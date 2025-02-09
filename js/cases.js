@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   // 创建案例项
   function createCaseItem(fileUrl, category, fileType, metadata) {
-    console.log('Creating item:', { fileUrl, category, fileType });
+    // console.log('Creating item:', { fileUrl, category, fileType });
     const caseItem = document.createElement('div');
     caseItem.className = 'case-item';
     caseItem.setAttribute('data-category', category);
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     mediaWrapper.className = 'media-wrapper';
 
     const fullUrl = `images/cases/${category}/${fileUrl}`;
-    console.log('Full URL:', fullUrl);
+    // console.log('Full URL:', fullUrl);
 
     if (fileType === 'video') {
         const videoContainer = document.createElement('div');

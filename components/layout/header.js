@@ -1,21 +1,21 @@
-import { config } from '../../js/config.js';
-
 export function createHeader() {
-  return `
-    <nav class="nav-bar">
-        <div class="nav-container">
-            <div class="nav-left">
-                <a href="${config.BASE_URL}/index.html">
-                    <img src="${config.BASE_URL}/images/vegelogo.svg" alt="vegesense" class="logo">
-                </a>
-                <span class="nav-separator">|</span>
-                <span class="nav-title">教育 Education</span>
+    // 从全局变量获取 baseUrl
+    const baseUrl = window.siteConfig?.BASE_URL || '';
+    return `
+        <nav class="nav-bar">
+            <div class="nav-container">
+                <div class="nav-left">
+                    <a href="${baseUrl}/index.html">
+                        <img src="${baseUrl}/images/vegelogo.svg" alt="vegesense" class="logo">
+                    </a>
+                    <span class="nav-separator">|</span>
+                    <span class="nav-title">教育 Education</span>
+                </div>
+                <div class="nav-right">
+                    <button class="login-btn">登录</button>
+                </div>
             </div>
-            <div class="nav-right">
-                <button class="login-btn">登录</button>
-            </div>
-        </div>
-    </nav>
+        </nav>
     `;
 }
 
