@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const handleClick = (e) => {
             e.preventDefault();
             e.stopPropagation();
-            window.open(url, '_blank');
+            window.open(window.siteConfig.BASE_URL + url, '_blank');
         };
 
         // 添加点击和触摸事件监听
