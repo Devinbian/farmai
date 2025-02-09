@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.sub-card').forEach(card => {
         // 获取卡片的目标链接
         const url = card.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        url = url.startsWith('http')?url:window.siteConfig.BASE_URL + url;
         if (!url) return;
         
         // 移除 onclick 属性，改用事件监听
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const handleClick = (e) => {
             e.preventDefault();
             e.stopPropagation();
-            window.open(window.siteConfig.BASE_URL + url, '_blank');
+            window.open(url, '_blank');
         };
 
         // 添加点击和触摸事件监听
