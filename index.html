@@ -16,6 +16,10 @@
         // 直接注册，不需要等待 load 事件
         gsap.registerPlugin(ScrollTrigger);
     </script>
+    <script type="module">
+        import { config } from './js/config.js';
+        window.siteConfig = config;
+    </script>
 </head>
 
 <body>
@@ -30,7 +34,7 @@
                 </div>
                 <div class="rightbanner">
                     <img src="images/DM_20250206145800_005.png" alt="banner" class="banner-img">
-                    <a href="cases.html" class="banner-btn">
+                    <a href="cases.html" class="banner-btn" id="casesLink">
                         <img src="images/fire.svg" alt="fire" class="fire-icon">
                         智慧微农场出镜回顾 <span class="material-icons">arrow_forward</span>
                     </a>
@@ -479,6 +483,7 @@
 
         import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
         import { createFooter } from './components/layout/footer.js';
+        import { createBanner } from './components/banner/banner.js';
 
         // 初始化页面组件
         document.getElementById('header').innerHTML = createHeader();
@@ -489,6 +494,12 @@
 
         // 初始化导航栏
         initializeNavbar();
+
+        // 更新链接
+        document.getElementById('casesLink').href = `${config.BASE_URL}/cases.html`;
+
+        // 插入 banner
+        document.getElementById('bannerSection').innerHTML = createBanner();
     </script>
     <script type="module" src="js/script.js"></script>
     <script src="js/index.js"></script>

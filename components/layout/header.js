@@ -1,10 +1,12 @@
+import { config } from '../../js/config.js';
+
 export function createHeader() {
   return `
     <nav class="nav-bar">
         <div class="nav-container">
             <div class="nav-left">
-                <a href="index.html">
-                    <img src="images/vegelogo.svg" alt="vegesense" class="logo">
+                <a href="${config.BASE_URL}/index.html">
+                    <img src="${config.BASE_URL}/images/vegelogo.svg" alt="vegesense" class="logo">
                 </a>
                 <span class="nav-separator">|</span>
                 <span class="nav-title">教育 Education</span>
