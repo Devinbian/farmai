@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // 添加触摸事件处理
     document.querySelectorAll('.sub-card').forEach(card => {
         // 获取卡片的目标链接
-        const url = card.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
+        let url = card.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
         url = url.startsWith('http')?url:window.siteConfig.BASE_URL + url;
         if (!url) return;
         
