@@ -482,25 +482,18 @@
         // 在模块内重新注册插件
         gsap.registerPlugin(ScrollTrigger);
 
+        // 使用全局变量 window.siteConfig
+        document.getElementById('casesLink').href = `${window.siteConfig.BASE_URL}/cases.html`;
+
+        // 其他模块导入和初始化
         import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
         import { createFooter } from './components/layout/footer.js';
-        import { createBanner } from './components/banner/banner.js';
-
-        // 初始化页面组件
+        
         document.getElementById('header').innerHTML = createHeader();
         document.getElementById('footer').innerHTML = createFooter();
-
-        // 设置页面标题
+        
         updateNavTitle('教育 Education');
-
-        // 初始化导航栏
         initializeNavbar();
-
-        // 更新链接
-        document.getElementById('casesLink').href = `${config.BASE_URL}/cases.html`;
-
-        // 插入 banner
-        document.getElementById('bannerSection').innerHTML = createBanner();
     </script>
     <script type="module" src="js/script.js"></script>
     <script src="js/index.js"></script>

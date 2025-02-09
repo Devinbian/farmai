@@ -1,5 +1,5 @@
 export function createHeader() {
-    // 从全局变量获取 baseUrl
+    // 使用全局变量
     const baseUrl = window.siteConfig?.BASE_URL || '';
     return `
         <nav class="nav-bar">
