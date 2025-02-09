@@ -1,13 +1,14 @@
 // 确保在导入其他模块前注册
 gsap.registerPlugin(ScrollTrigger);
 
-import { createRobot, initializeRobot } from "/components/robot/robot.js";
-import { initializeCardInteractions } from "/components/card/card-interactions.js";
+// 使用相对路径导入
+import { createRobot, initializeRobot } from "../components/robot/robot.js";
+import { initializeCardInteractions } from "../components/card/card-interactions.js";
 import {
-  initializeScrollAnimations,
-  initializeBannerAnimations,
-  initializeHoverAnimations,
-} from "/components/animation/scroll-animations.js";
+    initializeScrollAnimations,
+    initializeBannerAnimations,
+    initializeHoverAnimations,
+} from "../components/animation/scroll-animations.js";
 
 // 初始化所有功能
 function initializeAll() {
@@ -27,7 +28,7 @@ function initializeAll() {
   initializeCardInteractions(".summer-section");
   initializeCardInteractions(".competition-section");
 
-  // initializeScrollAnimations();
+  initializeScrollAnimations();
   initializeBannerAnimations();
   initializeHoverAnimations();
 }

@@ -379,6 +379,12 @@
             }
         }
     </style>
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
 </head>
 <body>
     <div id="header"></div>
@@ -414,6 +420,7 @@
     <div id="footer"></div>
 
     <script type="module">
+        // 使用全局变量 window.siteConfig
         import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
         import { createFooter } from './components/layout/footer.js';
         
