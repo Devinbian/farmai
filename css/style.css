@@ -1,0 +1,1475 @@
+/* 重置默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    line-height: 1.5;
+    color: #1A1A1A;
+    /* background-color: #F5F5F5; */
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+}
+
+button {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+/* 导航栏 */
+.nav-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    z-index: 9000;
+    transition: all 0.3s ease;
+}
+
+.nav-bar.scrolled {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.nav-container {
+    width: 100%;
+    padding: 16px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.nav-left a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.nav-left a:hover {
+    opacity: 0.8;
+}
+
+.logo {
+    height: 32px;
+}
+
+.nav-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #1A1A1A;
+    transition: color 0.3s ease;
+}
+
+.nav-bar:not(.scrolled) .nav-title {
+    color: #333333;
+}
+
+.nav-separator {
+    color: #1A1A1A;
+    font-weight: 200;
+}
+
+.nav-bar:not(.scrolled) .nav-separator {
+    color: #333333;
+}
+
+.login-btn {
+    padding: 8px 24px;
+    background: rgba(255, 255, 255, 0.2);
+    color: #000000;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.login-btn:hover {
+    background: rgba(77, 77, 77, 0.3);
+}
+
+.nav-bar.scrolled .login-btn {
+    background: rgba(190, 190, 190, 0.9);
+    border: none;
+}
+
+.nav-bar.scrolled .login-btn:hover {
+    background: rgba(33, 33, 34, 0.9);
+    color: #ffffff;
+}
+
+.nav-bar.scrolled .nav-title {
+    color: #1A1A1A;
+}
+
+/* 主要内容区域 */
+.main-content {
+    margin: 0;
+    padding: 0;
+}
+
+/* 通用区块样式 */
+.section-container {
+    width: 100%;
+    margin: 0 auto;
+    /* padding: 40px 0; */
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.section-subtitle {
+    font-size: 16px;
+    color: #666666;
+    text-align: center;
+    margin-bottom: 40px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.section-date {
+    text-align: center;
+    color: #666666;
+    margin-bottom: 32px;
+}
+
+/* Banner样式 */
+.banner {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    margin: 0;
+    background: url(../images/DM_20250206145800_008.png);
+    background-size: cover;
+    background-position: center;
+    padding-top: 64px;
+}
+
+.leftbanner {
+    flex: 1.2;
+    height: 100vh;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    position: relative;
+    order: 2;
+    padding-left: 0;
+    padding-bottom: 0;
+    padding-top: 48px;
+}
+
+.leftbanner .banner-img {
+    width: 130%;
+    height: auto;
+    object-fit: contain;
+    transition: all 0.3s ease;
+    margin-bottom: -32%;
+    margin-top: 48px;
+    position: relative;
+    z-index: 2;
+}
+
+.leftbanner .banner-overlay {
+    position: absolute;
+    top: 15%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin: 0;
+    z-index: 1;
+    transform: scale(1.2);
+}
+
+.rightbanner {
+    flex: 0.8;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    order: 1;
+    padding-left: 40px;
+    padding-bottom: 64px;
+    gap: 48px;
+}
+
+.rightbanner .banner-img {
+    width: 85%;
+    height: auto;
+    max-height: 70%;
+    object-fit: contain;
+    transition: all 0.3s ease;
+}
+
+.rightbanner button {
+    padding: 12px 24px;
+    background: rgba(0, 0, 0, 0.9);
+    border: none;
+    border-radius: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.rightbanner button .material-icons {
+    font-size: 18px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #FFFFFF;
+}
+
+.rightbanner button:hover {
+    transform: translate(-2px, -2px) rotate(-10deg);
+    background: rgba(0, 0, 0, 1);
+    box-shadow: 2px 4px 16px rgba(0, 0, 0, 0.25);
+}
+
+.rightbanner button:hover .material-icons {
+    transform: translateX(4px);
+}
+
+.rightbanner .banner-btn {
+    padding: 12px 12px;
+    background: rgba(0, 0, 0, 0.9);
+    border: none;
+    border-radius: 48px;
+    font-size: 18px;
+    font-weight: 500;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    margin-top: 10%;
+}
+
+.rightbanner .banner-btn .material-icons {
+    font-size: 18px;
+    color: #FFFFFF;
+}
+
+.rightbanner .banner-btn .fire-icon {
+    width: 26px;
+    height: 26px;
+    margin-right: 8px;
+}
+
+/* 特色卡片样式 */
+.camp-section {
+    position: relative;
+    margin-top: -200px;
+    z-index: 10;
+    padding: 0 40px;
+}
+
+.feature-grid {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.feature-card {
+    padding: 40px 10px;
+}
+
+.feature-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 32px;
+    gap: 40px;
+    align-items: center;
+}
+
+.divider {
+    width: 1px;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.1);
+    /* background: #333333; */
+    margin: 8px 0;
+}
+
+.desc-section {
+    flex: 1;
+    opacity: 0.7;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.feature-card .desc-section p {
+    font-size: 15px;
+    color: #333333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.feature-card h3 {
+    font-size: 50px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin: 0;
+    line-height: 1.4;
+    letter-spacing: .15px;
+}
+
+.feature-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 32px;
+    height: 320px;
+}
+
+.sub-card {
+    position: relative;
+    background: #d6fef0;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    width: 25%;
+    cursor: pointer;
+    border: 1px solid rgba(112, 255, 200, .5);
+    height: 420px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.sub-card:first-child {
+    width: 50%;
+}
+
+/* 持久化的悬停状态 */
+.feature-cards.has-active .sub-card {
+    width: 25%;
+}
+
+.sub-card.active {
+    width: 50% !important;
+    background: #d6fef0;
+    z-index: 1;
+}
+
+.sub-card.active .card-icon {
+    transform: scale(1.8);
+    bottom: 35%;
+    margin-bottom: -10px;
+    right: 48px;
+}
+
+.sub-card.active .try-btn {
+    width: 160px;
+    padding: 0 20px;
+    justify-content: space-between;
+    background: #000000;
+    color: #ffffff;
+}
+
+.sub-card.active .try-btn .btn-text {
+    opacity: 1;
+    transform: translateX(0);
+    position: static;
+    color: #ffffff;
+}
+
+.sub-card.active .try-btn .material-icons.btn-icon {
+    margin-left: 8px;
+    color: #ffffff;
+}
+
+.card-content {
+    position: relative;
+    padding: 32px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.sub-card h4 {
+    font-size: 40px;
+    font-weight: 600;
+    color: #1A1A1A;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: .12px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.sub-card p {
+    font-size: 18px;
+    font-weight: 400;
+    color: #666666;
+    margin-bottom: 24px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+    opacity: 0.9;
+    letter-spacing: .054px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sub-card .card-icon {
+    position: absolute;
+    right: -21px;
+    bottom: -6px;
+    width: auto;
+    height: 150px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.sub-card .material-icons {
+    position: absolute;
+    right: 32px;
+    bottom: 32px;
+    font-size: 48px;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+}
+
+.sub-card.active .material-icons {
+    transform: scale(2);
+    bottom: 50%;
+    margin-bottom: -24px;
+    right: 48px;
+}
+
+/* 页脚 */
+.footer {
+    background: #f8f9fa;
+    padding: 60px 0 40px;
+    margin-top: 100px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.footer-section h4 {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1A1A1A;
+    margin-bottom: 20px;
+}
+
+.footer-section ul li {
+    margin-bottom: 12px;
+}
+
+.footer-section ul li a {
+    color: #666666;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+.footer-section ul li a:hover {
+    color: #333333;
+}
+
+.footer-section .wechat-item {
+    position: relative;
+}
+
+.footer-section .wechat-item a {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.footer-section .wechat-item .material-icons {
+    font-size: 18px;
+}
+
+.footer-section .wechat-qr {
+    position: absolute;
+    top: -20px;
+    left: 26%;
+    transform: translateY(0);
+    width: 120px;
+    height: 120px;
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    margin-left: 8px;
+    z-index: 100;
+}
+
+.footer-section .wechat-qr img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.footer-section .wechat-qr::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: -6px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    transform: rotate(45deg);
+    box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.footer-section .wechat-item:hover .wechat-qr {
+    opacity: 1;
+    visibility: visible;
+}
+
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px 0;
+    text-align: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+}
+
+.footer-bottom p {
+    color: #999999;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* 响应式布局 */
+@media screen and (min-width: 1921px) {
+    .leftbanner .banner-img {
+        width: 60%;
+        margin-bottom: -1%;
+    }
+    
+    .rightbanner .banner-img {
+        width: 65%;
+    }
+}
+
+@media screen and (max-width: 1920px) {
+    .leftbanner .banner-img {
+        width: 85%;
+        margin-bottom: 5%;
+    }
+    
+    .rightbanner .banner-img {
+        width: 120%;
+        max-height: 75%;
+        margin-top: -168px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    .leftbanner .banner-img {
+        width: 100%;
+        margin-bottom: 8%;
+    }
+    
+    .rightbanner .banner-img {
+        width: 85%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .leftbanner {
+        padding-left: 40px;
+        margin-top: -50%;
+    }
+    .rightbanner {
+        padding-left: 40px;
+    }
+    .leftbanner .banner-img,
+    .rightbanner .banner-img {
+        width: 85%;
+    }
+    .leftbanner .banner-overlay {
+        top: 30%;
+    }
+
+    .training-grid,
+    .mvp-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .feature-cards {
+        height: 360px;
+    }
+
+    .sub-card .card-icon {
+        width: auto;
+        height: 146px;
+    }
+
+    .nav-container {
+        padding: 16px 40px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .section-title {
+        font-size: 28px;
+    }
+
+    .feature-cards {
+        flex-direction: column;
+        height: auto;
+        gap: 16px;
+    }
+
+    .title-btn-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+    }
+
+    .title-btn-wrapper .try-btn {
+        display: none;
+    }
+
+    .card-content h4 {
+        font-size: 16px;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .try-btn {
+        display: none;
+    }
+
+    .title-btn-wrapper .try-btn {
+        position: static;
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #000000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        display: flex;
+    }
+
+    .title-btn-wrapper .try-btn .btn-text {
+        display: none;
+    }
+
+    .title-btn-wrapper .try-btn .material-icons.btn-icon {
+        font-size: 16px;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        color: #000000;
+    }
+
+    .sub-card {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 120px;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+        pointer-events: auto;
+        display: flex;
+        user-select: none;
+        -webkit-user-select: none;
+        -webkit-touch-callout: none;
+    }
+
+    .sub-card:first-child {
+        width: 100% !important;
+    }
+
+    .feature-cards.has-active .sub-card {
+        width: 100% !important;
+    }
+
+    .card-content {
+        padding: 20px;
+        position: relative;
+        z-index: 2;
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        pointer-events: auto;
+    }
+
+    .card-content h4 {
+        font-size: 16px;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .card-content p {
+        font-size: 12px;
+        line-height: 1.4;
+        margin: 0;
+        opacity: 0.8;
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+        -webkit-line-clamp: 2;
+        -moz-line-clamp: 2;
+        line-clamp: 2;
+        -webkit-box-orient: vertical;
+        -moz-box-orient: vertical;
+        box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .cardleft {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        pointer-events: none;
+    }
+
+    .cardleft .card-icon {
+        height: 120px;
+        width: auto;
+        object-fit: contain;
+        object-position: center;
+        margin: 0;
+        padding: 0;
+        transform: none;
+    }
+
+    .title-btn-wrapper .try-btn {
+        width: 20px;
+        height: 20px;
+    }
+
+    .title-btn-wrapper .try-btn .material-icons.btn-icon {
+        font-size: 16px;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
+
+    .main-content {
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .title-section {
+        flex: none;
+    }
+
+    .divider {
+        width: 100%;
+        height: 1px;
+        margin: 0;
+    }
+
+    .desc-section {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .feature-card h3 {
+        font-size: 28px;
+    }
+
+    .banner {
+        flex-direction: column;
+        height: auto;
+        min-height: 85vh;
+    }
+
+    .leftbanner,
+    .rightbanner {
+        flex: none;
+        height: 45vh;
+        width: 100%;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
+        order: unset;
+    }
+
+    .leftbanner .banner-img {
+        width: 80%;
+        max-height: none;
+        margin-bottom: -115%;
+    }
+
+    .rightbanner .banner-img {
+        width: 70%;
+        max-height: 70%;
+    }
+
+    .rightbanner {
+        gap: 24px;
+        margin-top: 80%;
+    }
+
+    .nav-container {
+        padding: 12px 20px;
+    }
+
+    .logo {
+        height: 24px;
+    }
+
+    .login-btn {
+        padding: 6px 16px;
+        font-size: 13px;
+    }
+
+    .feature-card {
+        padding: 24px 40px;
+    }
+
+    .card-content p {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 2.8em;
+        margin: 0;
+        font-size: 14px;
+        opacity: 0.8;
+    }
+
+    .camp-section {
+        position: static;
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .feature-grid {
+        background: transparent;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
+    }
+
+    .service-section {
+        margin-top: 32px;
+    }
+
+    .leftbanner .banner-overlay {
+        position: absolute;
+        top: 160%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        transform: scale(1.5) rotate(-15deg);
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .footer-section .wechat-qr {
+        position: absolute;
+        top: 50%;
+        left: 26%;
+        transform: translateY(-50%);
+        margin-left: 8px;
+        margin-bottom: 0;
+    }
+
+    .footer-section .wechat-qr::before {
+        top: 50%;
+        left: -6px;
+        transform: translateY(-50%) rotate(45deg);
+        box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.05);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .nav-title {
+        /* display: none; */
+    }
+
+    .section-title {
+        font-size: 24px;
+    }
+
+    .section-subtitle {
+        font-size: 14px;
+    }
+
+    .feature-card {
+        padding: 24px 20px;
+    }
+
+    .sub-card {
+        height: 92px;
+    }
+
+    .card-content {
+        padding: 12px;
+    }
+
+    .cardleft .card-icon {
+        height: 130px;
+    }
+
+    .try-btn {
+        width: 20px;
+        height: 20px;
+    }
+
+    .try-btn .material-icons.btn-icon {
+        font-size: 14px;
+    }
+
+    .training-grid,
+    .mvp-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .footer-container {
+        grid-template-columns: 1fr;
+        gap: 32px;
+    }
+
+    .banner {
+        min-height: 85vh;
+    }
+
+    .leftbanner,
+    .rightbanner {
+        height: 42vh;
+        padding: 0;
+    }
+
+    .leftbanner .banner-img {
+        width: 110%;
+        margin-bottom: -90%;
+    }
+    .leftbanner .banner-overlay{
+        top:90%;
+    }
+
+    .rightbanner .banner-img {
+        width: 85%;
+        max-height: 80%;
+    }
+
+    .main-content {
+        padding: 0;
+        margin: 0;
+    }
+
+    .feature-card h3 {
+        font-size: 24px;
+    }
+
+    .feature-card .desc-section p {
+        font-size: 14px;
+    }
+
+    .nav-container {
+        padding: 10px 16px;
+    }
+
+    .logo {
+        height: 20px;
+    }
+
+    .login-btn {
+        padding: 5px 14px;
+        font-size: 12px;
+        border-radius: 16px;
+    }
+
+    .rightbanner {
+        gap: 20px;
+        margin-top: 80%;
+    }
+    
+    .rightbanner button {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .section-title {
+        font-size: 22px;
+    }
+
+    .feature-card {
+        padding: 16px;
+    }
+
+    .sub-card {
+        height: 92px;
+    }
+
+    .card-content {
+        padding: 12px;
+    }
+
+    .cardleft .card-icon {
+        height: 184px;
+    }
+
+    .try-btn {
+        width: 18px;
+        height: 18px;
+    }
+
+    .try-btn .material-icons.btn-icon {
+        font-size: 12px;
+    }
+
+    .leftbanner,
+    .rightbanner {
+        height: 40vh;
+        padding: 0;
+    }
+
+    .leftbanner .banner-img {
+        width: 150%;
+        margin-bottom: -35%;
+    }
+
+    .rightbanner .banner-img {
+        width: 90%;
+    }
+
+    .rightbanner {
+        gap: 16px;
+    }
+
+    .nav-container {
+        padding: 8px 12px;
+    }
+
+    .logo {
+        height: 18px;
+    }
+
+    .login-btn {
+        padding: 4px 12px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (min-width: 769px) {
+    .leftbanner {
+        order: 2;
+    }
+    .rightbanner {
+        order: 1;
+    }
+}
+
+/* 基础按钮样式 */
+.try-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.try-btn .btn-text {
+    white-space: nowrap;
+}
+
+.try-btn .material-icons.btn-icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PC 端样式 */
+@media screen and (min-width: 769px) {
+    .title-btn-wrapper .try-btn {
+        display: none;
+    }
+
+    .card-content .try-btn {
+        position: absolute;
+        left: 32px;
+        bottom: 32px;
+        width: 48px;
+        height: 48px;
+        background: #ffffff;
+        color: #000000;
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 第一个卡片的按钮默认展开状态（仅在没有其他卡片激活时） */
+    .feature-cards:not(.has-active) .sub-card:first-child .card-content .try-btn {
+        width: 160px;
+        padding: 0 20px;
+        background: #000000;
+        color: #ffffff;
+        justify-content: space-between;
+    }
+
+    .feature-cards:not(.has-active) .sub-card:first-child .card-content .try-btn .btn-text {
+        opacity: 1;
+        transform: translateX(0);
+        position: static;
+    }
+
+    .feature-cards:not(.has-active) .sub-card:first-child .card-content .try-btn .material-icons.btn-icon {
+        position: static;
+        transform: none;
+        margin-left: 8px;
+        margin-bottom: 3px;
+    }
+
+    /* 第一个卡片的图片默认放大效果 */
+    .feature-cards:not(.has-active) .sub-card:first-child .card-icon {
+        transform: scale(1.8);
+        bottom: 35%;
+        margin-bottom: -24px;
+        right: 48px;
+    }
+
+    .card-content .try-btn .btn-text {
+        opacity: 0;
+        position: absolute;
+        left: 20px;
+        transform: translateX(-100%);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .card-content .try-btn .material-icons.btn-icon {
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, 85%);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* 展开状态 */
+    .sub-card.active .card-content .try-btn {
+        width: 160px;
+        padding: 0 20px;
+        background: #000000;
+        color: #ffffff;
+        justify-content: space-between;
+    }
+
+    .sub-card.active .card-content .try-btn .btn-text {
+        opacity: 1;
+        transform: translateX(0);
+        position: static;
+    }
+
+    .sub-card.active .card-content .try-btn .material-icons.btn-icon {
+        position: static;
+        transform: none;
+        margin-left: 8px;
+        margin-bottom: 3px;
+    }
+
+    /* Hover 状态 */
+    .card-content .try-btn:hover {
+        width: 160px;
+        padding: 0 20px;
+        background: #000000;
+        color: #ffffff;
+        justify-content: space-between;
+    }
+
+    .card-content .try-btn:hover .btn-text {
+        opacity: 1;
+        transform: translateX(0);
+        position: static;
+    }
+
+    .card-content .try-btn:hover .material-icons.btn-icon {
+        position: static;
+        transform: none;
+        margin-left: 8px;
+        margin-bottom: 3px;
+    }
+}
+
+/* 移动端样式 */
+@media screen and (max-width: 768px) {
+    .card-content .try-btn {
+        display: none;
+    }
+
+    .title-btn-wrapper .try-btn {
+        position: static;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        border-radius: 50%;
+        background: #ffffff;
+        color: #000000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .title-btn-wrapper .try-btn .btn-text {
+        display: none;
+    }
+
+    .title-btn-wrapper .try-btn .material-icons.btn-icon {
+        font-size: 16px;
+        position: static;
+        transform: none;
+    }
+}
+
+.service-section {
+    margin-top: 60px;
+}
+
+.service-section .sub-card {
+    background: #ffefed;
+    border: 1px solid #ffddda;
+}
+
+.service-section .cardleft {
+    background: #ffefed;
+}
+
+.children-section {
+    margin-top: 60px;
+}
+
+.children-section .sub-card {
+    background: #e8f4ff;
+    border: 1px solid #cce4ff;
+}
+
+.children-section .cardleft {
+    background: #e8f4ff;
+}
+
+.study-section {
+    margin-top: 60px;
+}
+
+.study-section .sub-card {
+    background: #f0f7ed;
+    border: 1px solid #d7ebd1;
+}
+
+.study-section .cardleft {
+    background: #f0f7ed;
+}
+
+.summer-section {
+    margin-top: 60px;
+}
+
+.summer-section .sub-card {
+    background: #fff5e6;
+    border: 1px solid #ffe0b3;
+}
+
+.summer-section .cardleft {
+    background: #fff5e6;
+}
+
+.competition-section {
+    margin-top: 60px;
+}
+
+.competition-section .sub-card {
+    background: #f5e6ff;
+    border: 1px solid #e0b3ff;
+}
+
+.competition-section .cardleft {
+    background: #f5e6ff;
+}
+
+.robot-container {
+    position: fixed;
+    bottom: auto;
+    right: auto;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    cursor: move;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    touch-action: none;
+    display: flex;
+    align-items: center;
+}
+
+.robot-wrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    background: url('../images/robot/normal.png') no-repeat center;
+    background-size: contain;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.robot-tools {
+    position: absolute;
+    /* left: -50px; */
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.robot-container:hover .robot-tools {
+    opacity: 1;
+    visibility: visible;
+}
+
+.robot-tool-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1001;
+}
+
+.robot-tool-btn:hover {
+    transform: scale(1.1);
+    background: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.robot-tool-btn .material-icons {
+    font-size: 18px;
+    color: #333333;
+}
+
+@media (max-width: 768px) {
+    .robot-container {
+        bottom: 10px;
+        right: 10px;
+    }
+    
+    .robot-wrapper {
+        width: 120px;
+        height: 120px;
+    }
+
+    .robot-tools {
+        left: -40px;
+    }
+
+    .robot-tool-btn {
+        width: 32px;
+        height: 32px;
+    }
+
+    .robot-tool-btn .material-icons {
+        font-size: 16px;
+    }
+} 
