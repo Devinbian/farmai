@@ -3,7 +3,7 @@ export function createHeader() {
     <nav class="nav-bar">
         <div class="nav-container">
             <div class="nav-left">
-                <a href="../../../index.html">
+                <a href="index.html">
                     <img src="images/vegelogo.svg" alt="vegesense" class="logo">
                 </a>
                 <span class="nav-separator">|</span>
