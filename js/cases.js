@@ -1,77 +1,111 @@
-document.addEventListener("DOMContentLoaded", async function () {
-  // 初始化GSAP ScrollTrigger
-  gsap.registerPlugin(ScrollTrigger);
+// 确保在导入其他模块前注册
+gsap.registerPlugin(ScrollTrigger);
 
-  // 声明全局变量
-  let waterfallInstance = null;
-  let colcade = null;
+// 声明全局变量
+let waterfallInstance = null;
+let colcade = null;
+let currentIndex = 0;
+let currentMainCategory = "all";
+let currentSubCategory = "全部";
+let currentResourceType = 'image';
+let categoryData = {};
 
-  // 导航栏滚动效果
-  const navbar = document.querySelector(".nav-bar");
-  let lastScrollTop = 0;
+// 获取 DOM 元素的引用
+const casesGrid = document.querySelector(".cases-grid");
+const filterContainer = document.querySelector(".cases-filter");
+const subFilterContainer = document.createElement("div");
+subFilterContainer.className = "cases-subfilter";
+const loadingSpinner = document.querySelector(".loading-spinner");
 
-  // 获取URL参数
-  const urlParams = new URLSearchParams(window.location.search);
-  const mainCategoryFromUrl = urlParams.get("category");
-  const subCategoryFromUrl = urlParams.get("subcategory");
-
-  window.addEventListener("scroll", function () {
-    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-
-    if (scrollTop > 50) {
-      navbar.classList.add("scrolled");
-    } else {
-      navbar.classList.remove("scrolled");
-    }
-
-    lastScrollTop = scrollTop;
-  });
-
-  const casesGrid = document.querySelector(".cases-grid");
-  const filterContainer = document.querySelector(".cases-filter");
-  const subFilterContainer = document.createElement("div");
-  subFilterContainer.className = "cases-subfilter";
-  filterContainer.after(subFilterContainer);
-
-  const loadingSpinner = document.querySelector(".loading-spinner");
-  let currentMainCategory = "all";
-  let currentSubCategory = "全部";
-  let currentResourceType = 'image';
-  let categoryData = {};
-
-  // 初始化Layout
-  function initLayout() {
-    // 监听图片加载
-    imagesLoaded(casesGrid, function() {
-        // 所有图片加载完成后的处理
-        const items = casesGrid.querySelectorAll('.case-item');
-        gsap.to(items, {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: {
-                each: 0.1,
-                from: "start"
-            },
-            ease: "power2.out"
-        });
-    });
-  }
-
-  // 从JSON文件加载分类数据
-  async function loadCategoryData() {
+// 动态导入模块并初始化
+async function initializeCases() {
+    const baseUrl = window.siteConfig?.BASE_URL || '';
+    
     try {
-      const response = await fetch("js/cases-data.json");
-      categoryData = await response.json();
-      return Object.keys(categoryData);
-    } catch (error) {
-      console.error("Error loading category data:", error);
-      return [];
-    }
-  }
+        // 获取URL参数
+        const urlParams = new URLSearchParams(window.location.search);
+        const mainCategoryFromUrl = urlParams.get("category");
+        const subCategoryFromUrl = urlParams.get("subcategory");
+        
+        // 导航栏滚动效果
+        const navbar = document.querySelector(".nav-bar");
+        let lastScrollTop = 0;
 
-  // 创建案例项
-  function createCaseItem(fileUrl, category, fileType, metadata) {
+        // 设置二级分类容器
+        filterContainer.after(subFilterContainer);
+
+        // 加载分类数据
+        const categories = await loadCategoryData();
+        initializeMainFilters(categories);
+
+        // 根据URL参数设置初始状态
+        if (mainCategoryFromUrl && categories.includes(mainCategoryFromUrl)) {
+            currentMainCategory = mainCategoryFromUrl;
+            // 激活对应的主分类按钮
+            document.querySelectorAll(".cases-filter .filter-btn").forEach((btn) => {
+                if (btn.dataset.category === mainCategoryFromUrl) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+
+            // 初始化并设置二级分类
+            initializeSubFilters(mainCategoryFromUrl);
+            if (subCategoryFromUrl) {
+                currentSubCategory = subCategoryFromUrl;
+                // 激活对应的二级分类按钮
+                document.querySelectorAll(".cases-subfilter .filter-btn").forEach((btn) => {
+                    if (btn.dataset.category === subCategoryFromUrl) {
+                        btn.classList.add("active");
+                    } else {
+                        btn.classList.remove("active");
+                    }
+                });
+            }
+
+            loadImages(mainCategoryFromUrl, currentSubCategory);
+        } else {
+            loadImages("all", "全部");
+        }
+
+        // 根据 URL 参数设置初始资源类型
+        const typeFromUrl = urlParams.get("type");
+        if (typeFromUrl && ['image', 'video'].includes(typeFromUrl)) {
+            currentResourceType = typeFromUrl;
+            document.querySelectorAll('.type-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.type === typeFromUrl);
+            });
+        }
+
+    } catch (error) {
+        console.error('初始化失败:', error);
+    }
+}
+
+// 当DOM加载完成后初始化
+document.addEventListener("DOMContentLoaded", () => {
+    if (casesGrid && filterContainer && loadingSpinner) {
+        initializeCases();
+    } else {
+        console.error('必要的 DOM 元素未找到');
+    }
+});
+
+// 从JSON文件加载分类数据
+async function loadCategoryData() {
+    try {
+        const response = await fetch("js/cases-data.json");
+        categoryData = await response.json();
+        return Object.keys(categoryData);
+    } catch (error) {
+        console.error("Error loading category data:", error);
+        return [];
+    }
+}
+
+// 创建案例项
+function createCaseItem(fileUrl, category, fileType, metadata) {
     // console.log('Creating item:', { fileUrl, category, fileType });
     const caseItem = document.createElement('div');
     caseItem.className = 'case-item';
@@ -254,11 +288,11 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 确保 mediaWrapper 被添加到 caseItem
     caseItem.appendChild(mediaWrapper);
     return caseItem;
-  }
+}
 
-  // 添加资源类型切换处理
-  const resourceTypeFilter = document.querySelector('.resource-type-filter');
-  resourceTypeFilter.addEventListener('click', (e) => {
+// 添加资源类型切换处理
+const resourceTypeFilter = document.querySelector('.resource-type-filter');
+resourceTypeFilter.addEventListener('click', (e) => {
     const typeBtn = e.target.closest('.type-btn');
     if (!typeBtn) return;
 
@@ -275,10 +309,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     
     // 重新加载当前分类的资源
     loadImages(currentMainCategory, currentSubCategory);
-  });
+});
 
-  // 修改 loadImages 函数
-  function loadImages(mainCategory = "all", subCategory = "全部") {
+// 修改 loadImages 函数
+function loadImages(mainCategory = "all", subCategory = "全部") {
     const wrapper = casesGrid.querySelector('.grid-sizer-wrapper') || casesGrid;
     wrapper.innerHTML = "";
     loadingSpinner.style.display = "flex";
@@ -355,10 +389,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         console.error('Error in loadImages:', error);
         loadingSpinner.style.display = 'none';
     }
-  }
+}
 
-  // 修改 getItemWidth 函数，使用屏幕宽度而不是容器宽度
-  function getItemWidth() {
+// 修改 getItemWidth 函数，使用屏幕宽度而不是容器宽度
+function getItemWidth() {
     const screenWidth = window.innerWidth;
     const padding = 40; // 考虑左右内边距
     const maxWidth = 1600; // 最大宽度限制
@@ -376,10 +410,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         return `${(availableWidth - gutter * 2) / 3}px`; // 三列
     }
     return `${(availableWidth - gutter * 3) / 4}px`; // 四列
-  }
+}
 
-  // 添加函数来设置正确的尺寸
-  function setCorrectSizes() {
+// 添加函数来设置正确的尺寸
+function setCorrectSizes() {
     const items = casesGrid.querySelectorAll('.case-item');
     const itemWidth = getItemWidth();
 
@@ -416,10 +450,10 @@ document.addEventListener("DOMContentLoaded", async function () {
             img.style.maxHeight = '70vh';
         }
     });
-  }
+}
 
-  // 修改 setupInfiniteScroll 函数
-  function setupInfiniteScroll() {
+// 修改 setupInfiniteScroll 函数
+function setupInfiniteScroll() {
     const options = {
         root: null,
         rootMargin: '0px',
@@ -446,13 +480,13 @@ document.addEventListener("DOMContentLoaded", async function () {
     }
 
     return observeNewItems;
-  }
+}
 
-  // 在 DOMContentLoaded 事件处理程序中初始化
-  const observeNewItems = setupInfiniteScroll();
+// 在 DOMContentLoaded 事件处理程序中初始化
+const observeNewItems = setupInfiniteScroll();
 
-  // 修改二级分类的事件监听，移除重复的事件监听
-  function initializeSubFilters(mainCategory) {
+// 修改二级分类的事件监听，移除重复的事件监听
+function initializeSubFilters(mainCategory) {
     subFilterContainer.innerHTML = "";
     
     if (mainCategory === "all") {
@@ -479,10 +513,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         button.dataset.category = category;
         subFilterContainer.appendChild(button);
     });
-  }
+}
 
-  // 添加一次性的事件监听
-  subFilterContainer.addEventListener("click", (e) => {
+// 添加一次性的事件监听
+subFilterContainer.addEventListener("click", (e) => {
     const button = e.target.closest(".filter-btn");
     if (!button) return;
 
@@ -495,10 +529,10 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 更新当前分类并重新加载图片
     currentSubCategory = button.dataset.category;
     loadImages(currentMainCategory, currentSubCategory);
-  });
+});
 
-  // 修改一级分类的事件监听
-  function initializeMainFilters(categories) {
+// 修改一级分类的事件监听
+function initializeMainFilters(categories) {
     filterContainer.innerHTML = "";
     
     // 添加"全部"按钮
@@ -540,63 +574,10 @@ document.addEventListener("DOMContentLoaded", async function () {
         casesGrid.innerHTML = '';
         loadImages(category, "全部");
     });
-  }
+}
 
-  // 初始化
-  const categories = await loadCategoryData();
-  initializeMainFilters(categories);
-
-  // 根据URL参数设置初始状态
-  if (mainCategoryFromUrl && categories.includes(mainCategoryFromUrl)) {
-    currentMainCategory = mainCategoryFromUrl;
-    // 激活对应的主分类按钮
-    document.querySelectorAll(".cases-filter .filter-btn").forEach((btn) => {
-      if (btn.dataset.category === mainCategoryFromUrl) {
-        btn.classList.add("active");
-      } else {
-        btn.classList.remove("active");
-      }
-    });
-
-    // 初始化并设置二级分类
-    initializeSubFilters(mainCategoryFromUrl);
-    if (subCategoryFromUrl) {
-      currentSubCategory = subCategoryFromUrl;
-      // 激活对应的二级分类按钮
-      document
-        .querySelectorAll(".cases-subfilter .filter-btn")
-        .forEach((btn) => {
-          if (btn.dataset.category === subCategoryFromUrl) {
-            btn.classList.add("active");
-          } else {
-            btn.classList.remove("active");
-          }
-        });
-    }
-
-    loadImages(mainCategoryFromUrl, currentSubCategory);
-  } else {
-    loadImages("all", "全部");
-  }
-
-  // 根据 URL 参数设置初始资源类型
-  const typeFromUrl = urlParams.get("type");
-  if (typeFromUrl && ['image', 'video'].includes(typeFromUrl)) {
-    currentResourceType = typeFromUrl;
-    document.querySelectorAll('.type-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.type === typeFromUrl);
-    });
-  }
-
-  // 优化图片加载
-  document.addEventListener('DOMContentLoaded', function() {
-    // 预加载缩略图
-    const thumbnailImg = new Image();
-    thumbnailImg.src = 'images/cases/video-thumbnail.jpg';
-  });
-
-  // 修改 initColcade 函数
-  function initColcade() {
+// 修改 initColcade 函数
+function initColcade() {
     // 保存当前的项目
     const currentItems = Array.from(casesGrid.querySelectorAll('.case-item'));
     
@@ -638,11 +619,11 @@ document.addEventListener("DOMContentLoaded", async function () {
             colcade.append(item);
         });
     }
-  }
+}
 
-  // 优化窗口大小改变事件监听
-  let resizeTimeout;
-  window.addEventListener('resize', () => {
+// 优化窗口大小改变事件监听
+let resizeTimeout;
+window.addEventListener('resize', () => {
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
         const oldColumns = casesGrid.querySelectorAll('.grid-col').length;
@@ -655,5 +636,4 @@ document.addEventListener("DOMContentLoaded", async function () {
             initColcade();
         }
     }, 250);
-  });
 });
