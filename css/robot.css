@@ -2,15 +2,18 @@
   position: fixed;
   right: 40px;
   bottom: 40px;
-  transition: all 0.3s ease;
   z-index: 1000;
-  background: white;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 130px;
+  height: 130px;
 }
 
 .robot-container.hidden {
-  transform: translateX(calc(100% + 40px));
+  right: 40px !important;
+  bottom: 40px !important;
+  left: auto !important;
+  top: auto !important;
+  transform: translateX(calc(100% + 40px)) !important;
   pointer-events: none;
 }
 
@@ -29,11 +32,15 @@
   position: relative;
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
   cursor: pointer;
+  background: url('../images/robot/normal.png') center/contain no-repeat;
+  border-radius: 50%;
+  transition: all 0.3s ease;
 }
 
-/* 添加一个触发区域 */
 .robot-wrapper::before {
   content: '';
   position: absolute;
@@ -48,53 +55,187 @@
   width: 40px;
 }
 
-.robot-tools {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  opacity: 0;
-  transform: translateX(-20px);
-  transition: all 0.3s ease;
+/* 移除表情符号，使用背景图片代替 */
+.robot-wrapper::after {
+  display: none;
 }
 
-.robot-wrapper:hover .robot-tools {
+/* 定义不同状态的背景图片 */
+.robot-wrapper[data-state="normal"] {
+  background-image: url('../images/robot/normal.png');
+}
+
+.robot-wrapper[data-state="thinking"] {
+  background-image: url('../images/robot/thinking.png');
+}
+
+.robot-wrapper[data-state="surprised"] {
+  background-image: url('../images/robot/surprised.png');
+}
+
+.robot-wrapper[data-state="happy"] {
+  background-image: url('../images/robot/happy.png');
+}
+
+/* 工具箱基础样式 */
+.robot-tools {
+  position: absolute;
+  right: -30px;  /* 工具箱在机器人右侧 */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  pointer-events: auto;
+  z-index: 1000;  /* 确保工具箱在上层 */
+}
+
+/* 显示工具箱的触发条件 */
+.robot-container:not(.hidden):hover .robot-tools,
+.robot-container:not(.hidden):active .robot-tools,
+.robot-container:not(.hidden):focus .robot-tools,
+.robot-container:not(.hidden).interacting .robot-tools {
   opacity: 1;
-  transform: translateX(0);
+  visibility: visible;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .robot-container {
+    width: 80px;
+    height: 80px;
+    right: 20px;
+    bottom: 20px;
+  }
+  
+  .robot-tools {
+    right: -45px;
+    gap: 6px;
+  }
+
+  .robot-tool-btn {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .hide-button {
+    left: -10px;
+    top: -10px;
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .robot-tool-btn .material-icons {
+    font-size: 16px !important;
+  }
+
+  .hide-button .material-icons {
+    font-size: 14px !important;
+  }
+
+  .robot-container.hidden {
+    right: 20px !important;
+    bottom: 20px !important;
+    transform: translateX(calc(100% + 20px)) !important;
+  }
+}
+
+/* 小屏幕设备适配 */
+@media (max-width: 480px) {
+  .robot-container {
+    width: 60px;
+    height: 60px;
+    right: 26px;
+    bottom: 16px;
+  }
+
+  .robot-tools {
+    right: -10px;
+    gap: 4px;
+  }
+
+  .robot-tool-btn {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .hide-button {
+    left: -8px;
+    top: -8px;
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .robot-tool-btn .material-icons {
+    font-size: 14px !important;
+  }
+
+  .hide-button .material-icons {
+    font-size: 12px !important;
+  }
+
+  .robot-container.hidden {
+    right: 16px !important;
+    bottom: 16px !important;
+    transform: translateX(calc(100% + 16px)) !important;
+  }
 }
 
 .robot-tool-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  background: white;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 .robot-tool-btn:hover {
-  transform: translateY(-2px);
+  transform: scale(1.1);
+  background: #f0f0f0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.robot-tool-btn span {
-  font-size: 20px;
-  color: #333;
+.robot-tool-btn .material-icons {
+  font-size: 18px;
+  color: #333333;
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }
 
+/* 隐藏按钮统一在左上角 */
 .hide-button {
+  position: absolute;
+  left: -12px;
+  top: -12px;
+  width: 24px !important;
+  height: 24px !important;
   background: rgba(0, 0, 0, 0.6);
+  pointer-events: auto !important;
+  z-index: 1001;
+  transform: none !important;
+  border-radius: 50%;
 }
 
-.hide-button span {
+.hide-button .material-icons {
   color: white;
   transition: transform 0.3s ease;
+  display: block;
+  font-size: 16px !important;
 }
 
-.robot-container.hidden .hide-button span {
+.robot-container.hidden .hide-button .material-icons {
   transform: rotate(180deg);
 } 
