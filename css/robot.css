@@ -1,0 +1,100 @@
+.robot-container {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  transition: all 0.3s ease;
+  z-index: 1000;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.robot-container.hidden {
+  transform: translateX(calc(100% + 40px));
+  pointer-events: none;
+}
+
+.robot-container::before {
+  content: '';
+  position: absolute;
+  right: 100%;
+  top: 0;
+  width: 40px;
+  height: 100%;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.robot-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* 添加一个触发区域 */
+.robot-wrapper::before {
+  content: '';
+  position: absolute;
+  left: -20px;
+  top: 0;
+  width: 20px;
+  height: 100%;
+}
+
+.robot-container.hidden .robot-wrapper::before {
+  left: -40px;
+  width: 40px;
+}
+
+.robot-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.3s ease;
+}
+
+.robot-wrapper:hover .robot-tools {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.robot-tool-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.robot-tool-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.robot-tool-btn span {
+  font-size: 20px;
+  color: #333;
+}
+
+.hide-button {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hide-button span {
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.robot-container.hidden .hide-button span {
+  transform: rotate(180deg);
+} 
