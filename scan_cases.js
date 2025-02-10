@@ -78,37 +78,47 @@ async function scanCasesDirectory() {
           const fileName = path.basename(file);
           const filePath = path.dirname(relativePath);
 
-          let subCategory = "未分类";
+          let subCategories = [];
           for (const [
             category,
-            { pattern, path: categoryPath },
+            { pattern, path: categoryPath, tags },
           ] of Object.entries(config.categories)) {
             const regex = new RegExp(pattern);
             if (
               regex.test(fileName) &&
               (!categoryPath || filePath.includes(categoryPath))
             ) {
-              subCategory = category;
-              break;
+              subCategories.push({
+                name: category,
+                tags: tags || [],
+              });
             }
+          }
+
+          // 如果没有匹配的类别，添加默认类别
+          if (subCategories.length === 0) {
+            subCategories.push({
+              name: "未分类",
+              tags: [],
+            });
           }
 
           return {
             filename: relativePath.replace(/\\/g, "/"),
-            subCategory,
-            mainCategory,
+            subCategories: subCategories,
+            mainCategory: mainCategory,
           };
         });
 
         // 按照配置中的 order 排序
         categorizedFiles.sort((a, b) => {
           const orderA =
-            (config.categories[a.subCategory] &&
-              config.categories[a.subCategory].order) ||
+            (config.categories[a.subCategories[0].name] &&
+              config.categories[a.subCategories[0].name].order) ||
             999;
           const orderB =
-            (config.categories[b.subCategory] &&
-              config.categories[b.subCategory].order) ||
+            (config.categories[b.subCategories[0].name] &&
+              config.categories[b.subCategories[0].name].order) ||
             999;
           return orderA - orderB;
         });
@@ -116,7 +126,10 @@ async function scanCasesDirectory() {
         // 创建分类配置
         const categories = {};
         Object.entries(config.categories).forEach(([key, value]) => {
-          categories[key] = { order: value.order };
+          categories[key] = {
+            order: value.order,
+            tags: value.tags || [],
+          };
         });
 
         categoriesData[mainCategory] = {

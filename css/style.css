@@ -1026,10 +1026,10 @@ button {
 
     .leftbanner .banner-img {
         width: 110%;
-        margin-bottom: -90%;
+        margin-bottom: -110%;
     }
     .leftbanner .banner-overlay{
-        top:90%;
+        top: 120%;
     }
 
     .rightbanner .banner-img {
@@ -1066,7 +1066,7 @@ button {
 
     .rightbanner {
         gap: 20px;
-        margin-top: 80%;
+        margin-top: 90%;
     }
     
     .rightbanner button {
