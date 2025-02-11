@@ -1,7 +1,7 @@
 export function createHeader() {
-    // 使用全局变量
-    const baseUrl = window.siteConfig?.BASE_URL || '';
-    return `
+  // 使用全局变量
+  const baseUrl = window.siteConfig?.BASE_URL || "";
+  return `
         <nav class="nav-bar">
             <div class="nav-container">
                 <div class="nav-left">
@@ -12,7 +12,9 @@ export function createHeader() {
                     <span class="nav-title">教育 Education</span>
                 </div>
                 <div class="nav-right">
-                    <button class="login-btn">登录</button>
+                    <a href="${baseUrl}/profile.html">
+                        <button class="login-btn">登录</button>
+                    </a>
                 </div>
             </div>
         </nav>

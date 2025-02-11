@@ -1,0 +1,1295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人中心 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <!-- 添加移动端菜单按钮和遮罩层 -->
+        <button class="mobile-menu-btn">
+            <span class="material-icons">menu</span>
+        </button>
+        <div class="sidebar-overlay"></div>
+
+        <div class="profile-container">
+            <!-- 左侧边栏 -->
+            <div class="profile-sidebar">
+                <div class="sidebar-header">
+                    <div class="user-avatar">
+                        <img src="images/avatar.jpeg" alt="用户头像">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name">李明</h3>
+                        <p class="user-role">角色</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <!-- 学习 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">school</span>
+                                学习
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item active" data-section="my-courses">
+                                    我的课程
+                                </li>
+                                <li class="nav-item" data-section="my-planting">
+                                    我的种植
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 评估 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">assessment</span>
+                                评估
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="skill-assessment">
+                                    技能评估
+                                </li>
+                                <li class="nav-item" data-section="course-report">
+                                    课程报告
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- AI -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">smart_toy</span>
+                                AI
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="generate-poster">
+                                    生成海报
+                                </li>
+                                <li class="nav-item" data-section="ai-qa">
+                                    AI问答
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 成就 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">emoji_events</span>
+                                成就
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="skill-badges">
+                                    技能勋章
+                                </li>
+                                <li class="nav-item" data-section="certificates">
+                                    结业证书
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="profile-content">
+                <!-- 学习 - 我的课程 -->
+                <div class="content-section active" id="my-courses">
+                    <h2>我的课程</h2>
+                    <div class="courses-container">
+                        <!-- 课程进度概览 -->
+                        <div class="course-overview">
+                            <div class="overview-card">
+                                <span class="material-icons">book</span>
+                                <div class="overview-info">
+                                    <span class="overview-value">3</span>
+                                    <span class="overview-label">在学课程</span>
+                                </div>
+                            </div>
+                            <div class="overview-card">
+                                <span class="material-icons">task_alt</span>
+                                <div class="overview-info">
+                                    <span class="overview-value">2</span>
+                                    <span class="overview-label">已完成课程</span>
+                                </div>
+                            </div>
+                            <div class="overview-card">
+                                <span class="material-icons">schedule</span>
+                                <div class="overview-info">
+                                    <span class="overview-value">12.5</span>
+                                    <span class="overview-label">学习时长(小时)</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 课程列表 -->
+                        <div class="course-list">
+                            <!-- 进行中的课程 -->
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <img src="./images/courses/hydroponics.jpg" alt="水培基础">
+                                    <span class="course-status in-progress">学习中</span>
+                                </div>
+                                <div class="course-info">
+                                    <h3>水培种植基础知识</h3>
+                                    <div class="course-meta">
+                                        <div class="meta-item">
+                                            <span class="material-icons">schedule</span>
+                                            <span>总时长：8小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="material-icons">menu_book</span>
+                                            <span>6个章节</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="progress-info">
+                                            <span>学习进度</span>
+                                            <span>60%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 60%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="continue-btn">
+                                        <span class="material-icons">play_circle</span>
+                                        继续学习
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-image">
+                                    <img src="./images/courses/nutrients.jpg" alt="营养液配置">
+                                    <span class="course-status in-progress">学习中</span>
+                                </div>
+                                <div class="course-info">
+                                    <h3>营养液配置与调整</h3>
+                                    <div class="course-meta">
+                                        <div class="meta-item">
+                                            <span class="material-icons">schedule</span>
+                                            <span>总时长：6小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="material-icons">menu_book</span>
+                                            <span>4个章节</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="progress-info">
+                                            <span>学习进度</span>
+                                            <span>30%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 30%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="continue-btn">
+                                        <span class="material-icons">play_circle</span>
+                                        继续学习
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 已完成的课程 -->
+                            <div class="course-card completed">
+                                <div class="course-image">
+                                    <img src="./images/courses/environment.jpg" alt="环境控制">
+                                    <span class="course-status completed">已完成</span>
+                                </div>
+                                <div class="course-info">
+                                    <h3>水培环境控制技术</h3>
+                                    <div class="course-meta">
+                                        <div class="meta-item">
+                                            <span class="material-icons">schedule</span>
+                                            <span>总时长：5小时</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <span class="material-icons">menu_book</span>
+                                            <span>5个章节</span>
+                                        </div>
+                                    </div>
+                                    <div class="course-progress">
+                                        <div class="progress-info">
+                                            <span>学习进度</span>
+                                            <span>100%</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress" style="width: 100%"></div>
+                                        </div>
+                                    </div>
+                                    <button class="review-btn">
+                                        <span class="material-icons">refresh</span>
+                                        复习课程
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 学习 - 我的种植 -->
+                <div class="content-section" id="my-planting">
+                    <h2>我的种植</h2>
+                    <div class="planting-container">
+                        <!-- 切换按钮 -->
+                        <div class="planting-tabs">
+                            <button class="tab-btn active" data-tab="current">当前种植</button>
+                            <button class="tab-btn" data-tab="history">历史记录</button>
+                        </div>
+
+                        <!-- 当前种植状态 -->
+                        <div class="planting-tab-content active" id="current-planting">
+                            <div class="current-planting">
+                                <div class="plant-header">
+                                    <h3>当前种植</h3>
+                                    <button class="add-record-btn">
+                                        <span class="material-icons">add</span>
+                                        添加记录
+                                    </button>
+                                </div>
+                                <div class="plant-status-card">
+                                    <div class="plant-image">
+                                        <img src="./images/plants/tomato.png" alt="小番茄">
+                                        <span class="growing-days">已种植15天</span>
+                                    </div>
+                                    <div class="plant-info">
+                                        <div class="plant-title">
+                                            <h4>小番茄</h4>
+                                            <span class="status growing">生长中</span>
+                                        </div>
+                                        <div class="plant-details">
+                                            <div class="detail-item">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>种植时间：2024-01-15</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="material-icons">eco</span>
+                                                <span>生长阶段：营养生长期</span>
+                                            </div>
+                                            <div class="detail-item">
+                                                <span class="material-icons">straighten</span>
+                                                <span>当前高度：25cm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="planting-timeline">
+                                    <h3>生长记录</h3>
+                                    <div class="timeline-entries">
+                                        <!-- 记录项 - 图片类型 -->
+                                        <div class="timeline-entry">
+                                            <div class="entry-date">
+                                                <span class="date">01-30</span>
+                                                <span class="time">14:30</span>
+                                            </div>
+                                            <div class="entry-content">
+                                                <div class="entry-header">
+                                                    <span class="material-icons">photo_camera</span>
+                                                    <h5>记录生长状态</h5>
+                                                </div>
+                                                <p>植株生长良好，叶片翠绿，第一朵花苞已经形成。</p>
+                                                <div class="entry-media image-grid">
+                                                    <div class="media-item">
+                                                        <img src="./images/growth/day15-1.png" alt="生长照片">
+                                                    </div>
+                                                    <div class="media-item">
+                                                        <img src="./images/growth/day15-2.png" alt="生长照片">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 记录项 - 视频类型 -->
+                                        <div class="timeline-entry">
+                                            <div class="entry-date">
+                                                <span class="date">01-25</span>
+                                                <span class="time">10:15</span>
+                                            </div>
+                                            <div class="entry-content">
+                                                <div class="entry-header">
+                                                    <span class="material-icons">videocam</span>
+                                                    <h5>记录浇水过程</h5>
+                                                </div>
+                                                <p>进行第一次营养液更换，EC值调整至1.8。</p>
+                                                <div class="entry-media video-player">
+                                                    <video controls poster="./images/growth/video-thumb.jpg">
+                                                        <source src="./videos/watering.mp4" type="video/mp4">
+                                                    </video>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 记录项 - 数据类型 -->
+                                        <div class="timeline-entry">
+                                            <div class="entry-date">
+                                                <span class="date">01-20</span>
+                                                <span class="time">09:00</span>
+                                            </div>
+                                            <div class="entry-content">
+                                                <div class="entry-header">
+                                                    <span class="material-icons">analytics</span>
+                                                    <h5>环境数据记录</h5>
+                                                </div>
+                                                <div class="environment-data">
+                                                    <div class="data-item">
+                                                        <span class="label">温度</span>
+                                                        <span class="value">25°C</span>
+                                                    </div>
+                                                    <div class="data-item">
+                                                        <span class="label">湿度</span>
+                                                        <span class="value">65%</span>
+                                                    </div>
+                                                    <div class="data-item">
+                                                        <span class="label">pH值</span>
+                                                        <span class="value">6.5</span>
+                                                    </div>
+                                                    <div class="data-item">
+                                                        <span class="label">EC值</span>
+                                                        <span class="value">1.8</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- 记录项 - 文本类型 -->
+                                        <div class="timeline-entry">
+                                            <div class="entry-date">
+                                                <span class="date">01-15</span>
+                                                <span class="time">15:00</span>
+                                            </div>
+                                            <div class="entry-content">
+                                                <div class="entry-header">
+                                                    <span class="material-icons">description</span>
+                                                    <h5>开始种植</h5>
+                                                </div>
+                                                <p>选用荷兰进口小番茄种子，采用岩棉块作为基质，搭建NFT水培系统。</p>
+                                                <div class="entry-tags">
+                                                    <span class="tag">种植启动</span>
+                                                    <span class="tag">水培系统</span>
+                                                    <span class="tag">小番茄</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 历史种植记录 -->
+                        <div class="planting-tab-content" id="history-planting">
+                            <div class="history-planting-grid">
+                                <!-- 历史记录卡片 -->
+                                <div class="history-plant-card">
+                                    <div class="history-plant-image">
+                                        <img src="./images/plants/lettuce.png" alt="生菜">
+                                        <span class="plant-status completed">已完成</span>
+                                    </div>
+                                    <div class="history-plant-info">
+                                        <h4>水培生菜</h4>
+                                        <div class="plant-period">
+                                            <span class="material-icons">date_range</span>
+                                            <span>2023-12-01 至 2023-12-30</span>
+                                        </div>
+                                        <div class="plant-stats">
+                                            <div class="stat-item">
+                                                <span class="label">种植周期</span>
+                                                <span class="value">30天</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="label">收获重量</span>
+                                                <span class="value">500g</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="label">成功率</span>
+                                                <span class="value">95%</span>
+                                            </div>
+                                        </div>
+                                        <button class="view-detail-btn">
+                                            <span class="material-icons">visibility</span>
+                                            查看详情
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="history-plant-card">
+                                    <div class="history-plant-image">
+                                        <img src="./images/plants/basil.png" alt="罗勒">
+                                        <span class="plant-status completed">已完成</span>
+                                    </div>
+                                    <div class="history-plant-info">
+                                        <h4>香草罗勒</h4>
+                                        <div class="plant-period">
+                                            <span class="material-icons">date_range</span>
+                                            <span>2023-11-01 至 2023-11-25</span>
+                                        </div>
+                                        <div class="plant-stats">
+                                            <div class="stat-item">
+                                                <span class="label">种植周期</span>
+                                                <span class="value">25天</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="label">收获重量</span>
+                                                <span class="value">300g</span>
+                                            </div>
+                                            <div class="stat-item">
+                                                <span class="label">成功率</span>
+                                                <span class="value">90%</span>
+                                            </div>
+                                        </div>
+                                        <button class="view-detail-btn">
+                                            <span class="material-icons">visibility</span>
+                                            查看详情
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评估 - 技能评估 -->
+                <div class="content-section" id="skill-assessment">
+                    <h2>技能评估</h2>
+                    <div class="assessment-container">
+                        <!-- 总体技能评分 -->
+                        <div class="assessment-overview">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36" class="circular-chart">
+                                    <path class="circle-bg" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="circle" stroke-dasharray="80, 100" d="M18 2.0845
+                                        a 15.9155 15.9155 0 0 1 0 31.831
+                                        a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                </svg>
+                                <div class="score-text">
+                                    <span class="score-number">80</span>
+                                    <span class="score-label">分</span>
+                                </div>
+                            </div>
+                            <div class="score-info">
+                                <h3>水培技能等级：进阶种植员</h3>
+                                <p>您已完成基础评估，具备独立管理水培系统的能力</p>
+                            </div>
+                        </div>
+
+                        <!-- 技能模块评估 -->
+                        <div class="skill-modules">
+                            <h4>技能模块评估</h4>
+                            <div class="module-grid">
+                                <div class="module-item">
+                                    <div class="module-header">
+                                        <span class="material-icons">water_drop</span>
+                                        <span class="module-score">85分</span>
+                                    </div>
+                                    <h5>营养液管理</h5>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag excellent">pH调节</span>
+                                        <span class="skill-tag good">EC控制</span>
+                                        <span class="skill-tag good">配方调配</span>
+                                    </div>
+                                </div>
+                                <div class="module-item">
+                                    <div class="module-header">
+                                        <span class="material-icons">thermostat</span>
+                                        <span class="module-score">78分</span>
+                                    </div>
+                                    <h5>环境控制</h5>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag good">温度管理</span>
+                                        <span class="skill-tag good">湿度调节</span>
+                                        <span class="skill-tag normal">光照控制</span>
+                                    </div>
+                                </div>
+                                <div class="module-item">
+                                    <div class="module-header">
+                                        <span class="material-icons">bug_report</span>
+                                        <span class="module-score">75分</span>
+                                    </div>
+                                    <h5>病虫害防治</h5>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag good">病害识别</span>
+                                        <span class="skill-tag normal">防治方案</span>
+                                        <span class="skill-tag normal">预防措施</span>
+                                    </div>
+                                </div>
+                                <div class="module-item">
+                                    <div class="module-header">
+                                        <span class="material-icons">monitoring</span>
+                                        <span class="module-score">82分</span>
+                                    </div>
+                                    <h5>生长监测</h5>
+                                    <div class="skill-tags">
+                                        <span class="skill-tag excellent">生长观察</span>
+                                        <span class="skill-tag good">数据记录</span>
+                                        <span class="skill-tag good">调整优化</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 提升建议 -->
+                        <div class="improvement-suggestions">
+                            <h4>提升建议</h4>
+                            <div class="suggestion-list">
+                                <div class="suggestion-item priority-high">
+                                    <div class="suggestion-icon">
+                                        <span class="material-icons">priority_high</span>
+                                    </div>
+                                    <div class="suggestion-content">
+                                        <h5>加强光照管理技能</h5>
+                                        <p>建议学习《植物光照需求与调控》课程，提升光照管理能力</p>
+                                    </div>
+                                </div>
+                                <div class="suggestion-item priority-medium">
+                                    <div class="suggestion-icon">
+                                        <span class="material-icons">trending_up</span>
+                                    </div>
+                                    <div class="suggestion-content">
+                                        <h5>提升病虫害防治水平</h5>
+                                        <p>可以参加实操培训，积累更多实战经验</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 评估记录 -->
+                        <div class="assessment-history">
+                            <h4>历史评估记录</h4>
+                            <div class="history-timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2024-01-20</div>
+                                    <div class="timeline-content">
+                                        <h5>第三次技能评估</h5>
+                                        <p>总分：80分（较上次+5分）</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2023-12-15</div>
+                                    <div class="timeline-content">
+                                        <h5>第二次技能评估</h5>
+                                        <p>总分：75分（较上次+10分）</p>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-date">2023-11-10</div>
+                                    <div class="timeline-content">
+                                        <h5>首次技能评估</h5>
+                                        <p>总分：65分（基础水平）</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 评估 - 课程报告 -->
+                <div class="content-section" id="course-report">
+                    <h2>课程报告</h2>
+                    <div class="report-container">
+                        <!-- 课程基本信息 -->
+                        <div class="report-header">
+                            <div class="course-info">
+                                <h3>水培种植基础知识</h3>
+                                <div class="course-meta">
+                                    <span class="completion-date">完成时间：2024-01-20</span>
+                                    <span class="study-duration">学习时长：8小时</span>
+                                    <span class="score">综合得分：92分</span>
+                                </div>
+                            </div>
+                            <button class="download-report">
+                                <span class="material-icons">download</span>
+                                下载报告
+                            </button>
+                        </div>
+
+                        <!-- 学习进度概览 -->
+                        <div class="report-section">
+                            <h4>课程完成情况</h4>
+                            <div class="progress-overview">
+                                <div class="progress-item">
+                                    <div class="progress-info">
+                                        <span>课程完成率</span>
+                                        <span>100%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-info">
+                                        <span>测验通过率</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 90%"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-item">
+                                    <div class="progress-info">
+                                        <span>实操完成率</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="progress-bar">
+                                        <div class="progress" style="width: 85%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 知识掌握情况 -->
+                        <div class="report-section">
+                            <h4>知识点掌握</h4>
+                            <div class="knowledge-grid">
+                                <div class="knowledge-item excellent">
+                                    <div class="knowledge-header">
+                                        <span class="material-icons">water_drop</span>
+                                        <span class="mastery">优秀</span>
+                                    </div>
+                                    <h5>水培基础概念</h5>
+                                    <p>对水培系统类型、原理有深入理解</p>
+                                </div>
+                                <div class="knowledge-item good">
+                                    <div class="knowledge-header">
+                                        <span class="material-icons">science</span>
+                                        <span class="mastery">良好</span>
+                                    </div>
+                                    <h5>营养液配置</h5>
+                                    <p>掌握基本配比方法和调整技巧</p>
+                                </div>
+                                <div class="knowledge-item good">
+                                    <div class="knowledge-header">
+                                        <span class="material-icons">eco</span>
+                                        <span class="mastery">良好</span>
+                                    </div>
+                                    <h5>植物生长周期</h5>
+                                    <p>了解不同阶段的生长特点</p>
+                                </div>
+                                <div class="knowledge-item excellent">
+                                    <div class="knowledge-header">
+                                        <span class="material-icons">monitoring</span>
+                                        <span class="mastery">优秀</span>
+                                    </div>
+                                    <h5>环境控制</h5>
+                                    <p>熟练掌握环境参数调控方法</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 学习建议 -->
+                        <div class="report-section">
+                            <h4>学习建议</h4>
+                            <div class="suggestions">
+                                <div class="suggestion-item">
+                                    <span class="material-icons">tips_and_updates</span>
+                                    <div class="suggestion-content">
+                                        <h5>建议深入学习</h5>
+                                        <p>可以进一步学习高级营养液配方和调配技巧，提升种植效果。</p>
+                                    </div>
+                                </div>
+                                <div class="suggestion-item">
+                                    <span class="material-icons">recommend</span>
+                                    <div class="suggestion-content">
+                                        <h5>推荐后续课程</h5>
+                                        <p>《水培植物病虫害防治》、《水培蔬菜种植进阶》</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI - 生成海报 -->
+                <div class="content-section" id="generate-poster">
+                    <h2>生成海报</h2>
+                    <div class="poster-generator">
+                        <!-- 切换按钮 -->
+                        <div class="poster-tabs">
+                            <button class="tab-btn active" data-tab="generate">生成海报</button>
+                            <button class="tab-btn" data-tab="history">历史记录</button>
+                        </div>
+
+                        <!-- 生成海报内容 -->
+                        <div class="poster-tab-content active" id="generate-content">
+                            <!-- 原有的海报生成内容 -->
+                            <div class="poster-controls">
+                                <div class="prompt-input">
+                                    <label for="poster-prompt">提示词</label>
+                                    <textarea id="poster-prompt" placeholder="请输入您想要生成的海报描述，例如：一张展示智慧农业的海报，突出科技感..."></textarea>
+                                </div>
+                                <div class="reference-upload">
+                                    <label>参考图片</label>
+                                    <div class="upload-btn">
+                                        <span class="material-icons">add_photo_alternate</span>
+                                        <span>上传参考图</span>
+                                        <input type="file" accept="image/*" id="reference-image">
+                                    </div>
+                                </div>
+                                <button class="generate-btn">
+                                    <span class="material-icons">auto_awesome</span>
+                                    生成海报
+                                </button>
+                            </div>
+                            <div class="poster-display">
+                                <!-- 初始状态 -->
+                                <div class="display-placeholder"  style="display: none;">
+                                    <span class="material-icons">image</span>
+                                    <p>生成的海报将在这里显示</p>
+                                </div>
+                                <!-- 生成的海报展示区 -->
+                                <div class="generated-posters">
+                                    <div class="poster-grid">
+                                        <div class="poster-item">
+                                            <img src="./images/posts/p1.jpeg" alt="海报方案1">
+                                            <div class="poster-overlay">
+                                                <button class="download-btn">
+                                                    <span class="material-icons">download</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="poster-item">
+                                            <img src="./images/posts/p2.jpeg" alt="海报方案2">
+                                            <div class="poster-overlay">
+                                                <button class="download-btn">
+                                                    <span class="material-icons">download</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="poster-item">
+                                            <img src="./images/posts/p3.jpeg" alt="海报方案3">
+                                            <div class="poster-overlay">
+                                                <button class="download-btn">
+                                                    <span class="material-icons">download</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="poster-item">
+                                            <img src="./images/posts/p4.jpeg" alt="海报方案4">
+                                            <div class="poster-overlay">
+                                                <button class="download-btn">
+                                                    <span class="material-icons">download</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 历史记录内容 -->
+                        <div class="poster-tab-content" id="history-content">
+                            <div class="poster-history">
+                                <!-- 历史记录筛选 -->
+                                <div class="history-filters">
+                                    <div class="filter-group">
+                                        <label>时间范围</label>
+                                        <select>
+                                            <option>最近一周</option>
+                                            <option>最近一月</option>
+                                            <option>最近三月</option>
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>排序方式</label>
+                                        <select>
+                                            <option>最新优先</option>
+                                            <option>最早优先</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- 历史记录列表 -->
+                                <div class="history-list">
+                                    <!-- 历史记录项 -->
+                                    <div class="history-item">
+                                        <div class="history-info">
+                                            <div class="history-date">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>2024-01-20 15:30</span>
+                                            </div>
+                                            <div class="history-prompt">
+                                                <h4>提示词</h4>
+                                                <p>一张展示智慧农业的海报，突出科技感和现代化种植理念...</p>
+                                            </div>
+                                        </div>
+                                        <div class="history-posters">
+                                            <div class="poster-thumbnail">
+                                                <img src="./images/posts/p1.jpeg" alt="历史海报1">
+                                                <div class="thumbnail-overlay">
+                                                    <button class="download-btn">
+                                                        <span class="material-icons">download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="poster-thumbnail">
+                                                <img src="./images/posts/p2.jpeg" alt="历史海报2">
+                                                <div class="thumbnail-overlay">
+                                                    <button class="download-btn">
+                                                        <span class="material-icons">download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="history-item">
+                                        <div class="history-info">
+                                            <div class="history-date">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>2024-01-18 10:15</span>
+                                            </div>
+                                            <div class="history-prompt">
+                                                <h4>提示词</h4>
+                                                <p>设计一张水培种植技术推广海报，包含实际种植场景...</p>
+                                            </div>
+                                        </div>
+                                        <div class="history-posters">
+                                            <div class="poster-thumbnail">
+                                                <img src="./images/posts/p3.jpeg" alt="历史海报3">
+                                                <div class="thumbnail-overlay">
+                                                    <button class="download-btn">
+                                                        <span class="material-icons">download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="poster-thumbnail">
+                                                <img src="./images/posts/p4.jpeg" alt="历史海报4">
+                                                <div class="thumbnail-overlay">
+                                                    <button class="download-btn">
+                                                        <span class="material-icons">download</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI - AI问答 -->
+                <div class="content-section" id="ai-qa">
+                    <h2>AI问答</h2>
+                    <div class="qa-container">
+                        <!-- 切换按钮 -->
+                        <div class="qa-tabs">
+                            <button class="tab-btn active" data-tab="new">新建问答</button>
+                            <button class="tab-btn" data-tab="history">历史记录</button>
+                        </div>
+
+                        <!-- 新建问答内容 -->
+                        <div class="qa-tab-content active" id="new-content">
+                            <!-- 对话历史区域 -->
+                            <div class="message-list">
+                                <!-- 系统欢迎消息 -->
+                                <div class="message system">
+                                    <div class="message-content">
+                                        <p>你好！我是你的智慧种植助手。我可以帮你解答种植相关的问题，提供专业的建议。</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 输入区域 -->
+                            <div class="input-area">
+                                <div class="input-wrapper">
+                                    <textarea 
+                                        placeholder="输入您的问题..." 
+                                        rows="1"
+                                        data-autosize="true"
+                                    ></textarea>
+                                    <button class="send-btn">
+                                        <span class="material-icons">send</span>
+                                    </button>
+                                </div>
+                                <div class="input-info">
+                                    <span class="material-icons info-icon">info</span>
+                                    <span class="info-text">AI助手会根据已有知识为您解答问题，建议结合实际情况参考</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 历史记录内容 -->
+                        <div class="qa-tab-content" id="history-content">
+                            <div class="qa-history">
+                                <!-- 历史记录筛选 -->
+                                <div class="history-filters">
+                                    <div class="filter-group">
+                                        <label>时间范围</label>
+                                        <select>
+                                            <option>最近一周</option>
+                                            <option>最近一月</option>
+                                            <option>最近三月</option>
+                                            <option>全部</option>
+                                        </select>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>问题类型</label>
+                                        <select>
+                                            <option>全部类型</option>
+                                            <option>种植技术</option>
+                                            <option>病虫害防治</option>
+                                            <option>环境控制</option>
+                                            <option>营养调配</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- 历史问答列表 -->
+                                <div class="qa-history-list">
+                                    <!-- 水培基础知识问答 -->
+                                    <div class="qa-history-item">
+                                        <div class="qa-history-header">
+                                            <div class="qa-history-date">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>2024-01-22 14:30</span>
+                                            </div>
+                                            <div class="qa-history-type">种植技术</div>
+                                        </div>
+                                        <div class="qa-history-content">
+                                            <div class="message-list">
+                                                <div class="message user">
+                                                    <div class="avatar">
+                                                        <img src="images/avatar.jpeg" alt="用户头像">
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>水培和土培相比有什么优势？</p>
+                                                    </div>
+                                                </div>
+                                                <div class="message assistant">
+                                                    <div class="avatar">
+                                                        <span class="material-icons">smart_toy</span>
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>水培种植相比传统土培有以下几个主要优势：</p>
+                                                        <ol>
+                                                            <li>生长速度快：营养直接被植物吸收，生长周期缩短20-30%</li>
+                                                            <li>产量更高：在相同空间内可以获得更高产量</li>
+                                                            <li>节约用水：循环系统可节约70-90%的水资源</li>
+                                                            <li>环境可控：营养、温度、湿度等更易精确控制</li>
+                                                            <li>无土壤病害：避免了土传病害的困扰</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                                <div class="message user">
+                                                    <div class="avatar">
+                                                        <img src="images/avatar.jpeg" alt="用户头像">
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>适合新手种植的蔬菜有哪些？</p>
+                                                    </div>
+                                                </div>
+                                                <div class="message assistant">
+                                                    <div class="avatar">
+                                                        <span class="material-icons">smart_toy</span>
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>以下这些蔬菜比较适合水培新手：</p>
+                                                        <ul>
+                                                            <li>生菜：生长周期短，管理简单，约30-40天可收获</li>
+                                                            <li>韭菜：生命力强，可多次收割，维护成本低</li>
+                                                            <li>空心菜：耐高温，生长快，病虫害少</li>
+                                                            <li>草莓：观赏价值高，果实可食用，适合阳台种植</li>
+                                                        </ul>
+                                                        <p>建议从生菜开始尝试，积累经验后再尝试其他品种。</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 继续对话输入框 -->
+                                            <div class="continue-chat">
+                                                <div class="input-wrapper">
+                                                    <textarea placeholder="继续对话..." rows="1" data-autosize="true"></textarea>
+                                                    <button class="send-btn">
+                                                        <span class="material-icons">send</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 营养液配置问答 -->
+                                    <div class="qa-history-item">
+                                        <div class="qa-history-header">
+                                            <div class="qa-history-date">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>2024-01-21 16:45</span>
+                                            </div>
+                                            <div class="qa-history-type">营养调配</div>
+                                        </div>
+                                        <div class="qa-history-content">
+                                            <div class="message-list">
+                                                <div class="message user">
+                                                    <div class="avatar">
+                                                        <img src="images/avatar.jpeg" alt="用户头像">
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>如何判断营养液是否需要更换？</p>
+                                                    </div>
+                                                </div>
+                                                <div class="message assistant">
+                                                    <div class="avatar">
+                                                        <span class="material-icons">smart_toy</span>
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>判断营养液是否需要更换可以从以下几个方面观察：</p>
+                                                        <ol>
+                                                            <li>EC值变化：
+                                                                <ul>
+                                                                    <li>如果EC值持续升高，说明营养液浓度过高</li>
+                                                                    <li>如果EC值显著降低，表明养分被大量吸收</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>pH值异常：
+                                                                <ul>
+                                                                    <li>pH值超出5.5-6.5范围</li>
+                                                                    <li>调节后仍难以维持在合适范围</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>营养液颜色：
+                                                                <ul>
+                                                                    <li>变浑浊或出现漂浮物</li>
+                                                                    <li>有异味或藻类滋生</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ol>
+                                                        <p>一般建议：</p>
+                                                        <ul>
+                                                            <li>小型系统：7-10天更换一次</li>
+                                                            <li>大型系统：2-3周更换一次</li>
+                                                            <li>高温季节：适当缩短更换周期</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 继续对话输入框 -->
+                                            <div class="continue-chat">
+                                                <div class="input-wrapper">
+                                                    <textarea placeholder="继续对话..." rows="1" data-autosize="true"></textarea>
+                                                    <button class="send-btn">
+                                                        <span class="material-icons">send</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 环境控制问答 -->
+                                    <div class="qa-history-item">
+                                        <div class="qa-history-header">
+                                            <div class="qa-history-date">
+                                                <span class="material-icons">calendar_today</span>
+                                                <span>2024-01-20 09:15</span>
+                                            </div>
+                                            <div class="qa-history-type">环境控制</div>
+                                        </div>
+                                        <div class="qa-history-content">
+                                            <div class="message-list">
+                                                <div class="message user">
+                                                    <div class="avatar">
+                                                        <img src="images/avatar.jpeg" alt="用户头像">
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>水培蔬菜的最佳生长温度是多少？</p>
+                                                    </div>
+                                                </div>
+                                                <div class="message assistant">
+                                                    <div class="avatar">
+                                                        <span class="material-icons">smart_toy</span>
+                                                    </div>
+                                                    <div class="message-content">
+                                                        <p>不同蔬菜的最佳生长温度有所不同：</p>
+                                                        <ul>
+                                                            <li>叶菜类：
+                                                                <ul>
+                                                                    <li>生菜：18-25℃</li>
+                                                                    <li>菠菜：15-20℃</li>
+                                                                    <li>芝麻菜：16-22℃</li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>果菜类：
+                                                                <ul>
+                                                                    <li>番茄：22-28℃</li>
+                                                                    <li>黄瓜：25-30℃</li>
+                                                                    <li>辣椒：20-25℃</li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                        <p>注意事项：</p>
+                                                        <ul>
+                                                            <li>昼夜温差控制在5-10℃为宜</li>
+                                                            <li>避免温度剧烈波动</li>
+                                                            <li>高温时注意通风降温</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- 继续对话输入框 -->
+                                            <div class="continue-chat">
+                                                <div class="input-wrapper">
+                                                    <textarea placeholder="继续对话..." rows="1" data-autosize="true"></textarea>
+                                                    <button class="send-btn">
+                                                        <span class="material-icons">send</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 成就 - 技能勋章 -->
+                <div class="content-section" id="skill-badges">
+                    <h2>技能勋章</h2>
+                    <div class="badge-list">
+                        <!-- 种植达人勋章 -->
+                        <div class="badge-card">
+                            <div class="badge-image">
+                                <img src="./images/rewards/level1.png" alt="种植达人勋章">
+                                <div class="badge-glow"></div>
+                            </div>
+                            <div class="badge-info">
+                                <h3>种植达人</h3>
+                                <p class="badge-desc">完成10次成功种植</p>
+                                <span class="badge-date">获得于：2024-01-15</span>
+                            </div>
+                        </div>
+
+                        <!-- 营养专家勋章 -->
+                        <div class="badge-card">
+                            <div class="badge-image">
+                                <img src="./images/rewards/level1.png" alt="营养专家勋章">
+                                <div class="badge-glow"></div>
+                            </div>
+                            <div class="badge-info">
+                                <h3>营养专家</h3>
+                                <p class="badge-desc">精准调配营养液30次</p>
+                                <span class="badge-date">获得于：2024-01-18</span>
+                            </div>
+                        </div>
+
+                        <!-- 环境掌控者勋章 -->
+                        <div class="badge-card">
+                            <div class="badge-image">
+                                <img src="./images/rewards/level1.png" alt="环境掌控者勋章">
+                                <div class="badge-glow"></div>
+                            </div>
+                            <div class="badge-info">
+                                <h3>环境掌控者</h3>
+                                <p class="badge-desc">环境参数调控优秀20次</p>
+                                <span class="badge-date">获得于：2024-01-20</span>
+                            </div>
+                        </div>
+
+                        <!-- 病虫害防治勋章 -->
+                        <div class="badge-card locked">
+                            <div class="badge-image">
+                                <img src="./images/rewards/level1.png" alt="病虫害防治勋章">
+                                <div class="badge-lock">
+                                    <span class="material-icons">lock</span>
+                                </div>
+                            </div>
+                            <div class="badge-info">
+                                <h3>病虫害防治</h3>
+                                <p class="badge-desc">成功处理病虫害15次</p>
+                                <span class="badge-progress">进度：10/15</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 成就 - 结业证书 -->
+                <div class="content-section" id="certificates">
+                    <h2>结业证书</h2>
+                    <div class="certificate-list">
+                        <!-- 水培基础证书 -->
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="./images/certis/cer1.png" alt="水培基础证书">
+                                <div class="certificate-actions">
+                                    <button class="view-btn">
+                                        <span class="material-icons">visibility</span>
+                                        查看
+                                    </button>
+                                    <button class="download-btn">
+                                        <span class="material-icons">download</span>
+                                        下载
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="certificate-info">
+                                <h3>水培种植基础证书</h3>
+                                <p class="certificate-desc">完成水培种植基础课程的全部内容</p>
+                                <span class="certificate-date">获得于：2024-01-15</span>
+                            </div>
+                        </div>
+
+                        <!-- 营养调配证书 -->
+                        <div class="certificate-card">
+                            <div class="certificate-image">
+                                <img src="./images/certis/cer1.png" alt="营养调配证书">
+                                <div class="certificate-actions">
+                                    <button class="view-btn">
+                                        <span class="material-icons">visibility</span>
+                                        查看
+                                    </button>
+                                    <button class="download-btn">
+                                        <span class="material-icons">download</span>
+                                        下载
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="certificate-info">
+                                <h3>营养液调配专项证书</h3>
+                                <p class="certificate-desc">完成营养液配置与调整课程</p>
+                                <span class="certificate-date">获得于：2024-01-20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module">
+        // 使用全局变量 window.siteConfig
+        import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
+        import { createFooter } from './components/layout/footer.js';
+        
+        // 初始化页面组件
+        document.getElementById('header').innerHTML = createHeader();
+        document.getElementById('footer').innerHTML = createFooter();
+        
+        // 设置页面标题
+        updateNavTitle('个人中心');
+        
+        // 初始化导航栏
+        initializeNavbar();
+    </script>
+    <script src="js/profile.js"></script>
+</body>
+</html> 
+

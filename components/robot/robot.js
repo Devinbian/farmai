@@ -9,8 +9,8 @@ export function createRobot() {
                 <button class="robot-tool-btn" title="联系客服">
                     <span class="material-icons">chat</span>
                 </button>
-                <button class="robot-tool-btn" title="查看文档">
-                    <span class="material-icons">description</span>
+                <button class="robot-tool-btn" title="Ai工具箱">
+                    <span class="material-icons">smart_toy</span>
                 </button>
                 <button class="robot-tool-btn" title="返回顶部">
                     <span class="material-icons">arrow_upward</span>
@@ -61,7 +61,7 @@ export function initializeRobot() {
   function updateRobotState(newState, isTemporary = false) {
     if (currentState === newState || isInteracting) return;
 
-    robotWrapper.setAttribute('data-state', newState);
+    robotWrapper.setAttribute("data-state", newState);
     currentState = newState;
 
     if (isTemporary) {
@@ -102,16 +102,16 @@ export function initializeRobot() {
 
     const moveDistance = Math.sqrt(
       Math.pow(currentX - initialMouseX, 2) +
-      Math.pow(currentY - initialMouseY, 2),
+        Math.pow(currentY - initialMouseY, 2),
     );
 
     if (!isDragging && moveDistance > 5) {
       isDragging = true;
       isInteracting = true;
       updateRobotState("surprised");
-      
-      robotContainer.style.transition = 'none';
-      robotContainer.classList.remove('hidden');
+
+      robotContainer.style.transition = "none";
+      robotContainer.classList.remove("hidden");
     }
 
     if (isDragging) {
@@ -128,12 +128,12 @@ export function initializeRobot() {
       newX = Math.min(Math.max(0, newX), maxX);
       newY = Math.min(Math.max(0, newY), maxY);
 
-      robotContainer.style.position = 'fixed';
+      robotContainer.style.position = "fixed";
       robotContainer.style.left = `${newX}px`;
-      robotContainer.style.right = 'auto';
+      robotContainer.style.right = "auto";
       robotContainer.style.top = `${newY}px`;
-      robotContainer.style.bottom = 'auto';
-      robotContainer.style.transform = 'none';
+      robotContainer.style.bottom = "auto";
+      robotContainer.style.transform = "none";
     }
   }
 
@@ -141,21 +141,21 @@ export function initializeRobot() {
   function getDeviceConfig() {
     if (window.innerWidth <= 480) {
       return {
-        right: '16px',
-        bottom: '16px',
-        transform: 'translateX(calc(100% + 16px))'
+        right: "16px",
+        bottom: "16px",
+        transform: "translateX(calc(100% + 16px))",
       };
     } else if (window.innerWidth <= 768) {
       return {
-        right: '20px',
-        bottom: '20px',
-        transform: 'translateX(calc(100% + 20px))'
+        right: "20px",
+        bottom: "20px",
+        transform: "translateX(calc(100% + 20px))",
       };
     } else {
       return {
-        right: '40px',
-        bottom: '40px',
-        transform: 'translateX(calc(100% + 40px))'
+        right: "40px",
+        bottom: "40px",
+        transform: "translateX(calc(100% + 40px))",
       };
     }
   }
@@ -163,25 +163,25 @@ export function initializeRobot() {
   // 修改 toggleRobot 函数
   function toggleRobot() {
     if (isDragging || isAnimating) return;
-    
+
     isAnimating = true;
-    const isHidden = robotContainer.classList.contains('hidden');
+    const isHidden = robotContainer.classList.contains("hidden");
     const config = getDeviceConfig();
-    
+
     if (isHidden) {
       // 显示动画
-      robotContainer.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      robotContainer.style.position = 'fixed';
-      robotContainer.style.left = '';
-      robotContainer.style.top = '';
+      robotContainer.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
+      robotContainer.style.position = "fixed";
+      robotContainer.style.left = "";
+      robotContainer.style.top = "";
       robotContainer.style.right = config.right;
       robotContainer.style.bottom = config.bottom;
       robotContainer.style.transform = config.transform;
-      
+
       requestAnimationFrame(() => {
-        robotContainer.classList.remove('hidden');
+        robotContainer.classList.remove("hidden");
         requestAnimationFrame(() => {
-          robotContainer.style.transform = 'none';
+          robotContainer.style.transform = "none";
           updateRobotState("happy", true);
           setTimeout(() => {
             isAnimating = false;
@@ -190,14 +190,14 @@ export function initializeRobot() {
       });
     } else {
       // 隐藏动画
-      robotContainer.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      robotContainer.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
       robotContainer.style.transform = config.transform;
-      
+
       setTimeout(() => {
-        robotContainer.classList.add('hidden');
-        robotContainer.style.position = 'fixed';
-        robotContainer.style.left = '';
-        robotContainer.style.top = '';
+        robotContainer.classList.add("hidden");
+        robotContainer.style.position = "fixed";
+        robotContainer.style.left = "";
+        robotContainer.style.top = "";
         robotContainer.style.right = config.right;
         robotContainer.style.bottom = config.bottom;
         updateRobotState("surprised", true);
@@ -211,7 +211,7 @@ export function initializeRobot() {
     if (isDragging) {
       isDragging = false;
       isInteracting = false;
-      robotContainer.style.transition = 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+      robotContainer.style.transition = "all 0.5s cubic-bezier(0.4, 0, 0.2, 1)";
       updateRobotState("happy", true);
     }
     initialMouseX = null;
@@ -227,7 +227,8 @@ export function initializeRobot() {
 
   // 工具按钮点击事件
   robotTools.forEach((btn) => {
-    if (!btn.classList.contains("hide-button")) {  // 跳过隐藏按钮
+    if (!btn.classList.contains("hide-button")) {
+      // 跳过隐藏按钮
       btn.addEventListener("mouseenter", (e) => {
         e.stopPropagation();
         isInteracting = true;
@@ -256,7 +257,7 @@ export function initializeRobot() {
               updateRobotState("happy", true);
             }, 1000);
             break;
-          case "查看文档":
+          case "Ai工具箱":
             updateRobotState("thinking");
             window.open("https://docs.vegesense.com/", "_blank");
             setTimeout(() => {
@@ -289,8 +290,8 @@ export function initializeRobot() {
   document.addEventListener("touchend", handleDragEnd);
 
   // 添加窗口大小变化监听
-  window.addEventListener('resize', () => {
-    if (!isDragging && !robotContainer.classList.contains('hidden')) {
+  window.addEventListener("resize", () => {
+    if (!isDragging && !robotContainer.classList.contains("hidden")) {
       const config = getDeviceConfig();
       robotContainer.style.right = config.right;
       robotContainer.style.bottom = config.bottom;

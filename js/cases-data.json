@@ -9,7 +9,8 @@
             "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
         "filename": "暑期班2024/17c7b6e01ad4d3ee2ae7ac900242894.jpg",
@@ -19,7 +20,8 @@
             "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
         "filename": "暑期班2024/83efe2ac92080193d2e8a49d63585d1.jpg",
@@ -29,7 +31,8 @@
             "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
         "filename": "暑期班2024/67ccc2f888a76d75bf221c25b4caa69.jpg",
@@ -39,7 +42,8 @@
             "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
         "filename": "暑期班2024/3af323e549661ddfcf2dc725724896b.jpg",
@@ -49,17 +53,19 @@
             "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
-        "filename": "暑期班2024/72a901a4355986deb707a9b5a4dc945.jpg",
+        "filename": "暑期班2024/summer.mp4",
         "subCategories": [
           {
-            "name": "趣味活动",
-            "tags": ["活动", "趣味"]
+            "name": "课程实践",
+            "tags": ["实践", "课程"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["实践", "课程"]
       },
       {
         "filename": "暑期班2024/401869996cc760b562465863fa99053.jpg",
@@ -69,7 +75,8 @@
             "tags": ["活动", "趣味"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["活动", "趣味"]
       },
       {
         "filename": "暑期班2024/c2f14385dd99a2ab6591c4e102d5552.jpg",
@@ -79,7 +86,19 @@
             "tags": ["活动", "趣味"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["活动", "趣味"]
+      },
+      {
+        "filename": "暑期班2024/72a901a4355986deb707a9b5a4dc945.jpg",
+        "subCategories": [
+          {
+            "name": "趣味活动",
+            "tags": ["活动", "趣味"]
+          }
+        ],
+        "mainCategory": "暑托班",
+        "tags": ["活动", "趣味"]
       },
       {
         "filename": "暑期班2024/346f609b19bbc880cb239dc5f31fd5e.jpg",
@@ -89,7 +108,8 @@
             "tags": ["活动", "趣味"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["活动", "趣味"]
       },
       {
         "filename": "暑期班2024/1af9cfa148c658f4d639a37ec899166.jpg",
@@ -99,7 +119,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/50362ae19d610b228fa9afdebc6c105.jpg",
@@ -109,7 +130,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/44fb0551e2c318d70c5431a48de1e0c.jpg",
@@ -119,17 +141,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
-      },
-      {
-        "filename": "暑期班2024/81e1fe59de8f440ff74e3c209baf8dc.jpg",
-        "subCategories": [
-          {
-            "name": "成果展示",
-            "tags": ["成果", "展示", "优秀作品"]
-          }
-        ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/31ccf71a46be4b8fe3e530b7b5fb123.jpg",
@@ -139,7 +152,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/b63c55dd85df55b0f49ca0a82d7ef90.jpg",
@@ -149,7 +163,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/4d3bb44e2c594601850bcaec65e9b5b.jpg",
@@ -159,7 +174,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/d33a32b861272f89dd4a715a45a3a61.jpg",
@@ -169,7 +185,8 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       },
       {
         "filename": "暑期班2024/f7014773b7dfb2d5d7537a4c9099a96.jpg",
@@ -179,7 +196,19 @@
             "tags": ["成果", "展示", "优秀作品"]
           }
         ],
-        "mainCategory": "暑托班"
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
+      },
+      {
+        "filename": "暑期班2024/81e1fe59de8f440ff74e3c209baf8dc.jpg",
+        "subCategories": [
+          {
+            "name": "成果展示",
+            "tags": ["成果", "展示", "优秀作品"]
+          }
+        ],
+        "mainCategory": "暑托班",
+        "tags": ["成果", "展示", "优秀作品"]
       }
     ],
     "config": {
@@ -210,7 +239,8 @@
             "tags": ["劳动课", "新课标"]
           }
         ],
-        "mainCategory": "常规课程"
+        "mainCategory": "常规课程",
+        "tags": ["劳动课", "新课标"]
       },
       {
         "filename": "苏州星海中学/641.webp",
@@ -220,7 +250,8 @@
             "tags": ["劳动课", "新课标"]
           }
         ],
-        "mainCategory": "常规课程"
+        "mainCategory": "常规课程",
+        "tags": ["劳动课", "新课标"]
       },
       {
         "filename": "宁夏中宁县第五小学/640.webp",
@@ -230,7 +261,8 @@
             "tags": ["劳动课", "新课标"]
           }
         ],
-        "mainCategory": "常规课程"
+        "mainCategory": "常规课程",
+        "tags": ["劳动课", "新课标"]
       },
       {
         "filename": "宁夏中宁县第五小学/641.webp",
@@ -240,18 +272,23 @@
             "tags": ["劳动课", "新课标"]
           }
         ],
-        "mainCategory": "常规课程"
+        "mainCategory": "常规课程",
+        "tags": ["劳动课", "新课标"]
       }
     ],
     "config": {
       "categories": {
         "苏州星海中学": {
           "order": 1,
-          "tags": ["优质学校"]
+          "tags": ["劳动课", "新课标"]
         },
         "宁夏中宁县第五小学": {
           "order": 2,
-          "tags": ["优质学校"]
+          "tags": ["劳动课", "新课标"]
+        },
+        "大连理工大学": {
+          "order": 3,
+          "tags": ["劳动课", "新课标"]
         }
       },
       "default_category": "全部"
@@ -264,240 +301,264 @@
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/5af6954edbae30ab7c931c853d5f3c97.mp4",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115018.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115019.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115020.jpg",
         "subCategories": [
           {
-            "name": "创新项目",
-            "tags": ["实验研究", "创新项目"]
+            "name": "科技农业",
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_202410281150201.jpg",
         "subCategories": [
           {
-            "name": "创新项目",
-            "tags": ["实验研究", "创新项目"]
+            "name": "科技农业",
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115021.jpg",
         "subCategories": [
           {
-            "name": "实验研究",
-            "tags": ["科技农业", "实验研究"]
+            "name": "科技农业",
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115022.jpg",
         "subCategories": [
           {
-            "name": "实验研究",
-            "tags": ["科技农业", "实验研究"]
+            "name": "科技农业",
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_202410281150221.jpg",
         "subCategories": [
           {
-            "name": "实验研究",
-            "tags": ["科技农业", "实验研究"]
+            "name": "科技农业",
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115023.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_202410281150231.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115024.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028114821.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115026.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_202410281150261.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115027.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115028.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_202410281150281.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024东亚海洋博览会/微信图片_20241028115029.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024数交会/WeChat_20241129111546.mp4",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024数交会/WeChat_20241129111558.mp4",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024数交会/WeChat_20241129111605.mp4",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024数交会/微信图片_20241129111526.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       },
       {
         "filename": "2024数交会/微信图片_20241129111614.jpg",
         "subCategories": [
           {
             "name": "科技农业",
-            "tags": ["科技农业", "实验研究"]
+            "tags": ["科技农业"]
           }
         ],
-        "mainCategory": "研学班"
+        "mainCategory": "研学班",
+        "tags": ["科技农业"]
       }
     ],
     "config": {
@@ -528,22 +589,23 @@
             "tags": ["竞赛培训"]
           }
         ],
-        "mainCategory": "竞赛服务"
+        "mainCategory": "竞赛服务",
+        "tags": ["竞赛培训"]
       }
     ],
     "config": {
       "categories": {
         "竞赛培训": {
           "order": 1,
-          "tags": []
+          "tags": ["竞赛培训"]
         },
         "模拟比赛": {
           "order": 2,
-          "tags": []
+          "tags": ["模拟比赛"]
         },
         "获奖指导": {
           "order": 3,
-          "tags": []
+          "tags": ["获奖指导"]
         }
       },
       "default_category": "全部"
@@ -559,7 +621,8 @@
             "tags": ["趣味种植"]
           }
         ],
-        "mainCategory": "幼儿场景"
+        "mainCategory": "幼儿场景",
+        "tags": ["趣味种植"]
       },
       {
         "filename": "山海焗/8523e928d500c6697a835d2fed1bb08.jpg",
@@ -569,27 +632,30 @@
             "tags": ["趣味种植"]
           }
         ],
-        "mainCategory": "幼儿场景"
+        "mainCategory": "幼儿场景",
+        "tags": ["趣味种植"]
       },
       {
         "filename": "山海焗/9d3958d314c6d7285b758dd20726257.jpg",
         "subCategories": [
           {
-            "name": "自然探索",
-            "tags": ["自然探索"]
+            "name": "趣味种植",
+            "tags": ["趣味种植"]
           }
         ],
-        "mainCategory": "幼儿场景"
+        "mainCategory": "幼儿场景",
+        "tags": ["趣味种植"]
       },
       {
         "filename": "山海焗/cc0e8d4ddd18ad7333021484c80d7aa.jpg",
         "subCategories": [
           {
-            "name": "智能互动",
-            "tags": ["智能互动"]
+            "name": "趣味种植",
+            "tags": ["趣味种植"]
           }
         ],
-        "mainCategory": "幼儿场景"
+        "mainCategory": "幼儿场景",
+        "tags": ["趣味种植"]
       }
     ],
     "config": {
@@ -620,27 +686,30 @@
             "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "VegeSense智慧微农场-6月21日_副本.mp4",
         "subCategories": [
           {
-            "name": "实践项目",
-            "tags": ["实践项目"]
+            "name": "作业辅导",
+            "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "奶油生菜生长_副本.mp4",
         "subCategories": [
           {
-            "name": "技术社区",
-            "tags": ["技术社区"]
+            "name": "作业辅导",
+            "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "如何育苗（水培）生菜_副本.mp4",
@@ -650,27 +719,30 @@
             "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "草莓成功挂果收获_副本.MOV",
         "subCategories": [
           {
-            "name": "实践项目",
-            "tags": ["实践项目"]
+            "name": "作业辅导",
+            "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "蘑菇2_副本.MOV",
         "subCategories": [
           {
-            "name": "技术社区",
-            "tags": ["技术社区"]
+            "name": "作业辅导",
+            "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       },
       {
         "filename": "辣椒_副本.MOV",
@@ -680,7 +752,8 @@
             "tags": ["作业辅导"]
           }
         ],
-        "mainCategory": "课后服务"
+        "mainCategory": "课后服务",
+        "tags": ["作业辅导"]
       }
     ],
     "config": {
@@ -709,9 +782,14 @@
           {
             "name": "实践项目",
             "tags": ["实践项目"]
+          },
+          {
+            "name": "科学研究",
+            "tags": ["科学研究"]
           }
         ],
-        "mainCategory": "科研服务"
+        "mainCategory": "科研服务",
+        "tags": ["实践项目", "科学研究"]
       },
       {
         "filename": "大连理工大学/641.webp",
@@ -719,19 +797,29 @@
           {
             "name": "实践项目",
             "tags": ["实践项目"]
-          }
-        ],
-        "mainCategory": "科研服务"
-      },
-      {
-        "filename": "大连理工大学/642.webp",
-        "subCategories": [
+          },
           {
             "name": "科学研究",
             "tags": ["科学研究"]
           }
         ],
-        "mainCategory": "科研服务"
+        "mainCategory": "科研服务",
+        "tags": ["实践项目", "科学研究"]
+      },
+      {
+        "filename": "大连理工大学/642.webp",
+        "subCategories": [
+          {
+            "name": "实践项目",
+            "tags": ["实践项目"]
+          },
+          {
+            "name": "科学研究",
+            "tags": ["科学研究"]
+          }
+        ],
+        "mainCategory": "科研服务",
+        "tags": ["实践项目", "科学研究"]
       }
     ],
     "config": {

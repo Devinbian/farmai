@@ -79,34 +79,53 @@ async function scanCasesDirectory() {
           const filePath = path.dirname(relativePath);
 
           let subCategories = [];
+          // 遍历所有分类配置
           for (const [
             category,
             { pattern, path: categoryPath, tags },
           ] of Object.entries(config.categories)) {
             const regex = new RegExp(pattern);
-            if (
-              regex.test(fileName) &&
-              (!categoryPath || filePath.includes(categoryPath))
-            ) {
+            // 统一处理图片和视频的分类逻辑
+            if (categoryPath) {
+              if (filePath.includes(categoryPath)) {
+                subCategories.push({
+                  name: category,
+                  tags: tags || [category],
+                });
+              }
+            } else if (regex.test(fileName)) {
               subCategories.push({
                 name: category,
-                tags: tags || [],
+                tags: tags || [category],
               });
             }
           }
 
-          // 如果没有匹配的类别，添加默认类别
+          // 如果没有匹配到任何分类，使用主分类的第一个子分类作为默认分类
           if (subCategories.length === 0) {
+            const defaultCategory = Object.keys(config.categories)[0];
             subCategories.push({
-              name: "未分类",
-              tags: [],
+              name: defaultCategory,
+              tags: config.categories[defaultCategory].tags || [
+                defaultCategory,
+              ],
             });
           }
+
+          // 移除重复标签
+          const uniqueTags = [
+            ...new Set(
+              subCategories.reduce((allTags, cat) => {
+                return [...allTags, ...(cat.tags || [])];
+              }, []),
+            ),
+          ];
 
           return {
             filename: relativePath.replace(/\\/g, "/"),
             subCategories: subCategories,
             mainCategory: mainCategory,
+            tags: uniqueTags, // 使用去重后的标签
           };
         });
 
@@ -128,7 +147,7 @@ async function scanCasesDirectory() {
         Object.entries(config.categories).forEach(([key, value]) => {
           categories[key] = {
             order: value.order,
-            tags: value.tags || [],
+            tags: value.tags || [key], // 如果没有指定标签，使用分类名称
           };
         });
 
