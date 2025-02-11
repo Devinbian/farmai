@@ -152,3 +152,24 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 });
+
+// 切换报告详情显示
+function toggleReportDetail(button) {
+  const reportCard = button.closest(".report-card");
+  const reportDetail = reportCard.querySelector(".report-detail");
+  const isExpanded = reportDetail.classList.contains("active");
+
+  // 更新按钮状态
+  button.classList.toggle("active");
+
+  if (isExpanded) {
+    reportDetail.classList.remove("active");
+  } else {
+    reportDetail.classList.add("active");
+
+    // 滚动到展开的卡片
+    setTimeout(() => {
+      reportCard.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 300);
+  }
+}

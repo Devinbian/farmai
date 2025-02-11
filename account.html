@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>账号设置 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/account.css">
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <!-- 添加移动端菜单按钮和遮罩层 -->
+        <button class="mobile-menu-btn">
+            <span class="material-icons">menu</span>
+        </button>
+        <div class="sidebar-overlay"></div>
+
+        <div class="account-container">
+            <!-- 左侧边栏 -->
+            <div class="account-sidebar">
+                <div class="sidebar-header">
+                    <div class="user-avatar">
+                        <img src="images/avatar.jpeg" alt="用户头像">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name">李明</h3>
+                        <p class="user-role">普通会员</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <!-- 账号信息 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">account_circle</span>
+                                账号信息
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item active" data-section="basic-info">
+                                    基本信息
+                                </li>
+                                <li class="nav-item" data-section="security-settings">
+                                    安全设置
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 充值管理 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">account_balance_wallet</span>
+                                充值管理
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="recharge">
+                                    充值中心
+                                </li>
+                                <li class="nav-item" data-section="transaction-history">
+                                    交易记录
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 积分管理 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">stars</span>
+                                积分管理
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="points-overview">
+                                    积分概览
+                                </li>
+                                <li class="nav-item" data-section="points-history">
+                                    积分明细
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 系统消息 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">notifications</span>
+                                系统消息
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="message-center">
+                                    消息中心
+                                </li>
+                                <li class="nav-item" data-section="notification-settings">
+                                    通知设置
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="account-content">
+                <!-- 基本信息 -->
+                <div class="content-section active" id="basic-info">
+                    <h2>基本信息</h2>
+                    <div class="info-container">
+                        <div class="avatar-section">
+                            <div class="avatar-wrapper">
+                                <img src="images/avatar.jpeg" alt="用户头像">
+                                <div class="avatar-overlay">
+                                    <span class="material-icons">photo_camera</span>
+                                    <span>更换头像</span>
+                                </div>
+                            </div>
+                        </div>
+                        <form class="info-form">
+                            <div class="form-group">
+                                <label>用户名</label>
+                                <input type="text" value="李明" disabled>
+                            </div>
+                            <div class="form-group">
+                                <label>昵称</label>
+                                <input type="text" value="智慧农夫">
+                            </div>
+                            <div class="form-group">
+                                <label>手机号</label>
+                                <div class="input-with-button">
+                                    <input type="tel" value="138****5678" disabled>
+                                    <button type="button" class="modify-btn">修改</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>邮箱</label>
+                                <div class="input-with-button">
+                                    <input type="email" value="user@example.com">
+                                    <button type="button" class="verify-btn">验证邮箱</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>个人简介</label>
+                                <textarea rows="4" placeholder="介绍一下你自己吧...">热爱智慧农业，致力于水培种植技术的研究和实践。</textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="save-btn">保存修改</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 安全设置 -->
+                <div class="content-section" id="security-settings">
+                    <h2>安全设置</h2>
+                    <div class="security-list">
+                        <div class="security-item">
+                            <div class="security-info">
+                                <span class="material-icons">lock</span>
+                                <div class="security-text">
+                                    <h3>登录密码</h3>
+                                    <p>定期更换密码可以保护账号安全</p>
+                                </div>
+                            </div>
+                            <button class="modify-btn">修改</button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <span class="material-icons">phone_android</span>
+                                <div class="security-text">
+                                    <h3>手机验证</h3>
+                                    <p>已绑定：138****5678</p>
+                                </div>
+                            </div>
+                            <button class="modify-btn">修改</button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <span class="material-icons">verified_user</span>
+                                <div class="security-text">
+                                    <h3>实名认证</h3>
+                                    <p>未认证</p>
+                                </div>
+                            </div>
+                            <button class="verify-btn">去认证</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 充值中心 -->
+                <div class="content-section" id="recharge">
+                    <h2>充值中心</h2>
+                    <div class="recharge-container">
+                        <div class="balance-card">
+                            <div class="balance-info">
+                                <h3>账户余额</h3>
+                                <div class="balance-amount">
+                                    <span class="currency">¥</span>
+                                    <span class="amount">258.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recharge-options">
+                            <h3>选择充值金额</h3>
+                            <div class="amount-grid">
+                                <div class="amount-item">
+                                    <span class="amount">50元</span>
+                                </div>
+                                <div class="amount-item">
+                                    <span class="amount">100元</span>
+                                </div>
+                                <div class="amount-item active">
+                                    <span class="amount">200元</span>
+                                    <span class="bonus">送20元</span>
+                                </div>
+                                <div class="amount-item">
+                                    <span class="amount">500元</span>
+                                    <span class="bonus">送60元</span>
+                                </div>
+                                <div class="amount-item custom">
+                                    <input type="number" placeholder="其他金额">
+                                </div>
+                            </div>
+                            <div class="payment-methods">
+                                <h3>选择支付方式</h3>
+                                <div class="method-list">
+                                    <div class="method-item active">
+                                        <span class="material-icons payment-icon alipay">payments</span>
+                                        <span>支付宝</span>
+                                    </div>
+                                    <div class="method-item">
+                                        <span class="material-icons payment-icon wechat">qr_code</span>
+                                        <span>微信支付</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="recharge-btn">立即充值</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 交易记录 -->
+                <div class="content-section" id="transaction-history">
+                    <h2>交易记录</h2>
+                    <div class="transaction-container">
+                        <div class="filter-bar">
+                            <div class="filter-group">
+                                <label>交易类型</label>
+                                <select>
+                                    <option value="all">全部</option>
+                                    <option value="recharge">充值</option>
+                                    <option value="consume">消费</option>
+                                    <option value="refund">退款</option>
+                                </select>
+                            </div>
+                            <div class="filter-group">
+                                <label>时间范围</label>
+                                <select>
+                                    <option value="7">最近7天</option>
+                                    <option value="30">最近30天</option>
+                                    <option value="90">最近3个月</option>
+                                    <option value="custom">自定义</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="transaction-list">
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type recharge">充值</div>
+                                    <div class="transaction-detail">
+                                        <h4>账户充值</h4>
+                                        <span class="transaction-time">2024-01-20 15:30</span>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount positive">+200.00</div>
+                            </div>
+                            <div class="transaction-item">
+                                <div class="transaction-info">
+                                    <div class="transaction-type consume">消费</div>
+                                    <div class="transaction-detail">
+                                        <h4>购买课程《水培种植基础》</h4>
+                                        <span class="transaction-time">2024-01-18 10:25</span>
+                                    </div>
+                                </div>
+                                <div class="transaction-amount negative">-99.00</div>
+                            </div>
+                        </div>
+                        <div class="pagination">
+                            <button class="prev-btn" disabled>
+                                <span class="material-icons">chevron_left</span>
+                            </button>
+                            <span class="page-number">1</span>
+                            <button class="next-btn">
+                                <span class="material-icons">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 积分概览 -->
+                <div class="content-section" id="points-overview">
+                    <h2>积分概览</h2>
+                    <div class="points-container">
+                        <!-- 积分卡片 -->
+                        <div class="points-overview-grid">
+                            <div class="points-main-card">
+                                <div class="card-header">
+                                    <span class="material-icons">stars</span>
+                                    <h3>我的积分</h3>
+                                </div>
+                                <div class="points-number">2,580</div>
+                                <div class="points-trend">
+                                    <div class="trend-item">
+                                        <span class="trend-label">本月获得</span>
+                                        <span class="trend-value positive">+320</span>
+                                    </div>
+                                    <div class="trend-divider"></div>
+                                    <div class="trend-item">
+                                        <span class="trend-label">本月使用</span>
+                                        <span class="trend-value negative">-150</span>
+                                    </div>
+                                </div>
+                                <div class="points-actions">
+                                    <button class="action-btn primary">
+                                        <span class="material-icons">redeem</span>
+                                        积分兑换
+                                    </button>
+                                    <button class="action-btn secondary">
+                                        <span class="material-icons">help_outline</span>
+                                        积分规则
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 任务卡片 -->
+                            <div class="tasks-card">
+                                <div class="card-header">
+                                    <h3>每日任务</h3>
+                                    <span class="task-progress">3/5 已完成</span>
+                                </div>
+                                <div class="task-list">
+                                    <div class="task-item">
+                                        <div class="task-info">
+                                            <div class="task-icon completed">
+                                                <span class="material-icons">task_alt</span>
+                                            </div>
+                                            <div class="task-content">
+                                                <h4>每日签到</h4>
+                                                <p>连续签到7天可获得额外奖励</p>
+                                            </div>
+                                        </div>
+                                        <div class="task-reward">
+                                            <span class="points">+5</span>
+                                            <button class="task-btn completed">已完成</button>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-info">
+                                            <div class="task-icon">
+                                                <span class="material-icons">play_circle</span>
+                                            </div>
+                                            <div class="task-content">
+                                                <h4>观看课程</h4>
+                                                <p>完整观看一节课程视频</p>
+                                            </div>
+                                        </div>
+                                        <div class="task-reward">
+                                            <span class="points">+10</span>
+                                            <button class="task-btn">去完成</button>
+                                        </div>
+                                    </div>
+                                    <div class="task-item">
+                                        <div class="task-info">
+                                            <div class="task-icon">
+                                                <span class="material-icons">share</span>
+                                            </div>
+                                            <div class="task-content">
+                                                <h4>分享课程</h4>
+                                                <p>分享课程到社交媒体</p>
+                                            </div>
+                                        </div>
+                                        <div class="task-reward">
+                                            <span class="points">+15</span>
+                                            <button class="task-btn">去完成</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 积分动态 -->
+                        <div class="points-activity">
+                            <div class="section-header">
+                                <h3>积分动态</h3>
+                                <button class="view-all-btn">
+                                    查看全部
+                                    <span class="material-icons">arrow_forward</span>
+                                </button>
+                            </div>
+                            <div class="activity-list">
+                                <div class="activity-item">
+                                    <div class="activity-icon earn">
+                                        <span class="material-icons">add_circle</span>
+                                    </div>
+                                    <div class="activity-content">
+                                        <div class="activity-main">
+                                            <h4>完成每日签到</h4>
+                                            <span class="points-change positive">+5</span>
+                                        </div>
+                                        <div class="activity-meta">
+                                            <span class="time">今天 09:30</span>
+                                            <span class="points-balance">积分余额：2,580</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 更多积分动态项... -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 积分明细 -->
+                <div class="content-section" id="points-history">
+                    <h2>积分明细</h2>
+                    <div class="points-history-container">
+                        <!-- 筛选和统计卡片 -->
+                        <div class="history-overview-grid">
+                            <!-- 统计卡片 -->
+                            <div class="history-stats-card">
+                                <div class="stats-header">
+                                    <h3>本月统计</h3>
+                                    <span class="material-icons">date_range</span>
+                                </div>
+                                <div class="stats-grid">
+                                    <div class="stats-item">
+                                        <span class="stats-label">获得积分</span>
+                                        <span class="stats-value positive">+580</span>
+                                    </div>
+                                    <div class="stats-item">
+                                        <span class="stats-label">使用积分</span>
+                                        <span class="stats-value negative">-220</span>
+                                    </div>
+                                    <div class="stats-item">
+                                        <span class="stats-label">净增长</span>
+                                        <span class="stats-value">360</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 筛选卡片 -->
+                            <div class="filter-card">
+                                <div class="filter-header">
+                                    <h3>筛选条件</h3>
+                                    <button class="clear-btn">
+                                        <span class="material-icons">refresh</span>
+                                        重置
+                                    </button>
+                                </div>
+                                <div class="filter-content">
+                                    <div class="filter-group">
+                                        <label>积分类型</label>
+                                        <div class="filter-options">
+                                            <button class="filter-btn active">全部</button>
+                                            <button class="filter-btn">获得</button>
+                                            <button class="filter-btn">使用</button>
+                                        </div>
+                                    </div>
+                                    <div class="filter-group">
+                                        <label>时间范围</label>
+                                        <div class="filter-options">
+                                            <button class="filter-btn active">最近7天</button>
+                                            <button class="filter-btn">最近30天</button>
+                                            <button class="filter-btn">最近3个月</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 积分记录列表 -->
+                        <div class="history-list-card">
+                            <div class="list-header">
+                                <h3>积分记录</h3>
+                                <div class="list-actions">
+                                    <button class="export-btn">
+                                        <span class="material-icons">download</span>
+                                        导出记录
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="history-list">
+                                <div class="history-item">
+                                    <div class="history-icon earn">
+                                        <span class="material-icons">add_circle</span>
+                                    </div>
+                                    <div class="history-content">
+                                        <div class="history-main">
+                                            <div class="history-info">
+                                                <h4>完成每日签到</h4>
+                                                <p>连续签到第3天</p>
+                                            </div>
+                                            <span class="points-change positive">+5</span>
+                                        </div>
+                                        <div class="history-meta">
+                                            <span class="time">2024-01-20 09:00</span>
+                                            <span class="points-balance">积分余额：2,580</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="history-item">
+                                    <div class="history-icon spend">
+                                        <span class="material-icons">remove_circle</span>
+                                    </div>
+                                    <div class="history-content">
+                                        <div class="history-main">
+                                            <div class="history-info">
+                                                <h4>兑换课程优惠券</h4>
+                                                <p>课程《水培种植基础》优惠券</p>
+                                            </div>
+                                            <span class="points-change negative">-100</span>
+                                        </div>
+                                        <div class="history-meta">
+                                            <span class="time">2024-01-19 15:30</span>
+                                            <span class="points-balance">积分余额：2,575</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 分页控制 -->
+                            <div class="pagination-wrapper">
+                                <div class="page-info">
+                                    <span>共 24 条记录</span>
+                                    <div class="page-size">
+                                        <span>每页显示：</span>
+                                        <select>
+                                            <option value="10">10条</option>
+                                            <option value="20">20条</option>
+                                            <option value="50">50条</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="pagination">
+                                    <button class="page-btn" disabled>
+                                        <span class="material-icons">first_page</span>
+                                    </button>
+                                    <button class="page-btn" disabled>
+                                        <span class="material-icons">chevron_left</span>
+                                    </button>
+                                    <div class="page-numbers">
+                                        <button class="page-btn active">1</button>
+                                        <button class="page-btn">2</button>
+                                        <button class="page-btn">3</button>
+                                    </div>
+                                    <button class="page-btn">
+                                        <span class="material-icons">chevron_right</span>
+                                    </button>
+                                    <button class="page-btn">
+                                        <span class="material-icons">last_page</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 消息中心 -->
+                <div class="content-section" id="message-center">
+                    <h2>消息中心</h2>
+                    <div class="message-container">
+                        <div class="message-tabs">
+                            <button class="tab-btn active" data-tab="all">全部消息</button>
+                            <button class="tab-btn" data-tab="system">系统通知</button>
+                            <button class="tab-btn" data-tab="activity">活动消息</button>
+                        </div>
+                        <div class="message-list">
+                            <div class="message-item unread">
+                                <div class="message-icon system">
+                                    <span class="material-icons">notifications</span>
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <h4>系统维护通知</h4>
+                                        <span class="message-time">2024-01-20 10:00</span>
+                                    </div>
+                                    <p>系统将于今晚22:00-24:00进行例行维护，期间部分功能可能无法使用。</p>
+                                </div>
+                                <div class="message-actions">
+                                    <button class="mark-read-btn">
+                                        <span class="material-icons">done</span>
+                                    </button>
+                                    <button class="delete-btn">
+                                        <span class="material-icons">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="message-item">
+                                <div class="message-icon activity">
+                                    <span class="material-icons">campaign</span>
+                                </div>
+                                <div class="message-content">
+                                    <div class="message-header">
+                                        <h4>新年优惠活动</h4>
+                                        <span class="message-time">2024-01-18 15:30</span>
+                                    </div>
+                                    <p>新年特惠活动开始啦！所有课程8折起，更有超值礼包等你来领！</p>
+                                </div>
+                                <div class="message-actions">
+                                    <button class="delete-btn">
+                                        <span class="material-icons">delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination">
+                            <button class="prev-btn" disabled>
+                                <span class="material-icons">chevron_left</span>
+                            </button>
+                            <span class="page-number">1</span>
+                            <button class="next-btn">
+                                <span class="material-icons">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 通知设置 -->
+                <div class="content-section" id="notification-settings">
+                    <h2>通知设置</h2>
+                    <div class="notification-container">
+                        <div class="notification-group">
+                            <h3>系统通知</h3>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>系统维护通知</h4>
+                                    <p>接收系统维护、更新等重要通知</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>安全提醒</h4>
+                                    <p>接收账号安全相关的提醒</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="notification-group">
+                            <h3>课程通知</h3>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>课程更新提醒</h4>
+                                    <p>已购课程的更新提醒</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>学习提醒</h4>
+                                    <p>每日学习目标提醒</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="notification-group">
+                            <h3>营销通知</h3>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>优惠活动</h4>
+                                    <p>接收优惠活动和促销信息</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="notification-item">
+                                <div class="notification-info">
+                                    <h4>新课上线</h4>
+                                    <p>接收新课程上线通知</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module">
+        import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
+        import { createFooter } from './components/layout/footer.js';
+        
+        document.getElementById('header').innerHTML = createHeader();
+        document.getElementById('footer').innerHTML = createFooter();
+        
+        updateNavTitle('账号设置');
+        
+        initializeNavbar();
+    </script>
+    <script src="js/account.js"></script>
+</body>
+</html> 
