@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>个人中心 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <!-- 书架展示区 -->
+        <div class="bookshelf-scene">
+            <div class="bookshelf-unit">
+                <!-- 第一个书架 -->
+                <div class="shelf">
+                    <button class="shelf-nav prev">
+                        <span class="material-icons">chevron_left</span>
+                    </button>
+                    <div class="shelf-layer">
+                        <!-- 动态生成的内容将在这里 -->
+                    </div>
+                    <button class="shelf-nav next">
+                        <span class="material-icons">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module">
+        // 使用全局变量 window.siteConfig
+        import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
+        import { createFooter } from './components/layout/footer.js';
+        
+        // 初始化页面组件
+        document.getElementById('header').innerHTML = createHeader();
+        document.getElementById('footer').innerHTML = createFooter();
+        
+        // 设置页面标题
+        updateNavTitle('文件展示');
+        
+        // 初始化导航栏
+        initializeNavbar();
+
+        // 初始化Swiper
+        const swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            coverflowEffect: {
+                rotate: 50,
+                stretch: 0,
+                depth: 100,
+                modifier: 1,
+                slideShadows: true,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+
+        // 为每个书架添加滚动控制
+        document.querySelectorAll('.shelf').forEach(shelf => {
+            const layer = shelf.querySelector('.shelf-layer');
+            const prevBtn = shelf.querySelector('.shelf-nav.prev');
+            const nextBtn = shelf.querySelector('.shelf-nav.next');
+            
+            prevBtn.addEventListener('click', () => {
+                layer.scrollBy({
+                    left: -300,
+                    behavior: 'smooth'
+                });
+            });
+            
+            nextBtn.addEventListener('click', () => {
+                layer.scrollBy({
+                    left: 300,
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+    <script src="js/showcase.js"></script>
+</body>
+</html> 
+

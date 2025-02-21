@@ -34,7 +34,7 @@ button {
     top: 0;
     left: 0;
     right: 0;
-    background: transparent;
+    background: #ffffff;
     z-index: 9000;
     transition: all 0.3s ease;
 }
@@ -490,7 +490,6 @@ button {
 .footer {
     background: #f8f9fa;
     padding: 60px 0 40px;
-    margin-top: 100px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
@@ -1599,4 +1598,462 @@ button {
         right: -8px;
         min-width: 130px;
     }
+}
+
+/* 文件展示样式 */
+.showcase-container {
+    max-width: 1200px;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+.file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.file-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.file-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.preview-container {
+    position: relative;
+    height: 240px;
+    background: #f8f9fa;
+    overflow: hidden;
+}
+
+.pdf-canvas {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.preview-overlay .material-icons {
+    font-size: 48px;
+    margin-bottom: 8px;
+}
+
+.file-card:hover .preview-overlay {
+    opacity: 1;
+}
+
+.file-info {
+    padding: 20px;
+}
+
+.info-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.info-header h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin: 0;
+    flex: 1;
+    padding-right: 16px;
+}
+
+.file-badge {
+    padding: 4px 8px;
+    background: rgba(0, 200, 83, 0.1);
+    color: #00C853;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.file-info p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.file-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.file-meta time {
+    font-size: 13px;
+    color: #888;
+}
+
+.file-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.action-btn.preview {
+    background: #00C853;
+    color: white;
+}
+
+.action-btn.preview:hover {
+    background: #00B84D;
+}
+
+.action-btn.download {
+    background: #f5f5f5;
+    color: #666;
+    padding: 8px;
+}
+
+.action-btn.download:hover {
+    background: #e0e0e0;
+    color: #333;
+}
+
+.action-btn .material-icons {
+    font-size: 20px;
+}
+
+/* 响应式适配 */
+@media (max-width: 768px) {
+    .showcase-container {
+        margin: 60px auto;
+        padding: 15px;
+    }
+
+    .file-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .preview-container {
+        height: 200px;
+    }
+
+    .file-info {
+        padding: 15px;
+    }
+
+    .info-header h3 {
+        font-size: 16px;
+    }
+
+    .file-info p {
+        font-size: 13px;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        font-size: 13px;
+    }
+}
+
+/* 书架场景 */
+.bookshelf-scene {
+    min-height: calc(100vh - 240px);
+    background: linear-gradient(135deg, 
+        rgba(0, 200, 83, 0.03) 0%,
+        rgba(0, 230, 118, 0.02) 100%
+    );
+    padding: 0;
+    overflow: hidden;
+    margin-top: 50px;
+}
+
+/* 书架单元 */
+.bookshelf-unit {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+/* 书架层 */
+.shelf {
+    width: 100%;
+    height: 85vh;
+    position: relative;
+    background: linear-gradient(to bottom, 
+        rgba(0, 200, 83, 0.15),
+        rgba(0, 230, 118, 0.1)
+    );
+    padding: 40px 60px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 200, 83, 0.1);
+    overflow: hidden;
+    margin: 40px 0;
+}
+
+/* 书本层容器 */
+.shelf-layer {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    grid-template-rows: repeat(3, 1fr);
+    gap: 25px;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+/* 书本包装器 */
+.book-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease;
+    max-width: 160px;
+    justify-self: center;
+}
+
+/* 导航按钮样式 */
+.shelf-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.shelf-nav:hover {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.shelf-nav.prev {
+    left: 10px;
+}
+
+.shelf-nav.next {
+    right: 10px;
+}
+
+/* 移除书架标题相关样式 */
+.shelf-title {
+    display: none;
+}
+
+/* 移除全局控制区 */
+.shelf-controls {
+    display: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .shelf {
+        padding: 30px 40px;
+        height: auto;
+        min-height: 85vh;
+    }
+
+    .shelf-layer {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-rows: repeat(5, 1fr);
+        gap: 20px;
+    }
+
+    .book-wrapper {
+        max-width: 140px;
+    }
+}
+
+/* 小屏幕进一步优化 */
+@media (max-width: 480px) {
+    .shelf {
+        padding: 20px 35px;
+    }
+
+    .shelf-layer {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-rows: repeat(7, 1fr);
+        gap: 15px;
+    }
+
+    .book-wrapper {
+        max-width: 120px;
+    }
+}
+
+/* 书本样式 */
+.book {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    aspect-ratio: 0.85;
+    max-height: 100%;
+}
+
+/* 书本悬停效果 */
+.book:hover {
+    transform: translateY(-10px) rotateX(10deg);
+}
+
+/* 书脊样式 */
+.book-spine {
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    left: 0;
+    background: linear-gradient(to right, #00C853, #00E676);
+    color: white;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 3px 0 0 3px;
+    letter-spacing: 1px;
+}
+
+/* 书本正面 */
+.book-front {
+    position: absolute;
+    width: calc(100% - 20px);
+    height: 100%;
+    right: 0;
+    background: white;
+    padding: 10px 10px 6px;
+    border-radius: 0 3px 3px 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 封面内容布局 */
+.cover-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+    gap: 8px;
+}
+
+
+.cover-title h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a1a1a;
+    margin-bottom: 4px;
+    line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cover-title p {
+    font-size: 11px;
+    color: #666;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 封面图片样式 */
+.cover-image {
+    flex: 1;
+    margin: 4px 0 8px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 4px;
+}
+
+.cover-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 悬停效果 */
+.cover-image::after {
+    content: '点击查看';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+
+.book:hover .cover-image::after {
+    opacity: 1;
+}
+
+.cover-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: #888;
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
 } 
