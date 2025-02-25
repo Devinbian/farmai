@@ -491,6 +491,7 @@ button {
     background: #f8f9fa;
     padding: 60px 0 40px;
     border-top: 1px solid rgba(0, 0, 0, 0.05);
+    margin-top: 40px;
 }
 
 .footer-container {
@@ -1315,6 +1316,7 @@ button {
 
 .service-section {
     margin-top: 60px;
+    margin-bottom: 120px;
 }
 
 .service-section .sub-card {
