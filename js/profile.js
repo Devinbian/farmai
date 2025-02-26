@@ -1,3 +1,158 @@
+// 服务器图片相关功能
+function showServerImages(btn) {
+  const modal = document.getElementById("serverImagesModal");
+  const previewGrid = btn
+    .closest(".record-item-content")
+    .querySelector(".media-preview-grid");
+  modal.dataset.targetGrid = previewGrid.id || `grid_${Date.now()}`;
+  if (!previewGrid.id) previewGrid.id = modal.dataset.targetGrid;
+  // 加载服务器图片
+  loadServerImages();
+  modal.style.display = "flex";
+}
+
+function closeServerImagesModal() {
+  const modal = document.getElementById("serverImagesModal");
+  modal.style.display = "none";
+  // 清除选中状态
+  const selectedImages = modal.querySelectorAll(".server-image-item.selected");
+  selectedImages.forEach((item) => item.classList.remove("selected"));
+}
+
+async function loadServerImages() {
+  const grid = document.querySelector(".server-images-grid");
+  grid.innerHTML = ""; // 清空现有内容
+  try {
+    // 创建时间轴容器
+    const timelineContainer = document.createElement("div");
+    timelineContainer.className = "server-images-timeline";
+    // 创建时间轴
+    const timeline = document.createElement("div");
+    timeline.className = "timeline";
+    timelineContainer.appendChild(timeline);
+    grid.appendChild(timelineContainer);
+    // 模拟按日期分组的图片数据
+    const imageGroups = {
+      "2024-02-15": [
+        "./images/plants/black-oyster-mushrooms.jpg",
+        "./images/plants/butter-lettuce.jpg",
+        "./images/plants/chives.jpg",
+        "./images/plants/black-oyster-mushrooms.jpg",
+        "./images/plants/butter-lettuce.jpg",
+        "./images/plants/chives.jpg",
+      ],
+      "2024-02-16": [
+        "./images/plants/black-oyster-mushrooms.jpg",
+        "./images/plants/butter-lettuce.jpg",
+        "./images/plants/chives.jpg",
+        "./images/plants/black-oyster-mushrooms.jpg",
+        "./images/plants/butter-lettuce.jpg",
+        "./images/plants/chives.jpg",
+      ],
+    };
+    // 遍历日期组并创建图片网格
+    Object.entries(imageGroups).forEach(([date, images]) => {
+      const dateGroup = document.createElement("div");
+      dateGroup.className = "timeline-date-group";
+      const dateLabel = document.createElement("div");
+      dateLabel.className = "timeline-date";
+      dateLabel.textContent = date;
+      dateLabel.onclick = () => {
+        dateGroup.classList.toggle("collapsed");
+      };
+      dateGroup.appendChild(dateLabel);
+      // 创建图片网格容器
+      const imagesGrid = document.createElement("div");
+      imagesGrid.className = "timeline-images-grid";
+      // 添加图片
+      images.forEach((imageSrc) => {
+        const imageItem = document.createElement("div");
+        imageItem.className = "server-image-item";
+        imageItem.onclick = () => toggleImageSelection(imageItem);
+        const img = document.createElement("img");
+        img.src = imageSrc;
+        img.alt = imageSrc
+          .split("/")
+          .pop()
+          .replace(".jpg", "")
+          .replace(/-/g, " ");
+        const imageInfo = document.createElement("div");
+        imageInfo.className = "image-info";
+        imageInfo.innerHTML = `<span class="upload-date">${date}</span>`;
+        imageItem.appendChild(img);
+        imageItem.appendChild(imageInfo);
+        imagesGrid.appendChild(imageItem);
+      });
+      dateGroup.appendChild(imagesGrid);
+      timeline.appendChild(dateGroup);
+    });
+  } catch (error) {
+    console.error("加载图片失败:", error);
+    grid.innerHTML = '<div class="error-message">加载图片失败，请重试</div>';
+  }
+}
+
+function toggleImageSelection(item) {
+  item.classList.toggle("selected");
+}
+
+function filterServerImages(keyword) {
+  const items = document.querySelectorAll(".server-image-item");
+  items.forEach((item) => {
+    const imageName = item.querySelector("img").alt.toLowerCase();
+    item.style.display = imageName.includes(keyword.toLowerCase())
+      ? ""
+      : "none";
+  });
+}
+
+function addSelectedImages() {
+  const modal = document.getElementById("serverImagesModal");
+  const targetGrid = document.getElementById(modal.dataset.targetGrid);
+  const selectedImages = document.querySelectorAll(
+    ".server-image-item.selected img",
+  );
+  selectedImages.forEach((img) => {
+    const mediaCard = document.createElement("div");
+    mediaCard.className = "media-card";
+    mediaCard.style.opacity = "0";
+    mediaCard.style.transform = "translateY(20px)";
+
+    // 创建加载指示器
+    const loadingIndicator = document.createElement("div");
+    loadingIndicator.className = "loading-indicator";
+    loadingIndicator.innerHTML =
+      '<span class="material-icons rotating">refresh</span>';
+    mediaCard.appendChild(loadingIndicator);
+    // 创建新的图片元素
+    const newImg = document.createElement("img");
+    newImg.style.opacity = "0";
+    newImg.src = img.src;
+    newImg.alt = img.alt;
+    // 图片加载完成后显示
+    newImg.onload = function () {
+      loadingIndicator.style.display = "none";
+      newImg.style.opacity = "1";
+      // 添加平滑过渡效果
+      setTimeout(() => {
+        mediaCard.style.opacity = "1";
+        mediaCard.style.transform = "translateY(0)";
+      }, 50);
+    };
+    mediaCard.appendChild(newImg);
+    mediaCard.innerHTML += `
+      <div class="media-overlay">
+        <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+          <span class="material-icons">delete</span>
+        </button>
+      </div>
+    `;
+
+    targetGrid.appendChild(mediaCard);
+  });
+  closeServerImagesModal();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
   const navGroups = document.querySelectorAll(".nav-group");
   const navItems = document.querySelectorAll(".nav-item");

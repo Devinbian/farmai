@@ -2,17 +2,20 @@
   "暑托班": {
     "categories": {
       "课程实践": {
-        "pattern": "^(3af323e|17c7b6e|608c87d|83efe2a|67ccc2f)",
+        "pattern": "^(3af323e|17c7b6e|608c87d|83efe2a|67ccc2f)|practice_.*|实践_.*",
+        "path": "summer/practice",
         "order": 1,
         "tags": ["实践", "课程"]
       },
       "趣味活动": {
-        "pattern": "^(346f609|c2f1438|4018699|72a901a)",
+        "pattern": "^(346f609|c2f1438|4018699|72a901a)|activity_.*|活动_.*",
+        "path": "summer/activity",
         "order": 2,
         "tags": ["活动", "趣味"]
       },
       "成果展示": {
-        "pattern": "^(d33a32b|f701477|44fb055|b63c55d|50362ae|81e1fe5|4d3bb44|31ccf71|1af9cfa)",
+        "pattern": "^(d33a32b|f701477|44fb055|b63c55d|50362ae|81e1fe5|4d3bb44|31ccf71|1af9cfa)|showcase_.*|展示_.*",
+        "path": "summer/showcase",
         "order": 3,
         "tags": ["成果", "展示", "优秀作品"]
       }
@@ -21,19 +24,19 @@
   "常规课程": {
     "categories": {
       "苏州星海中学": {
-        "pattern": "^(640|641)\\.webp$",
+        "pattern": "^(640|641)\\.webp$|xinghai_.*|星海_.*",
         "path": "苏州星海中学",
         "order": 1,
         "tags": ["劳动课", "新课标"]
       },
       "宁夏中宁县第五小学": {
-        "pattern": "^(640|641)\\.webp$",
+        "pattern": "^(640|641)\\.webp$|zhongning_.*|中宁_.*",
         "path": "宁夏中宁县第五小学",
         "order": 2,
         "tags": ["劳动课", "新课标"]
       },
       "大连理工大学": {
-        "pattern": "^(640|641|642)\\.webp$",
+        "pattern": "^(640|641|642)\\.webp$|dlut_.*|大工_.*",
         "path": "大连理工大学",
         "order": 3,
         "tags": ["劳动课", "新课标"]
@@ -43,78 +46,104 @@
   "研学班": {
     "categories": {
       "科技农业": {
-        "pattern": "科技农业",
-        "order": 1
+        "pattern": "tech_agri_.*|科技农业_.*",
+        "path": "research/tech",
+        "order": 1,
+        "tags": ["科技农业", "研学"]
       },
       "实验研究": {
-        "pattern": "实验研究",
-        "order": 2
+        "pattern": "experiment_.*|实验_.*",
+        "path": "research/lab",
+        "order": 2,
+        "tags": ["实验", "研究"]
       },
       "创新项目": {
-        "pattern": "创新项目",
-        "order": 3
+        "pattern": "innovation_.*|创新_.*",
+        "path": "research/innovation",
+        "order": 3,
+        "tags": ["创新", "项目"]
       }
     }
   },
   "竞赛服务": {
     "categories": {
       "竞赛培训": {
-        "pattern": "竞赛培训",
-        "order": 1
+        "pattern": "competition_training_.*|竞赛培训_.*",
+        "path": "competition/training",
+        "order": 1,
+        "tags": ["竞赛", "培训"]
       },
       "模拟比赛": {
-        "pattern": "模拟比赛",
-        "order": 2
+        "pattern": "mock_contest_.*|模拟比赛_.*",
+        "path": "competition/mock",
+        "order": 2,
+        "tags": ["模拟", "比赛"]
       },
       "获奖指导": {
-        "pattern": "获奖指导",
-        "order": 3
+        "pattern": "award_guide_.*|获奖指导_.*",
+        "path": "competition/guide",
+        "order": 3,
+        "tags": ["获奖", "指导"]
       }
     }
   },
   "幼儿场景": {
     "categories": {
       "趣味种植": {
-        "pattern": "趣味种植",
-        "order": 1
+        "pattern": "fun_planting_.*|趣味种植_.*",
+        "path": "children/planting",
+        "order": 1,
+        "tags": ["趣味", "种植", "幼儿"]
       },
       "自然探索": {
-        "pattern": "自然探索",
-        "order": 2
+        "pattern": "nature_explore_.*|自然探索_.*",
+        "path": "children/explore",
+        "order": 2,
+        "tags": ["自然", "探索", "幼儿"]
       },
       "智能互动": {
-        "pattern": "智能互动",
-        "order": 3
+        "pattern": "smart_interact_.*|智能互动_.*",
+        "path": "children/interact",
+        "order": 3,
+        "tags": ["智能", "互动", "幼儿"]
       }
     }
   },
   "课后服务": {
     "categories": {
       "作业辅导": {
-        "pattern": "作业辅导",
-        "order": 1
+        "pattern": "homework_help_.*|作业辅导_.*",
+        "path": "service/homework",
+        "order": 1,
+        "tags": ["作业", "辅导"]
       },
       "实践项目": {
-        "pattern": "实践项目",
-        "order": 2
+        "pattern": "practice_project_.*|实践项目_.*",
+        "path": "service/practice",
+        "order": 2,
+        "tags": ["实践", "项目"]
       },
       "技术社区": {
-        "pattern": "技术社区",
-        "order": 3
+        "pattern": "tech_community_.*|技术社区_.*",
+        "path": "service/community",
+        "order": 3,
+        "tags": ["技术", "社区"]
       }
     }
   },
   "科研服务": {
     "categories": {
       "实践项目": {
-        "pattern": "实践项目",
-        "path": "大连理工大学",
-        "order": 1
+        "pattern": "research_practice_.*|科研实践_.*",
+        "path": "research/practice",
+        "order": 1,
+        "tags": ["科研", "实践"]
       },
       "科学研究": {
-        "pattern": "科学研究",
-        "path": "大连理工大学",
-        "order": 2
+        "pattern": "scientific_research_.*|科学研究_.*",
+        "path": "research/science",
+        "order": 2,
+        "tags": ["科学", "研究"]
       }
     }
   }

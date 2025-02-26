@@ -134,11 +134,11 @@
 
 .verify-btn {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .save-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
     padding: 12px 24px;
     border: none;
@@ -176,7 +176,7 @@
 
 .security-info .material-icons {
     font-size: 24px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .security-text h3 {
@@ -192,7 +192,7 @@
 
 /* 充值中心样式 */
 .balance-card {
-    background: linear-gradient(135deg, #1976d2, #1565c0);
+    background: linear-gradient(135deg, #00C853, #1565c0);
     color: white;
     padding: 24px;
     border-radius: 12px;
@@ -227,14 +227,14 @@
 }
 
 .amount-item.active {
-    border-color: #1976d2;
+    border-color: #00C853;
     background: #e3f2fd;
 }
 
 .amount-item .bonus {
     display: block;
     font-size: 12px;
-    color: #1976d2;
+    color: #00C853;
     margin-top: 4px;
 }
 
@@ -265,7 +265,7 @@
 }
 
 .method-item.active {
-    border-color: #1976d2;
+    border-color: #00C853;
     background: #e3f2fd;
 }
 
@@ -289,7 +289,7 @@
 .recharge-btn {
     width: 100%;
     padding: 12px;
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -519,7 +519,7 @@
 }
 
 input:checked + .slider {
-    background-color: #1976d2;
+    background-color: #00C853;
 }
 
 input:checked + .slider:before {
@@ -733,11 +733,11 @@ input:checked + .slider:before {
 }
 
 .nav-item:hover {
-    color: #1976d2;
+    color: #00C853;
 }
 
 .nav-item.active {
-    color: #1976d2;
+    color: #00C853;
     font-weight: 500;
 }
 
@@ -875,7 +875,7 @@ input:checked + .slider:before {
     padding: 8px 16px;
     border: none;
     background: none;
-    color: #1976d2;
+    color: #00C853;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.3s ease;
@@ -908,7 +908,7 @@ input:checked + .slider:before {
 
 /* 主积分卡片 */
 .points-main-card {
-    background: linear-gradient(135deg, #1976d2, #2196f3);
+    background: linear-gradient(135deg, #00C853, #2196f3);
     color: white;
     padding: 24px;
     border-radius: 16px;
@@ -990,7 +990,7 @@ input:checked + .slider:before {
 
 .action-btn.primary {
     background: white;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .action-btn.secondary {
@@ -1043,7 +1043,7 @@ input:checked + .slider:before {
     height: 40px;
     border-radius: 10px;
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1075,7 +1075,7 @@ input:checked + .slider:before {
 .task-reward .points {
     font-size: 15px;
     font-weight: 500;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .task-btn {
@@ -1088,7 +1088,7 @@ input:checked + .slider:before {
 }
 
 .task-btn:not(.completed) {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -1117,7 +1117,7 @@ input:checked + .slider:before {
     display: flex;
     align-items: center;
     gap: 4px;
-    color: #1976d2;
+    color: #00C853;
     background: none;
     border: none;
     cursor: pointer;
@@ -1293,7 +1293,7 @@ input:checked + .slider:before {
 }
 
 .clear-btn:hover {
-    color: #1976d2;
+    color: #00C853;
 }
 
 .filter-group {
@@ -1329,13 +1329,13 @@ input:checked + .slider:before {
 }
 
 .filter-btn:hover {
-    border-color: #1976d2;
-    color: #1976d2;
+    border-color: #00C853;
+    color: #00C853;
 }
 
 .filter-btn.active {
-    background: #1976d2;
-    border-color: #1976d2;
+    background: #00C853;
+    border-color: #00C853;
     color: white;
 }
 
@@ -1365,17 +1365,17 @@ input:checked + .slider:before {
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    border: 1px solid #1976d2;
+    border: 1px solid #00C853;
     border-radius: 8px;
     background: none;
-    color: #1976d2;
+    color: #00C853;
     cursor: pointer;
     font-size: 14px;
     transition: all 0.3s ease;
 }
 
 .export-btn:hover {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -1509,13 +1509,13 @@ input:checked + .slider:before {
 }
 
 .page-btn:not(:disabled):hover {
-    border-color: #1976d2;
-    color: #1976d2;
+    border-color: #00C853;
+    color: #00C853;
 }
 
 .page-btn.active {
-    background: #1976d2;
-    border-color: #1976d2;
+    background: #00C853;
+    border-color: #00C853;
     color: white;
 }
 

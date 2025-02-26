@@ -115,9 +115,9 @@
 }
 
 .nav-item.active {
-    color: #1976d2;
+    color: #00C853;
     background: #e3f2fd;
-    border-left-color: #1976d2;
+    border-left-color: #00C853;
 }
 
 /* 修改内容区样式 */
@@ -311,7 +311,7 @@
 .badge-progress {
     display: block;
     font-size: 12px;
-    color: #1976d2;
+    color: #00C853;
     margin-top: 8px;
 }
 
@@ -417,7 +417,7 @@
 }
 
 .view-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -427,7 +427,7 @@
 
 .download-btn {
     background: white;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .download-btn:hover {
@@ -483,7 +483,7 @@
     display: inline-block;
     padding: 4px 12px;
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
     border-radius: 12px;
     font-size: 14px;
     margin-bottom: 12px;
@@ -516,7 +516,7 @@
 }
 
 .progress {
-    background: #1976d2;
+    background: #00C853;
     height: 100%;
     border-radius: 4px;
     transition: width 0.3s ease;
@@ -574,7 +574,7 @@
 }
 
 .message.assistant .avatar .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 20px;
 }
 
@@ -649,7 +649,7 @@
 }
 
 .send-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -737,10 +737,10 @@
     gap: 8px;
     padding: 12px;
     background: white;
-    border: 1px dashed #1976d2;
+    border: 1px dashed #00C853;
     border-radius: 8px;
     cursor: pointer;
-    color: #1976d2;
+    color: #00C853;
     transition: all 0.3s ease;
 }
 
@@ -758,7 +758,7 @@
     justify-content: center;
     gap: 8px;
     padding: 12px;
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -869,7 +869,7 @@
 }
 
 .download-btn .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
@@ -879,6 +879,54 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin-top: 8px;
+}
+
+.media-upload {
+    position: relative;
+    border: 2px dashed #e0e0e0;
+    border-radius: 8px;
+    padding: 16px;
+    min-height: 80px;
+    text-align: center;
+    cursor: pointer;
+    background: #fafafa;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.upload-placeholder .material-icons {
+    font-size: 24px;
+    color: #00C853;
+}
+
+.upload-placeholder span:not(.material-icons) {
+    color: #666;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.upload-hint {
+    font-size: 12px;
+    color: #999;
+    margin-top: 4px;
+}
+
+.media-upload.has-files .upload-placeholder {
+    opacity: 0.7;
+    transform: scale(0.9);
 }
 
 .reference-item {
@@ -944,7 +992,7 @@
 
 .reference-upload-btn {
     aspect-ratio: 1;
-    border: 2px dashed #1976d2;
+    border: 2px dashed #00C853;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
@@ -952,7 +1000,7 @@
     justify-content: center;
     gap: 8px;
     cursor: pointer;
-    color: #1976d2;
+    color: #00C853;
     transition: all 0.3s ease;
 }
 
@@ -998,7 +1046,7 @@
 
 .overview-card .material-icons {
     font-size: 32px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .overview-info {
@@ -1060,7 +1108,7 @@
 
 .course-status.in-progress {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .course-status.completed {
@@ -1094,7 +1142,7 @@
 
 .meta-item .material-icons {
     font-size: 16px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .course-progress {
@@ -1117,7 +1165,7 @@
 
 .progress {
     height: 100%;
-    background: #1976d2;
+    background: #00C853;
     border-radius: 3px;
     transition: width 0.3s ease;
 }
@@ -1137,7 +1185,7 @@
 }
 
 .continue-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -1147,8 +1195,8 @@
 
 .review-btn {
     background: none;
-    border: 1px solid #1976d2;
-    color: #1976d2;
+    border: 1px solid #00C853;
+    color: #00C853;
 }
 
 .review-btn:hover {
@@ -1196,7 +1244,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -1250,7 +1298,7 @@
 
 .progress-bar .progress {
     height: 100%;
-    background: #1976d2;
+    background: #00C853;
     border-radius: 4px;
     transition: width 0.3s ease;
 }
@@ -1277,7 +1325,7 @@
 }
 
 .knowledge-header .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
@@ -1326,7 +1374,7 @@
 }
 
 .suggestion-item .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
@@ -1380,7 +1428,7 @@
 
 .circle {
     fill: none;
-    stroke: #1976d2;
+    stroke: #00C853;
     stroke-width: 3;
     stroke-linecap: round;
     animation: progress 1s ease-out forwards;
@@ -1397,7 +1445,7 @@
 .score-number {
     font-size: 24px;
     font-weight: 600;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .score-label {
@@ -1439,13 +1487,13 @@
 }
 
 .module-header .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
 .module-score {
     font-weight: 500;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .module-item h5 {
@@ -1474,7 +1522,7 @@
 
 .skill-tag.good {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .skill-tag.normal {
@@ -1544,9 +1592,9 @@
     width: 16px;
     height: 16px;
     border-radius: 50%;
-    background: #1976d2;
+    background: #00C853;
     border: 3px solid white;
-    box-shadow: 0 0 0 2px #1976d2;
+    box-shadow: 0 0 0 2px #00C853;
 }
 
 .timeline-date {
@@ -1612,7 +1660,7 @@
     align-items: center;
     gap: 8px;
     padding: 8px 16px;
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -1701,7 +1749,7 @@
 
 .detail-item .material-icons {
     font-size: 20px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 /* 时间线样式 */
@@ -1762,7 +1810,7 @@
 }
 
 .entry-header .material-icons {
-    color: #1976d2;
+    color: #00C853;
 }
 
 .entry-header h5 {
@@ -1831,7 +1879,7 @@
 .data-item .value {
     font-size: 18px;
     font-weight: 500;
-    color: #1976d2;
+    color: #00C853;
     margin-top: 4px;
 }
 
@@ -1846,7 +1894,7 @@
 .tag {
     padding: 4px 12px;
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
     border-radius: 16px;
     font-size: 12px;
 }
@@ -1870,7 +1918,7 @@
 }
 
 .tab-btn.active {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -1949,7 +1997,7 @@
 
 .plant-period .material-icons {
     font-size: 18px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .plant-stats {
@@ -1978,7 +2026,7 @@
 .stat-item .value {
     font-size: 16px;
     font-weight: 500;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .view-detail-btn {
@@ -1989,15 +2037,15 @@
     gap: 8px;
     padding: 8px;
     background: none;
-    border: 1px solid #1976d2;
+    border: 1px solid #00C853;
     border-radius: 8px;
-    color: #1976d2;
+    color: #00C853;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 .view-detail-btn:hover {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -2016,7 +2064,7 @@
         top: 70px;
         width: 40px;
         height: 40px;
-        background: #1976d2;
+        background: #00C853;
         border-radius: 50%;
         align-items: center;
         justify-content: center;
@@ -2210,7 +2258,7 @@
 /* 暗色模式支持 */
 @media (prefers-color-scheme: dark) {
     .mobile-menu-btn {
-        background: #1976d2;
+        background: #00C853;
         color: white;
     }
 
@@ -2301,7 +2349,7 @@
 
 .history-date .material-icons {
     font-size: 18px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .history-prompt h4 {
@@ -2434,13 +2482,13 @@
 
 .qa-history-date .material-icons {
     font-size: 18px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .qa-history-type {
     padding: 4px 12px;
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
     border-radius: 20px;
     font-size: 12px;
 }
@@ -2501,7 +2549,7 @@
 }
 
 .continue-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
 }
 
@@ -2511,8 +2559,8 @@
 
 .share-btn {
     background: none;
-    border: 1px solid #1976d2;
-    color: #1976d2;
+    border: 1px solid #00C853;
+    color: #00C853;
 }
 
 .share-btn:hover {
@@ -2579,7 +2627,7 @@
 }
 
 .continue-chat .send-btn {
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
     border-radius: 8px;
@@ -2706,7 +2754,7 @@
 
 .section-title .material-icons {
     font-size: 20px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .module-grid {
@@ -2737,13 +2785,13 @@
 
 .module-header .material-icons {
     font-size: 24px;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .module-score {
     font-size: 16px;
     font-weight: 500;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .module-item h5 {
@@ -2771,7 +2819,7 @@
 
 .skill-tag.good {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 .skill-tag.normal {
@@ -2831,7 +2879,7 @@
 }
 
 .expand-btn:hover {
-    color: #1976d2;
+    color: #00C853;
 }
 
 .expand-btn .material-icons {
@@ -2898,7 +2946,7 @@
 }
 
 .view-report {
-    background: #1976d2;
+    background: #00C853;
     color: white;
     border: none;
 }
@@ -2909,8 +2957,8 @@
 
 .download-report {
     background: none;
-    border: 1px solid #1976d2;
-    color: #1976d2;
+    border: 1px solid #00C853;
+    color: #00C853;
 }
 
 .download-report:hover {
@@ -2995,7 +3043,7 @@
 }
 
 .knowledge-header .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 20px;
 }
 
@@ -3012,7 +3060,7 @@
 
 .knowledge-item.good .mastery {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 /* 建议列表样式 */
@@ -3031,7 +3079,7 @@
 }
 
 .suggestion-item .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
@@ -3092,7 +3140,7 @@
 }
 
 .performance-header .material-icons {
-    color: #1976d2;
+    color: #00C853;
     font-size: 24px;
 }
 
@@ -3138,7 +3186,7 @@
 
 .mini-progress .progress {
     height: 100%;
-    background: #1976d2;
+    background: #00C853;
     border-radius: 3px;
 }
 
@@ -3179,7 +3227,7 @@
 
 .stat-value.good {
     background: #e3f2fd;
-    color: #1976d2;
+    color: #00C853;
 }
 
 /* 建议列表样式 */
@@ -3203,7 +3251,7 @@
     top: 8px;
     width: 6px;
     height: 6px;
-    background: #1976d2;
+    background: #00C853;
     border-radius: 50%;
 }
 
@@ -3228,7 +3276,7 @@
 
 .course-tag .material-icons {
     font-size: 16px;
-    color: #1976d2;
+    color: #00C853;
 } 
 
 /* 课程报告移动端适配 */

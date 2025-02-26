@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="css/timeline.css">
     <!-- 先加载配置 -->
     <script type="module">
         import { config } from './js/config.js';
@@ -36,7 +37,7 @@
                     </div>
                     <div class="user-info">
                         <h3 class="user-name">李明</h3>
-                        <p class="user-role">角色</p>
+                        <p class="user-role">学生</p>
                     </div>
                 </div>
                 <nav class="sidebar-nav">
@@ -247,7 +248,14 @@
 
                 <!-- 学习 - 我的种植 -->
                 <div class="content-section" id="my-planting">
-                    <h2>我的种植</h2>
+                    <!-- 修改标题部分 -->
+                    <div class="planting-header">
+                        <h2>我的种植</h2>
+                        <!-- <button class="new-planting-btn" onclick="showRecordModal('new')">
+                            <span class="material-icons">add</span>
+                            新种植
+                        </button> -->
+                    </div>
                     <div class="planting-container">
                         <!-- 切换按钮 -->
                         <div class="planting-tabs">
@@ -260,14 +268,14 @@
                             <div class="current-planting">
                                 <div class="plant-header">
                                     <h3>当前种植</h3>
-                                    <button class="add-record-btn">
+                                    <button class="add-record-btn" onclick="showRecordModal('record')">
                                         <span class="material-icons">add</span>
                                         添加记录
                                     </button>
                                 </div>
                                 <div class="plant-status-card">
                                     <div class="plant-image">
-                                        <img src="./images/plants/tomato.png" alt="小番茄">
+                                        <img src="./images/plants/mini-tomato.jpg" alt="小番茄">
                                         <span class="growing-days">已种植15天</span>
                                     </div>
                                     <div class="plant-info">
@@ -1379,6 +1387,33 @@
 
     <div id="footer"></div>
 
+    <!-- 服务器图片选择弹窗 -->
+    <div class="server-images-modal" id="serverImagesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>选择服务器图片</h3>
+                <button class="close-btn" onclick="closeServerImagesModal()">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="server-images-grid">
+                    <!-- 图片将在这里动态加载 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeServerImagesModal()">
+                    <span class="material-icons">close</span>
+                    取消
+                </button>
+                <button class="confirm-btn" onclick="addSelectedImages()">
+                    <span class="material-icons">add_photo_alternate</span>
+                    确认添加
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         // 使用全局变量 window.siteConfig
         import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
@@ -1395,6 +1430,5138 @@
         initializeNavbar();
     </script>
     <script src="js/profile.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- 在 main-content 末尾添加弹窗 -->
+    <div class="record-modal" id="recordModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>添加种植记录</h3>
+                <button class="close-btn">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- 基本信息 -->
+                <div class="form-section">
+                    <h4>基本信息</h4>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <div class="plant-selection-header">
+                                <label>选择植物</label>
+                                <span class="selected-count">已选择 0 个植物</span>
+                            </div>
+                            <div class="plant-selection-container">
+                                <button class="scroll-button prev" onclick="scrollPlants('prev')">
+                                    <span class="material-icons">chevron_left</span>
+                                </button>
+                                <div class="plant-selection-grid">
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="tomato">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/mini-tomato.jpg" alt="小番茄">
+                                            <span>小番茄</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="lettuce">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/purple-lettuce.jpg" alt="生菜">
+                                            <span>生菜</span>
+                                        </div>
+                                    </label>
+                                    <!-- 其他植物选项 -->
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="tomato">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/mini-tomato.jpg" alt="小番茄">
+                                            <span>小番茄</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="lettuce">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/purple-lettuce.jpg" alt="生菜">
+                                            <span>生菜</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="tomato">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/mini-tomato.jpg" alt="小番茄">
+                                            <span>小番茄</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="lettuce">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/purple-lettuce.jpg" alt="生菜">
+                                            <span>生菜</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="tomato">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/mini-tomato.jpg" alt="小番茄">
+                                            <span>小番茄</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="lettuce">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/purple-lettuce.jpg" alt="生菜">
+                                            <span>生菜</span>
+                                        </div>
+                                    </label>
+                                    <label class="plant-option">
+                                        <input type="checkbox" name="plantType" value="tomato">
+                                        <div class="plant-option-content">
+                                            <img src="./images/plants/purple-lettuce.jpg" alt="生菜">
+                                            <span>生菜</span>
+                                        </div>
+                                    </label>
+                                </div>
+                                <button class="scroll-button next" onclick="scrollPlants('next')">
+                                    <span class="material-icons">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>植物类型</label>
+                            <select id="plantType">
+                                <option value="">请选择植物类型</option>
+                                <option value="fruit">果蔬类</option>
+                                <option value="leaf">叶菜类</option>
+                                <option value="flower">鲜花类</option>
+                                <option value="herb">香草类</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>生长阶段</label>
+                            <select id="growthStage" disabled>
+                                <option value="">请先选择植物类型</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>种植时间</label>
+                            <input type="datetime-local" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label>当前高度(cm)</label>
+                            <input type="number" placeholder="请输入植物高度">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <label>备注</label>
+                            <input type="text" placeholder="可选填">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 在基本信息和生长记录之间添加 -->
+                <div class="form-section operation-type-group">
+                    <h4>操作类型</h4>
+                    <div class="form-row">
+                        <div class="form-group full-width">
+                            <select id="operationType" class="operation-type-select">
+                                <option value="">请选择操作类型</option>
+                                <option value="growth_status">生长状态</option>
+                                <option value="watering">浇水过程</option>
+                                <option value="fertilizing">施肥过程</option>
+                                <option value="environment">环境数据</option>
+                                <option value="planting">开始种植</option>
+                                <option value="pruning">修剪整形</option>
+                                <option value="pest_control">病虫害防治</option>
+                                <option value="harvest">采收记录</option>
+                                <option value="nutrient_solution">营养液更换</option>
+                                <option value="equipment">设备维护</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 修改生长记录部分 -->
+                <div class="form-section">
+                    <h4>生长记录</h4>
+                    <div class="full-width">
+                        <div class="form-group">
+                            <label>记录类型（可多选）</label>
+                            <div class="record-type-checkboxes">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="text" checked>
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">description</span>
+                                        <span>文字记录</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="image">
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">image</span>
+                                        <span>图片记录</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="video">
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">videocam</span>
+                                        <span>视频记录</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="audio">
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">mic</span>
+                                        <span>语音记录</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="data">
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">analytics</span>
+                                        <span>数据记录</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" value="file">
+                                    <div class="checkbox-item-content">
+                                        <span class="material-icons">attach_file</span>
+                                        <span>文件记录</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 文字记录 -->
+                    <div class="record-type-content" id="textRecord">
+                        <div class="type-header">
+                            <span class="material-icons">description</span>
+                            <h5>文字记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('text')">
+                                <span class="material-icons">add</span>
+                                添加文字记录
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 记录项模板 -->
+                    <template id="textRecordTemplate">
+                        <div class="record-item">
+                            <div class="record-item-header">
+                                <span class="record-item-title">文字记录 #<span class="record-number"></span></span>
+                                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                                    <span class="material-icons">delete</span>
+                                </button>
+                            </div>
+                            <div class="record-item-content">
+                                <div class="rich-text-editor" contenteditable="true" placeholder="请输入记录内容..."></div>
+                                <div class="tags-input-container">
+                                    <div class="tags-list"></div>
+                                    <input type="text" class="tag-input" placeholder="输入标签后按回车添加...">
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- 图片记录 -->
+                    <div class="record-type-content" id="imageRecord" style="display: none;">
+                        <div class="type-header">
+                            <span class="material-icons">image</span>
+                            <h5>图片记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('image')">
+                                <span class="material-icons">add</span>
+                                添加图片记录
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 视频记录 -->
+                    <div class="record-type-content" id="videoRecord" style="display: none;">
+                        <div class="type-header">
+                            <span class="material-icons">videocam</span>
+                            <h5>视频记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('video')">
+                                <span class="material-icons">add</span>
+                                添加视频记录
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 视频记录模板 -->
+                    <template id="videoRecordTemplate">
+                        <div class="record-item media-record-item">
+                            <div class="record-item-header">
+                                <span class="record-item-title">视频记录 #<span class="record-number"></span></span>
+                                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                                    <span class="material-icons">delete</span>
+                                </button>
+                            </div>
+                            <div class="record-item-content">
+                                <div class="media-upload">
+                                    <input type="file" accept="video/*" onchange="handleMediaFiles(this)">
+                                    <div class="upload-placeholder">
+                                        <span class="material-icons">videocam</span>
+                                        <span>点击上传视频</span>
+                                        <span class="upload-hint">支持mp4、mov等格式</span>
+                                    </div>
+                                </div>
+                                <div class="media-preview-grid"></div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- 语音记录 -->
+                    <div class="record-type-content" id="audioRecord" style="display: none;">
+                        <div class="type-header">
+                            <span class="material-icons">mic</span>
+                            <h5>语音记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('audio')">
+                                <span class="material-icons">add</span>
+                                添加语音记录
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 语音记录模板 -->
+                    <template id="audioRecordTemplate">
+                        <div class="record-item audio-record-item">
+                            <div class="record-item-header">
+                                <span class="record-item-title">语音记录 #<span class="record-number"></span></span>
+                                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                                    <span class="material-icons">delete</span>
+                                </button>
+                            </div>
+                            <div class="record-item-content">
+                                <div class="audio-controls-wrapper">
+                                    <div class="record-controls">
+                                        <button class="record-btn" type="button">
+                                            <span class="material-icons">mic</span>
+                                            <span>开始录音</span>
+                                        </button>
+                                        <div class="recording-status" style="display: none;">
+                                            <div class="wave-animation">
+                                                <span></span><span></span><span></span><span></span>
+                                            </div>
+                                            <span class="record-time">00:00</span>
+                                            <button class="stop-btn" type="button">
+                                                <span class="material-icons">stop</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="audio-upload">
+                                        <div class="media-upload">
+                                            <input type="file" accept="audio/*" onchange="handleMediaFiles(this)">
+                                            <div class="upload-placeholder">
+                                                <span class="material-icons">upload_file</span>
+                                                <span>上传语音文件</span>
+                                                <span class="upload-hint">支持mp3、wav等格式</span>
+                                            </div>
+                                        </div>
+                                        <div class="media-preview-grid"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
+
+                    <!-- 数据记录 -->
+                    <div class="record-type-content" id="dataRecord" style="display: none;">
+                        <div class="type-header">
+                            <span class="material-icons">analytics</span>
+                            <h5>数据记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('data')">
+                                <span class="material-icons">add</span>
+                                添加数据记录
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 文件记录 -->
+                    <div class="record-type-content" id="fileRecord" style="display: none;">
+                        <div class="type-header">
+                            <span class="material-icons">attach_file</span>
+                            <h5>文件记录</h5>
+                        </div>
+                        <div class="records-container">
+                            <div class="record-list"></div>
+                            <button type="button" class="add-record-item-btn" onclick="addNewRecord('file')">
+                                <span class="material-icons">add</span>
+                                添加文件记录
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn">取消</button>
+                <button class="save-btn">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加对应的CSS样式 -->
+    <style>
+    /* 弹窗基础样式 */
+    .record-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        backdrop-filter: blur(4px);
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 12px;
+        width: 95%;
+        max-width: 720px;
+        max-height: 85vh;
+        overflow-y: auto;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background: white;
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .modal-header h3 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .modal-body {
+        padding: 20px;
+    }
+
+    /* 记录类型选择器优化 - 标签式样式 */
+    .record-type-checkboxes {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin: 16px 0 24px;
+    }
+
+    .checkbox-item {
+        position: relative;
+    }
+
+    .checkbox-item input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .checkbox-item-content {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: #f5f5f5;
+        border-radius: 20px;
+        border: 1px solid transparent;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .checkbox-item:hover .checkbox-item-content {
+        background: #e8f5e9;
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-item-content {
+        background: #00C853;
+        color: white;
+    }
+
+    .checkbox-item .material-icons {
+        font-size: 20px;
+        color: #666;
+        transition: color 0.2s ease;
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-item-content .material-icons {
+        color: white;
+    }
+
+    .checkbox-item-content span:not(.material-icons) {
+        font-size: 14px;
+        font-weight: 500;
+        color: #666;
+        transition: color 0.2s ease;
+    }
+
+    .checkbox-item input[type="checkbox"]:checked + .checkbox-item-content span:not(.material-icons) {
+        color: white;
+    }
+
+    /* 表单布局优化 */
+    .form-section {
+        background: #fff;
+        border-radius: 12px;
+        padding: 24px;
+        margin-bottom: 24px;
+    }
+
+    .form-section h4 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 16px;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .record-type-checkboxes {
+            gap: 8px;
+        }
+        
+        .checkbox-item-content {
+            padding: 6px 12px;
+        }
+        
+        .checkbox-item .material-icons {
+            font-size: 18px;
+        }
+        
+        .checkbox-item-content span:not(.material-icons) {
+            font-size: 13px;
+        }
+    }
+
+    /* 表单控件样式 */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        border-color: #00C853;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+        outline: none;
+    }
+
+    /* 上传区域样式 */
+    .media-upload {
+        position: relative;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .media-upload input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .media-upload:hover {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        pointer-events: none;
+    }
+
+    .upload-placeholder .material-icons {
+        font-size: 32px;
+        color: #00C853;
+    }
+
+    .upload-placeholder span:not(.material-icons) {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .upload-hint {
+        font-size: 12px !important;
+        color: #999 !important;
+    }
+
+    /* 底部按钮 */
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 16px;
+        padding: 16px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .modal-footer .cancel-btn,
+    .modal-footer .confirm-btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .modal-footer .cancel-btn {
+        background: #f5f5f5;
+        border: none;
+        color: #333;
+    }
+
+    .modal-footer .cancel-btn:hover {
+        background: #e0e0e0;
+    }
+
+    .modal-footer .confirm-btn {
+        background: #00C853;
+        border: none;
+        color: white;
+    }
+
+    .modal-footer .confirm-btn:hover {
+        background: #00b34a;
+    }
+
+    .modal-footer .material-icons {
+        font-size: 18px;
+    }
+
+    /* 关闭按钮 */
+    .close-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #666;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .close-btn:hover {
+        background: #f5f5f5;
+    }
+
+    /* 表单布局优化 */
+    .form-section {
+        margin-bottom: 24px;
+        background: #fff;
+        border-radius: 12px;
+        padding: 20px;
+        border: 1px solid #eee;
+    }
+
+    .form-section h4 {
+        font-size: 15px;
+        color: #333;
+        margin-bottom: 16px;
+        font-weight: 500;
+    }
+
+    /* 两列布局 */
+    .form-row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .form-group {
+        margin-bottom: 0;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #666;
+        font-size: 14px;
+    }
+
+    /* 媒体预览优化 */
+    .media-preview {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-top: 16px;
+    }
+
+    .preview-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+    }
+
+    .preview-item img,
+    .preview-item video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .preview-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .preview-item:hover .preview-overlay {
+        opacity: 1;
+    }
+
+    .preview-action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.3s ease;
+    }
+
+    .preview-action-btn:hover {
+        transform: scale(1.1);
+        background: #f44336;
+        color: white;
+    }
+
+    /* 上传区域优化 */
+    .media-upload {
+        position: relative;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        padding: 24px;
+        text-align: center;
+        cursor: pointer;
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .media-upload input[type="file"] {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .media-upload:hover {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    .upload-placeholder {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        pointer-events: none;
+    }
+
+    .upload-placeholder .material-icons {
+        font-size: 32px;
+        color: #00C853;
+    }
+
+    .upload-placeholder span:not(.material-icons) {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .upload-hint {
+        font-size: 12px !important;
+        color: #999 !important;
+    }
+
+    /* 媒体卡片样式优化 */
+    .media-card {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .media-card img.thumbnail {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .media-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .media-card:hover .media-overlay {
+        opacity: 1;
+    }
+
+    .media-action-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: white;
+        border: none;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.3s ease;
+    }
+
+    .media-action-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .media-action-btn.preview-btn:hover {
+        background: #00C853;
+        color: white;
+    }
+
+    .media-action-btn.delete-btn:hover {
+        background: #dc2626;
+        color: white;
+    }
+
+    .media-upload {
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .media-upload:hover {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    /* 文件预览卡片样式优化 */
+    .file-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 16px;
+        text-align: center;
+        background: #fff;
+    }
+
+    .file-preview .material-icons {
+        font-size: 36px;
+        margin-bottom: 8px;
+    }
+
+    /* 不同文件类型的图标颜色 */
+    .file-preview[data-type="pdf"] .material-icons,
+    .file-preview[data-type="word"] .material-icons,
+    .file-preview[data-type="excel"] .material-icons,
+    .file-preview[data-type="text"] .material-icons,
+    .file-preview .material-icons {
+        color: #00C853;
+    }
+
+    .file-preview .file-name {
+        font-size: 12px;
+        color: #333;
+        max-width: 100%;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+        line-height: 1.3;
+        word-break: break-all;
+    }
+
+    .file-preview .file-ext {
+        font-size: 11px;
+        color: #666;
+        padding: 2px 8px;
+        background: #f5f5f5;
+        border-radius: 4px;
+        text-transform: uppercase;
+    }
+
+    .file-preview .file-size {
+        font-size: 11px;
+        color: #999;
+        margin-top: 4px;
+    }
+
+    /* 媒体预览模态框样式 */
+    .media-preview-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+    }
+
+    .preview-content {
+        position: relative;
+        max-width: 90%;
+        max-height: 90vh;
+    }
+
+    .preview-content img,
+    .preview-content video {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+    }
+
+    .close-preview-btn {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+
+    /* 文字记录样式优化 */
+    .rich-text-editor {
+        min-height: 120px;
+        padding: 12px 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fafafa;
+        font-size: 14px;
+        line-height: 1.6;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .rich-text-editor:empty:before {
+        content: attr(placeholder);
+        color: #999;
+    }
+
+    .rich-text-editor:focus {
+        outline: none;
+        border-color: #00C853;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+    }
+
+    .rich-text-editor:hover {
+        background: #fff;
+    }
+
+    /* 标签输入区域样式 */
+    .tags-input-container {
+        margin-top: 12px;
+        padding: 8px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background: #fafafa;
+    }
+
+    .tags-list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 8px;
+    }
+
+    .tag-item {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 4px 8px;
+        background: #e8f5e9;
+        color: #00C853;
+        border-radius: 16px;
+        font-size: 12px;
+    }
+
+    .tag-item .remove-tag {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: none;
+        border: none;
+        padding: 0;
+        color: #00C853;
+        transition: all 0.2s ease;
+    }
+
+    .tag-item .remove-tag:hover {
+        background: #00C853;
+        color: white;
+    }
+
+    .tag-input {
+        width: 100%;
+        padding: 4px;
+        border: none;
+        background: none;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .tag-input:focus {
+        outline: none;
+    }
+
+    /* 语音记录样式优化 */
+    .audio-controls-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .record-controls {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        background: #f5f5f5;
+        border-radius: 8px;
+    }
+
+    .record-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 20px;
+        background: #00C853;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .record-btn:hover {
+        background: #00b34a;
+    }
+
+    .recording-status {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .wave-animation {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 24px;
+    }
+
+    .wave-animation span {
+        display: inline-block;
+        width: 3px;
+        height: 100%;
+        background: #00C853;
+        animation: wave 1s ease-in-out infinite;
+    }
+
+    .wave-animation span:nth-child(2) { animation-delay: 0.1s; }
+    .wave-animation span:nth-child(3) { animation-delay: 0.2s; }
+    .wave-animation span:nth-child(4) { animation-delay: 0.3s; }
+
+    @keyframes wave {
+        0%, 100% { height: 8px; }
+        50% { height: 24px; }
+    }
+
+    .record-time {
+        font-size: 14px;
+        color: #666;
+        min-width: 50px;
+    }
+
+    .stop-btn {
+        width: 36px;
+        height: 36px;
+        border: none;
+        border-radius: 50%;
+        background: #dc2626;
+        color: white;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .stop-btn:hover {
+        background: #c81e1e;
+    }
+
+    /* 音频文件预览样式 */
+    .audio-preview {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        margin-top: 8px;
+    }
+
+    .audio-preview .material-icons {
+        font-size: 24px;
+        color: #00C853;
+    }
+
+    .audio-info {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .audio-name {
+        font-size: 14px;
+        color: #333;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .audio-duration {
+        font-size: 12px;
+        color: #666;
+    }
+
+    /* 文件预览弹窗样式 */
+    .file-preview-content {
+        background: white;
+        padding: 32px;
+        border-radius: 12px;
+        text-align: center;
+    }
+
+    .file-preview-content .file-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .file-preview-content .material-icons {
+        font-size: 48px;
+    }
+
+    .file-preview-content h3 {
+        font-size: 16px;
+        color: #333;
+        margin: 0;
+        word-break: break-all;
+    }
+
+    .file-preview-content p {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+    }
+
+    /* 文件预览的关闭按钮 */
+    .file-preview-content .close-preview-btn {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .file-preview-content .close-preview-btn:hover {
+        background: #f5f5f5;
+    }
+
+    /* 记录类型内容分隔样式 */
+    .record-type-content {
+        position: relative;
+        padding: 20px;
+        margin: 20px 0;
+        background: #fff;
+        border-radius: 8px;
+        border: 1px solid #eee;
+    }
+
+    .record-type-content:before {
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 20px;
+        width: 20px;
+        height: 20px;
+        background: #fff;
+        border-left: 1px solid #eee;
+        border-top: 1px solid #eee;
+        transform: rotate(45deg);
+    }
+
+    /* 记录类型标题 */
+    .record-type-content .type-header {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .record-type-content .type-header .material-icons {
+        font-size: 20px;
+        color: #00C853;
+    }
+
+    .record-type-content .type-header h5 {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+        margin: 0;
+    }
+
+    /* 数据记录样式 */
+    .data-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .data-grid .form-group {
+        margin: 0;
+    }
+
+    .data-grid input[type="number"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        background: #fafafa;
+        transition: all 0.3s ease;
+    }
+
+    .data-grid input[type="number"]:focus {
+        border-color: #00C853;
+        background: #fff;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+        outline: none;
+    }
+
+    .data-grid input[type="number"]:hover {
+        background: #fff;
+    }
+
+    @media (max-width: 640px) {
+        .data-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+    }
+
+    /* 音频预览样式优化 */
+    .file-preview[data-type="audio"] {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .file-preview[data-type="audio"] .material-icons {
+        color: #00C853;
+        font-size: 32px;
+    }
+
+    .file-preview[data-type="audio"] audio {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    /* 录音动画优化 */
+    .wave-animation {
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        height: 24px;
+    }
+
+    .wave-animation span {
+        display: inline-block;
+        width: 3px;
+        height: 100%;
+        background: #00C853;
+        animation: wave 1s ease-in-out infinite;
+    }
+
+    .wave-animation span:nth-child(2) { animation-delay: 0.1s; }
+    .wave-animation span:nth-child(3) { animation-delay: 0.2s; }
+    .wave-animation span:nth-child(4) { animation-delay: 0.3s; }
+
+    @keyframes wave {
+        0%, 100% { height: 8px; }
+        50% { height: 24px; }
+    }
+
+    /* 添加当前种植和生长记录的间距 */
+    .planting-timeline {
+        margin-top: 32px;
+        padding-top: 32px;
+        border-top: 1px solid #eee;
+    }
+
+    /* 全局添加记录按钮样式 */
+    .add-planting-btn {
+        position: fixed;
+        right: 32px;
+        bottom: 32px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #00C853;
+        border: none;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 200, 83, 0.3);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 1000;
+    }
+
+    .add-planting-btn:hover {
+        background: #00b34a;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(0, 200, 83, 0.4);
+    }
+
+    .add-planting-btn .material-icons {
+        font-size: 24px;
+    }
+
+    /* 添加按钮的提示文字 */
+    .add-planting-btn::after {
+        content: '添加种植';
+        position: absolute;
+        bottom: -24px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        color: #666;
+        white-space: nowrap;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .add-planting-btn:hover::after {
+        opacity: 1;
+    }
+
+    /* 修改现有的添加记录按钮样式 */
+    .plant-header .add-record-btn {
+        padding: 8px 16px;
+        border-radius: 20px;
+        background: #f5f5f5;
+        border: none;
+        color: #333;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .plant-header .add-record-btn:hover {
+        background: #e0e0e0;
+    }
+
+    .plant-header .add-record-btn .material-icons {
+        font-size: 18px;
+        color: #00C853;
+    }
+
+    /* 种植标题区域样式 */
+    .planting-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+
+    .planting-header h2 {
+        margin: 0;
+        font-size: 20px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .new-planting-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        background: #00C853;
+        color: white;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .new-planting-btn:hover {
+        background: #00b34a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
+    }
+
+    .new-planting-btn .material-icons {
+        font-size: 18px;
+    }
+
+    /* 操作类型选择样式 */
+    .operation-type-select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #333;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    .operation-type-select:focus {
+        border-color: #00C853;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+        outline: none;
+    }
+
+    .operation-type-select option {
+        padding: 8px;
+    }
+
+    /* 全宽表单组 */
+    .form-group.full-width {
+        grid-column: 1 / -1;
+    }
+
+    /* 操作类型图标 */
+    .operation-type-select option::before {
+        margin-right: 8px;
+        vertical-align: middle;
+    }
+
+    /* 修改按钮样式，统一使用主题色 */
+    .view-detail-btn {
+        background: #00C853;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .view-detail-btn:hover {
+        background: #00b34a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
+    }
+
+    .review-btn {
+        background: #00C853;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .review-btn:hover {
+        background: #00b34a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
+    }
+
+    /* 修改进度条颜色 */
+    .progress-bar .progress {
+        background: #00C853;
+    }
+
+    /* 修改标签颜色 */
+    .entry-tags .tag {
+        background: #e8f5e9;
+        color: #00C853;
+        border: 1px solid #00C853;
+    }
+
+    /* 修改状态标签颜色 */
+    .status.growing {
+        background: #e8f5e9;
+        color: #00C853;
+    }
+
+    /* 修改证书操作按钮 */
+    .certificate-actions button {
+        background: #00C853;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .certificate-actions button:hover {
+        background: #00b34a;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2);
+    }
+
+    /* 修改选项卡按钮激活状态颜色 */
+    .planting-tabs .tab-btn.active {
+        color: #ffffff;
+        border-bottom-color: #00C853;
+    }
+
+    /* 修改链接颜色 */
+    a {
+        color: #00C853;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    a:hover {
+        color: #00b34a;
+    }
+
+    /* 统一所有按钮和图标的颜色 */
+    /* 左侧菜单样式 */
+    .nav-item.active {
+        background: #e8f5e9 !important;
+        border-color: #00C853 !important;
+    }
+
+    .nav-item.active .material-icons,
+    .nav-item.active .nav-text {
+        color: #00C853 !important;
+    }
+
+    .nav-item:hover {
+        background: #f0f9f4 !important;
+    }
+
+    /* 进度条和状态标签 */
+    .course-progress .progress-bar {
+        background: #00C853 !important;
+    }
+
+    .status-tag {
+        background: #e8f5e9 !important;
+        color: #00C853 !important;
+        border: 1px solid #00C853 !important;
+    }
+
+    /* 按钮和图标 */
+    .action-btn,
+    .control-btn,
+    .function-btn {
+        background: #00C853 !important;
+        color: white !important;
+    }
+
+    .action-btn:hover,
+    .control-btn:hover,
+    .function-btn:hover {
+        background: #00b34a !important;
+        box-shadow: 0 2px 8px rgba(0, 200, 83, 0.2) !important;
+    }
+
+    /* 图标颜色 */
+    .icon-primary,
+    .feature-icon,
+    .status-icon {
+        color: #00C853 !important;
+    }
+
+    /* 链接颜色 */
+    .link-primary,
+    .text-primary {
+        color: #00C853 !important;
+    }
+
+    /* 复选框和单选框 */
+    input[type="checkbox"]:checked,
+    input[type="radio"]:checked {
+        background-color: #00C853 !important;
+        border-color: #00C853 !important;
+    }
+
+    /* 表单控件焦点状态 */
+    input:focus,
+    select:focus,
+    textarea:focus {
+        border-color: #00C853 !important;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1) !important;
+    }
+
+    /* 标签和徽章 */
+    .badge-primary,
+    .tag-primary {
+        background: #e8f5e9 !important;
+        color: #00C853 !important;
+        border: 1px solid #00C853 !important;
+    }
+
+    /* 卡片和面板的激活状态 */
+    .card.active,
+    .panel.active {
+        border-color: #00C853 !important;
+    }
+
+    /* 导航和选项卡 */
+    .nav-tabs .active,
+    .tab-item.active {
+        color: #00C853 !important;
+        border-color: #00C853 !important;
+    }
+
+    /* 提示和通知 */
+    .tooltip,
+    .notification {
+        background: #00C853 !important;
+        color: white !important;
+    }
+
+    /* 开关按钮 */
+    .switch-input:checked + .switch-slider {
+        background: #00C853 !important;
+    }
+
+    /* 进度指示器 */
+    .step.active .step-icon,
+    .step.completed .step-icon {
+        background: #00C853 !important;
+        color: white !important;
+    }
+
+    /* 滚动条 */
+    ::-webkit-scrollbar-thumb {
+        background: #00C853 !important;
+    }
+
+    /* 选中文本 */
+    ::selection {
+        background: #e8f5e9 !important;
+        color: #00C853 !important;
+    }
+
+    /* 植物选择网格样式 */
+    .plant-selection-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        padding: 8px 4px;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none; /* Firefox */
+        margin: 0 -16px;
+        padding: 0 16px;
+    }
+
+    .plant-selection-grid::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }
+
+    /* 修改植物选项样式 */
+    .plant-option {
+        flex: 0 0 auto;
+        width: 120px; /* 增加卡片宽度 */
+        cursor: pointer;
+        position: relative;
+    }
+
+    .plant-option input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .plant-option-content {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .plant-option-content::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 24px;
+        height: 24px;
+        background: #00C853;
+        border-radius: 0 12px 0 12px;
+        transform: scale(0);
+        transition: transform 0.3s ease;
+    }
+
+    .plant-option-content::after {
+        content: '✓';
+        position: absolute;
+        top: 2px;
+        right: 6px;
+        color: white;
+        font-size: 12px;
+        transform: scale(0);
+        transition: transform 0.3s ease;
+    }
+
+    .plant-option input[type="checkbox"]:checked + .plant-option-content {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    .plant-option input[type="checkbox"]:checked + .plant-option-content::before,
+    .plant-option input[type="checkbox"]:checked + .plant-option-content::after {
+        transform: scale(1);
+    }
+
+    .plant-option-content img {
+        width: 80px; /* 增加图片尺寸 */
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        transition: transform 0.3s ease;
+    }
+
+    .plant-option-content span {
+        display: block;
+        font-size: 14px;
+        color: #333;
+        margin-top: 4px;
+    }
+
+    .plant-option:hover .plant-option-content {
+        border-color: #00C853;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
+    }
+
+    .plant-option:hover .plant-option-content img {
+        transform: scale(1.05);
+    }
+
+    /* 添加滚动指示器 */
+    .plant-selection-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 0 4px;
+    }
+
+    .plant-selection-header label {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .selected-count {
+        font-size: 13px;
+        color: #666;
+    }
+
+    /* 添加选中数量提示 */
+    .plant-selection-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .selected-count {
+        font-size: 12px;
+        color: #666;
+    }
+
+    /* 时间选择器样式 */
+    input[type="datetime-local"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #333;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    input[type="datetime-local"]:focus {
+        border-color: #00C853;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+        outline: none;
+    }
+
+    /* 生长阶段选择器样式优化 */
+    #growthStage {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #333;
+        background: #fff;
+        transition: all 0.3s ease;
+    }
+
+    #growthStage:focus {
+        border-color: #00C853;
+        box-shadow: 0 0 0 3px rgba(0, 200, 83, 0.1);
+        outline: none;
+    }
+
+    /* 添加服务器图片相关样式 */
+    .media-upload-actions {
+        display: flex;
+        gap: 16px;
+        margin-bottom: 16px;
+    }
+
+    .media-upload-actions > * {
+        flex: 1;
+        width: 100%;
+    }
+
+    .server-images-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 1px dashed #00C853;
+        border-radius: 8px;
+        background: #fff;
+        color: #00C853;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .media-preview {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .server-images-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        border: 1px dashed #00C853;
+        border-radius: 8px;
+        background: #fff;
+        color: #00C853;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .server-images-btn:hover {
+        background: #e8f5e9;
+    }
+
+    /* 修改服务器图片弹窗样式 */
+    .server-images-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 10000; /* 确保显示在最顶层 */
+    }
+
+    .server-images-modal .modal-content {
+        width: 80%;
+        max-width: 1000px;
+        max-height: 80vh;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        z-index: 10001;
+    }
+
+    .server-images-filter {
+        padding: 16px;
+        border-bottom: 1px solid #eee;
+    }
+
+    .server-images-filter input {
+        width: 100%;
+        padding: 8px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+
+    .filter-tags {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .filter-tag {
+        padding: 4px 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 16px;
+        background: #fff;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .filter-tag.active {
+        background: #00C853;
+        color: #fff;
+        border-color: #00C853;
+    }
+
+    .server-images-grid {
+        display: grid;
+        gap: 16px;
+        padding: 16px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .server-image-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .server-image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .server-image-item.selected {
+        outline: 3px solid #00C853;
+        transform: scale(0.95);
+    }
+
+    .server-images-grid .image-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .server-images-grid .image-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .server-images-grid .server-image-item:hover .image-info {
+        opacity: 1;
+    }
+
+    .server-images-grid .upload-date {
+        display: block;
+        text-align: center;
+    }
+
+    .server-image-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .server-image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .server-image-item.selected {
+        border: 2px solid #00C853;
+        transform: scale(0.98);
+    }
+
+    .server-image-item.selected::after {
+        content: '';
+        position: absolute;
+        top: -2px;
+        right: -2px;
+        width: 24px;
+        height: 24px;
+        background: #00C853;
+        border-radius: 0 8px 0 12px;
+        transform: scale(1);
+    }
+
+    .server-image-item.selected::before {
+        content: '✓';
+        position: absolute;
+        top: 2px;
+        right: 6px;
+        color: white;
+        font-size: 12px;
+        z-index: 1;
+    }
+
+    /* 恢复原有的添加记录按钮样式 */
+    .add-record-item-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 12px;
+        border: 2px dashed #e0e0e0;
+        border-radius: 8px;
+        background: #fafafa;
+        color: #00C853;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .add-record-item-btn:hover {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    .add-record-item-btn .material-icons {
+        font-size: 20px;
+    }
+
+    /* 恢复原有的记录项样式 */
+    .records-container {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .record-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .record-item {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 16px;
+        transition: all 0.3s ease;
+    }
+
+    .record-item:hover {
+        border-color: #00C853;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    /* 恢复删除按钮样式 */
+    .delete-record-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 50%;
+        background: none;
+        color: #666;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .delete-record-btn:hover {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .delete-content-btn {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        background: #fef2f2;
+        color: #dc2626;
+        font-size: 13px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .delete-content-btn:hover {
+        background: #fee2e2;
+    }
+
+    .delete-content-btn .material-icons {
+        font-size: 18px;
+    }
+
+    /* 恢复记录项标题和头部样式 */
+    .record-item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .record-item-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    /* 恢复媒体记录项和预览网格样式 */
+    .media-record-item .record-item-content {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .media-preview-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 24px;
+        margin-top: 24px;
+    }
+
+    .media-card {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f5f5f5;
+        border: 1px solid #e0e0e0;
+    }
+
+    .media-card img,
+    .media-card video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .media-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .media-card:hover .media-overlay {
+        opacity: 1;
+    }
+
+    /* 添加文件预览样式 */
+    .file-preview {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 16px;
+        background: #f5f5f5;
+    }
+
+    .file-type-icon {
+        font-size: 36px;
+        color: #666;
+        margin-bottom: 8px;
+    }
+
+    .file-name {
+        font-size: 12px;
+        color: #333;
+        text-align: center;
+        word-break: break-word;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 4px;
+    }
+
+    .file-size {
+        font-size: 11px;
+        color: #666;
+        background: #eee;
+        padding: 2px 8px;
+        border-radius: 4px;
+    }
+
+    .media-card video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .media-card audio {
+        width: 100%;
+        margin-top: 8px;
+    }
+
+    /* 添加左右滚动按钮样式 */
+    .plant-selection-container {
+        position: relative;
+        padding: 0 40px;
+    }
+
+    .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 50%;
+        background: white;
+        color: #666;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex !important; /* 强制显示 */
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 2;
+    }
+
+    .scroll-button:disabled {
+        opacity: 0;
+        pointer-events: none;
+        cursor: default;
+    }
+
+    .scroll-button:not(:disabled):hover {
+        background: #f5f5f5;
+        color: #00C853;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .scroll-button.prev {
+        left: 0;
+    }
+
+    .scroll-button.next {
+        right: 0;
+    }
+
+    /* 调整植物选择网格样式 */
+    .plant-selection-grid {
+        position: relative;
+        scroll-padding: 0 16px;
+    }
+
+    /* 修改植物选择容器和滚动样式 */
+    .plant-selection-container {
+        position: relative;
+        padding: 0 40px;
+        margin: 0 -16px;
+        overflow: hidden; /* 防止滚动按钮超出容器 */
+    }
+
+    .plant-selection-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 8px 0;
+        margin: 0;
+        scroll-snap-type: x mandatory;
+    }
+
+    .plant-selection-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 50%;
+        background: white;
+        color: #666;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex !important; /* 强制显示 */
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 2;
+    }
+
+    .scroll-button.prev {
+        left: 8px;
+    }
+
+    .scroll-button.next {
+        right: 8px;
+    }
+
+    .scroll-button:hover {
+        background: #f5f5f5;
+        color: #00C853;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .scroll-button:disabled {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .plant-option {
+        flex: 0 0 120px;
+        scroll-snap-align: start;
+    }
+
+    /* 修改植物选择相关样式 */
+    .form-group.full-width {
+        width: 100%;
+        overflow: hidden; /* 防止溢出 */
+    }
+
+    .plant-selection-container {
+        position: relative;
+        width: 100%;
+        padding: 0 40px;
+        box-sizing: border-box;
+    }
+
+    .plant-selection-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 8px 0;
+        width: 100%;
+        white-space: nowrap;
+    }
+
+    .plant-selection-grid::-webkit-scrollbar {
+        display: none;
+    }
+
+    .plant-option {
+        flex: 0 0 120px; /* 固定宽度，防止压缩 */
+        min-width: 120px; /* 确保最小宽度 */
+        width: 120px;
+        margin-right: 0;
+    }
+
+    /* 修改滚动按钮样式 */
+    .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .scroll-button.prev {
+        left: 0;
+    }
+
+    .scroll-button.next {
+        right: 0;
+    }
+
+    .scroll-button:not(:disabled):hover {
+        background: #f5f5f5;
+        color: #00C853;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .scroll-button .material-icons {
+        font-size: 20px;
+        color: #666;
+    }
+
+    .scroll-button:hover .material-icons {
+        color: #00C853;
+    }
+
+    /* 优化植物选项样式 */
+    .plant-option-content {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: white;
+    }
+
+    .plant-option-content img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-bottom: 8px;
+    }
+
+    .plant-option-content span {
+        display: block;
+        font-size: 14px;
+        color: #333;
+        white-space: normal;
+    }
+
+    /* 修改表单行和植物选择相关样式 */
+    .form-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        padding: 16px 0;
+    }
+
+    .form-group.full-width {
+        width: 100%;
+        max-width: 800px; /* 限制最大宽度 */
+        margin: 0 auto;
+        overflow: visible; /* 允许按钮溢出 */
+    }
+
+    .plant-selection-container {
+        position: relative;
+        width: 100%;
+        padding: 0 48px; /* 增加内边距，给按钮留出空间 */
+        box-sizing: border-box;
+        margin: 0 -8px; /* 抵消内边距对齐 */
+    }
+
+    .plant-selection-grid {
+        display: flex;
+        gap: 16px;
+        overflow-x: auto;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 8px 4px;
+        width: 100%;
+    }
+
+    /* 修改滚动按钮样式 */
+    .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 36px;
+        height: 36px;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .scroll-button.prev {
+        left: 4px; /* 调整位置 */
+    }
+
+    .scroll-button.next {
+        right: 4px; /* 调整位置 */
+    }
+
+    /* 优化植物选项样式 */
+    .plant-option {
+        flex: 0 0 120px;
+        min-width: 120px;
+        width: 120px;
+        position: relative;
+    }
+
+    .plant-option-content {
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        padding: 12px;
+        text-align: center;
+        transition: all 0.3s ease;
+        background: white;
+        cursor: pointer;
+    }
+
+    .plant-option input[type="checkbox"] {
+        position: absolute;
+        opacity: 0;
+    }
+
+    .plant-option input[type="checkbox"]:checked + .plant-option-content {
+        border-color: #00C853;
+        background: #f0f9f4;
+    }
+
+    .plant-option-content:hover {
+        border-color: #00C853;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 200, 83, 0.1);
+    }
+
+    /* 选择计数器样式 */
+    .plant-selection-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 0 4px;
+    }
+
+    .selected-count {
+        font-size: 14px;
+        color: #666;
+    }
+
+    /* 媒体卡片样式 */
+    .media-card {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        overflow: hidden;
+        background: #f5f5f5;
+    }
+
+    .video-preview {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .video-preview video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .video-preview .play-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 48px;
+        color: white;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .audio-preview {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        background: #e3f2fd;
+    }
+
+    .audio-preview .material-icons {
+        font-size: 48px;
+        color: #2196f3;
+    }
+
+    .doc-preview {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        padding: 16px;
+        background: #f5f5f5;
+    }
+
+    .doc-preview .material-icons {
+        font-size: 48px;
+        color: #00C853;
+        margin-bottom: 8px;
+    }
+
+    .media-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        font-size: 12px;
+    }
+
+    .file-info {
+        text-align: center;
+    }
+
+    .file-name {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 12px;
+    }
+
+    .file-size {
+        display: block;
+        font-size: 11px;
+        color: #666;
+        margin-top: 4px;
+    }
+
+    /* 添加到 style 标签中 */
+    .loading-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255,255,255,0.9);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #f3f3f3;
+        border-top: 4px solid #00C853;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    #pdfViewer {
+        padding: 20px;
+        overflow-y: auto;
+        background: #f5f5f5;
+    }
+
+    #pdfViewer canvas {
+        display: block;
+        margin: 0 auto;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .preview-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.9);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        opacity: 0;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+
+    .preview-modal.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .preview-content {
+        position: relative;
+        max-width: 90vw;
+        max-height: 90vh;
+        transform: scale(0.95);
+        opacity: 0;
+        transition: all 0.3s ease;
+    }
+
+    .preview-modal.active .preview-content {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .close-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 8px;
+    }
+
+    .close-btn:hover {
+        color: #000;
+    }
+
+    #preview-viewer {
+        max-width: 100%;
+        max-height: 100%;
+        position: relative;
+    }
+
+    #preview-viewer img {
+        max-width: 100%;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    #preview-viewer video {
+        max-width: 100%;
+        max-height: 90vh;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    #preview-viewer canvas {
+        max-width: 100%;
+        height: auto;
+    }
+
+    #preview-viewer table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #preview-viewer td,
+    #preview-viewer th {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .preview-error {
+        text-align: center;
+        padding: 40px;
+    }
+
+    .preview-error p {
+        margin: 16px 0;
+        color: #666;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 16px;
+        justify-content: center;
+        margin-top: 20px;
+    }
+
+    .download-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: #00C853;
+        color: white;
+        border-radius: 20px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+        background: #00E676;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Excel 预览相关样式 */
+    .excel-viewer {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        background: white;
+    }
+
+    .excel-toolbar {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e0e0e0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f5f5f5;
+    }
+
+    .sheet-name {
+        font-weight: 500;
+        color: #333;
+    }
+
+    .excel-actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .action-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 6px 12px;
+        border-radius: 4px;
+        background: #fff;
+        color: #333;
+        text-decoration: none;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        transition: all 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background: #f5f5f5;
+        border-color: #ccc;
+    }
+
+    .excel-container {
+        flex: 1;
+        overflow: auto;
+        padding: 16px;
+    }
+
+    .excel-table {
+        border-collapse: collapse;
+        width: 100%;
+        font-family: Arial, sans-serif;
+        font-size: 14px;
+    }
+
+    .excel-table th {
+        background: #f5f5f5;
+        font-weight: bold;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    .loading-indicator {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 200px;
+        gap: 16px;
+    }
+
+    .loading-indicator p {
+        color: #666;
+        margin: 0;
+    }
+
+    /* 服务器图片选择相关样式 */
+    .server-images-timeline {
+        width: 100%;
+        padding: 20px;
+    }
+
+    .timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .timeline-date-group {
+        background: white;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .timeline-date {
+        padding: 16px 20px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+        background: #f8f8f8;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+
+    .timeline-date::after {
+        content: 'expand_more';
+        font-family: 'Material Icons';
+        margin-left: auto;
+        font-size: 20px;
+        color: #666;
+        transition: transform 0.3s ease;
+    }
+
+    .timeline-date-group.collapsed .timeline-date::after {
+        transform: rotate(-90deg);
+    }
+
+    .timeline-images-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+        padding: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-date-group.collapsed .timeline-images-grid {
+        display: none;
+    }
+
+    .timeline-image-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .timeline-image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .timeline-image-item:hover img {
+        transform: scale(1.05);
+    }
+
+    .timeline-image-item.selected {
+        outline: 3px solid #00C853;
+    }
+
+    .timeline-image-item.selected::after {
+        content: '';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
+        background: #00C853;
+        border-radius: 50%;
+    }
+
+    .timeline-image-item.selected::before {
+        content: '✓';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        z-index: 1;
+    }
+
+    .image-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 8px;
+        background: rgba(0, 0, 0, 0.6);
+        color: white;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .timeline-image-item:hover .image-info {
+        opacity: 1;
+    }
+
+    /* 优化模态框样式 */
+    .server-images-modal .modal-content {
+        width: 90%;
+        max-width: 1000px;
+        max-height: 90vh;
+        background: #f5f5f5;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .server-images-modal .modal-header {
+        padding: 16px 20px;
+        background: white;
+        border-bottom: 1px solid #eee;
+    }
+
+    .server-images-modal .modal-body {
+        max-height: calc(90vh - 140px);
+        overflow-y: auto;
+        padding: 0;
+    }
+
+    .server-images-modal .modal-footer {
+        padding: 16px 20px;
+        background: white;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+    }
+
+    /* 响应式调整 */
+    @media (max-width: 768px) {
+        .timeline-images-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .timeline-date {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+    }
+
+    /* 在原有样式的基础上添加，不要删除原有样式 */
+    #serverImagesModal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.7);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+    }
+
+    .server-images-container {
+        background: white;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 1000px;
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .server-images-header {
+        padding: 16px 20px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .server-images-header h3 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .server-images-grid {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px;
+        background: #f8f9fa;
+    }
+
+    .images-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+        padding: 16px;
+        background: white;
+        border-radius: 8px;
+    }
+
+    .image-item {
+        position: relative;
+        aspect-ratio: 1;
+        border-radius: 8px;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.2s ease;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .image-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .image-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.3s ease;
+    }
+
+    .image-item.selected {
+        border-color: #00C853;
+    }
+
+    .image-item.selected::after {
+        content: '✓';
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 24px;
+        height: 24px;
+        background: #00C853;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .image-info {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 12px;
+        background: linear-gradient(transparent, rgba(0,0,0,0.7));
+        color: white;
+        font-size: 12px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .image-item:hover .image-info {
+        opacity: 1;
+    }
+
+    .server-images-footer {
+        padding: 16px 20px;
+        border-top: 1px solid #eee;
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        background: white;
+    }
+
+    .server-images-footer button {
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        cursor: pointer;
+        border: none;
+        transition: all 0.2s ease;
+    }
+
+    .server-images-footer .cancel-btn {
+        background: #f5f5f5;
+        color: #666;
+    }
+
+    .server-images-footer .cancel-btn:hover {
+        background: #eeeeee;
+    }
+
+    .server-images-footer .confirm-btn {
+        background: #00C853;
+        color: white;
+    }
+
+    .server-images-footer .confirm-btn:hover {
+        background: #00b84d;
+        box-shadow: 0 2px 6px rgba(0,200,83,0.3);
+    }
+
+    /* 添加响应式支持 */
+    @media (max-width: 768px) {
+        .images-grid {
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 12px;
+        }
+        
+        .timeline-date {
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+    }
+
+    .date-group {
+        margin-bottom: 24px;
+    }
+
+    .date-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 16px;
+        background: #f8f9fa;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        cursor: pointer;
+        user-select: none;
+        transition: background-color 0.2s ease;
+    }
+
+    .date-header:hover {
+        background: #f0f0f0;
+    }
+
+    .date-header-left {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .expand-icon {
+        font-size: 20px;
+        color: #666;
+        transition: transform 0.3s ease;
+    }
+
+    .date-group.collapsed .images-grid {
+        display: none;
+    }
+
+    .date-text {
+        font-size: 15px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .image-count {
+        font-size: 13px;
+        color: #666;
+        margin-left: 8px;
+    }
+
+    /* 优化图片网格的过渡效果 */
+    .images-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 16px;
+        padding: 16px;
+        background: white;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .date-group {
+        margin-bottom: 24px;
+        transition: all 0.3s ease;
+    }
+
+    /* 修改关闭按钮样式 */
+    .server-images-header .close-btn {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: none;
+        background: none;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+    .server-images-header .close-btn:hover {
+        background: #f5f5f5;
+    }
+
+    .server-images-header .close-btn .material-icons {
+        font-size: 20px;
+        color: #666;
+    }
+    </style>
+
+    <!-- 添加JavaScript以处理复选框激活状态 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // 弹窗控制
+        const addRecordBtn = document.querySelector('.add-record-btn');
+        const recordModal = document.getElementById('recordModal');
+        const closeBtn = recordModal.querySelector('.close-btn');
+        const cancelBtn = recordModal.querySelector('.cancel-btn');
+        const checkboxes = document.querySelectorAll('.record-type-checkboxes input[type="checkbox"]');
+        const recordContents = document.querySelectorAll('.record-type-content');
+
+        // 显示弹窗
+        addRecordBtn.addEventListener('click', () => {
+            recordModal.style.display = 'flex';
+        });
+
+        // 关闭弹窗
+        const closeModal = () => {
+            recordModal.style.display = 'none';
+        };
+
+        closeBtn.addEventListener('click', closeModal);
+        cancelBtn.addEventListener('click', closeModal);
+        
+        // 点击遮罩层关闭
+        recordModal.addEventListener('click', (e) => {
+            if (e.target === recordModal) {
+                closeModal();
+            }
+        });
+
+        // 处理记录类型切换
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', (e) => {
+                const recordType = e.target.value;
+                const recordContent = document.getElementById(`${recordType}Record`);
+                if (recordContent) {
+                    if (e.target.checked) {
+                        recordContent.style.display = 'block';
+                        // 自动添加一条记录
+                        addNewRecord(recordType);
+                    } else {
+                        // 确认是否删除所有该类型的记录
+                        if (confirm('删除此类型将清空所有相关记录，是否继续？')) {
+                            recordContent.style.display = 'none';
+                            recordContent.querySelector('.record-list').innerHTML = '';
+                        } else {
+                            e.target.checked = true;
+                        }
+                    }
+                }
+            });
+
+            // 添加样式切换
+            const checkboxItem = checkbox.closest('.checkbox-item');
+            if (checkboxItem) {
+                checkbox.addEventListener('change', () => {
+                    if (checkbox.checked) {
+                        checkboxItem.classList.add('active');
+                    } else {
+                        checkboxItem.classList.remove('active');
+                    }
+                });
+            }
+        });
+
+        // 处理录音功能
+        const recordBtn = document.querySelector('.record-btn');
+        const stopBtn = document.querySelector('.stop-btn');
+        const audioControls = document.querySelector('.audio-controls');
+        let mediaRecorder;
+        let recordedChunks = [];
+
+        if (recordBtn && stopBtn && audioControls) {
+            recordBtn.addEventListener('click', async () => {
+                try {
+                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                    mediaRecorder = new MediaRecorder(stream);
+                    
+                    mediaRecorder.ondataavailable = (e) => {
+                        if (e.data.size > 0) {
+                            recordedChunks.push(e.data);
+                        }
+                    };
+
+                    mediaRecorder.start();
+                    recordBtn.style.display = 'none';
+                    audioControls.style.display = 'flex';
+                } catch (err) {
+                    console.error('录音失败:', err);
+                    alert('无法访问麦克风');
+                }
+            });
+
+            stopBtn.addEventListener('click', () => {
+                if (mediaRecorder && mediaRecorder.state === 'recording') {
+                    mediaRecorder.stop();
+                    recordBtn.style.display = 'flex';
+                    audioControls.style.display = 'none';
+                }
+            });
+        }
+    });
+    </script>
+
+    <!-- 添加JavaScript以处理文件预览 -->
+    <script>
+    // 处理文件预览
+    function handleFileSelect(input, previewGrid, type) {
+        if (!input || !previewGrid) return;
+        
+        const maxFiles = 8;
+        
+        input.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const uploadArea = input.closest('.media-upload');
+            const currentFiles = previewGrid.children.length;
+            
+            // 检查是否超出最大文件数量限制
+            if (currentFiles + files.length > maxFiles) {
+                alert(`最多只能上传${maxFiles}个文件`);
+                input.value = ''; // 清空选择
+                return;
+            }
+            
+            // 检查文件是否已存在
+            const existingFiles = Array.from(previewGrid.querySelectorAll('.file-name')).map(el => el.textContent);
+            const newFiles = files.filter(file => !existingFiles.includes(file.name));
+            
+            if (files.length !== newFiles.length) {
+                alert('已过滤重复文件');
+            }
+            
+            newFiles.forEach(file => {
+                const reader = new FileReader();
+                const mediaCard = document.createElement('div');
+                mediaCard.className = 'media-card';
+                
+                reader.onload = function(e) {
+                    let previewContent = '';
+                    
+                    if (type === 'image') {
+                        previewContent = `<img src="${e.target.result}" alt="预览">`;
+                    } else if (type === 'video') {
+                        previewContent = `<video src="${e.target.result}" controls></video>`;
+                    } else {
+                        const ext = file.name.split('.').pop().toUpperCase();
+                        previewContent = `
+                            <div class="file-preview">
+                                <span class="material-icons">description</span>
+                                <span class="file-ext">${ext}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    previewItem.innerHTML = `
+                        ${previewContent}
+                        <div class="preview-overlay">
+                            <button type="button" class="preview-action-btn" onclick="removeFile(this, '${file.name}')">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </div>
+                    `;
+                };
+                
+                reader.readAsDataURL(file);
+                previewGrid.appendChild(mediaCard);
+            });
+            
+            // 清空input，防止重复选择同一文件时不触发change事件
+            input.value = '';
+            updateUploadArea(input);
+        });
+    }
+
+    // 优化文件删除功能
+    function removeFile(btn, fileName) {
+        const previewItem = btn.closest('.preview-item');
+        const previewContainer = previewItem.parentElement;
+        const uploadArea = previewContainer.previousElementSibling;
+        const input = uploadArea.querySelector('input[type="file"]');
+        
+        // 创建新的 FileList
+        const dt = new DataTransfer();
+        const files = Array.from(input.files);
+        
+        // 过滤掉要删除的文件
+        files.filter(file => file.name !== fileName)
+             .forEach(file => dt.items.add(file));
+        
+        // 更新 input 的文件列表
+        input.files = dt.files;
+        
+        // 移除预览项
+        previewItem.remove();
+        
+        // 更新上传区域状态
+        updateUploadAreaState(uploadArea, previewContainer);
+    }
+
+    function updateUploadAreaState(uploadArea, previewContainer) {
+        const hasFiles = previewContainer.children.length > 0;
+        uploadArea.classList.toggle('has-files', hasFiles);
+        uploadArea.querySelector('.upload-placeholder').style.display = hasFiles ? 'none' : 'flex';
+    }
+
+    // 初始化文件预览
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.querySelector('#imageRecord input[type="file"]');
+        const videoInput = document.querySelector('#videoRecord input[type="file"]');
+        const fileInput = document.querySelector('#fileRecord input[type="file"]');
+        
+        handleFileSelect(imageInput, document.getElementById('imagePreview'), 'image');
+        handleFileSelect(videoInput, document.getElementById('videoPreview'), 'video');
+        handleFileSelect(fileInput, document.getElementById('filePreview'), 'file');
+    });
+    </script>
+
+    <!-- 添加JavaScript以处理删除记录内容 -->
+    <script>
+    // 删除记录内容
+    function deleteContent(type) {
+        const recordContent = document.getElementById(`${type}Record`);
+        const checkbox = document.querySelector(`.checkbox-item input[value="${type}"]`);
+        
+        // 清空内容
+        const inputs = recordContent.querySelectorAll('input, textarea');
+        inputs.forEach(input => input.value = '');
+        
+        // 清空文件预览
+        const preview = recordContent.querySelector('.media-preview');
+        if (preview) {
+            preview.innerHTML = '';
+        }
+        
+        // 重置文件上传区域
+        const uploadArea = recordContent.querySelector('.media-upload');
+        if (uploadArea) {
+            uploadArea.classList.remove('has-files');
+            uploadArea.querySelector('.upload-placeholder').style.display = 'flex';
+            uploadArea.querySelector('input[type="file"]').value = '';
+        }
+        
+        // 取消选中对应的复选框
+        checkbox.checked = false;
+        checkbox.dispatchEvent(new Event('change'));
+        
+        // 隐藏记录内容区域
+        recordContent.style.display = 'none';
+    }
+
+    // 在DOMContentLoaded事件中添加确认删除的处理
+    document.addEventListener('DOMContentLoaded', function() {
+        // ... 现有代码 ...
+        
+        // 添加删除确认
+        document.querySelectorAll('.delete-content-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const type = e.currentTarget.getAttribute('data-type');
+                if (confirm('确定要删除这条记录吗？')) {
+                    deleteContent(type);
+                }
+            });
+        });
+    });
+    </script>
+
+    <!-- 添加新记录 -->
+    <script>
+    // 添加新记录
+    function addNewRecord(type) {
+        const recordList = document.querySelector(`#${type}Record .record-list`);
+        const template = document.getElementById(`${type}RecordTemplate`);
+        
+        if (!recordList || !template) {
+            console.error(`找不到${type}类型的记录列表或模板`);
+            return;
+        }
+        
+        const recordItem = template.content.cloneNode(true);
+        const recordNumber = recordList.children.length + 1;
+        recordItem.querySelector('.record-number').textContent = recordNumber;
+        recordList.appendChild(recordItem);
+    }
+
+    // 删除记录
+    function deleteRecord(btn) {
+        if (!btn) return;
+        
+        if (confirm('确定要删除这条记录吗？')) {
+            const recordItem = btn.closest('.record-item');
+            const recordList = recordItem.parentElement;
+            
+            recordItem.remove();
+            
+            // 重新编号
+            recordList.querySelectorAll('.record-item').forEach((item, index) => {
+                item.querySelector('.record-number').textContent = index + 1;
+            });
+            
+            // 如果没有记录了，检查是否需要隐藏记录类型
+            if (recordList.children.length === 0) {
+                const recordType = recordList.closest('.record-type-content').id.replace('Record', '');
+                const checkbox = document.querySelector(`.checkbox-item input[value="${recordType}"]`);
+                if (checkbox) {
+                    checkbox.checked = false;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            }
+        }
+    }
+    </script>
+
+    <!-- 添加JavaScript以处理媒体文件上传和预览 -->
+    <script>
+    // 获取文件类型对应的图标和样式
+    function getFileTypeInfo(file) {
+        const ext = file.name.split('.').pop().toLowerCase();
+        const size = formatFileSize(file.size);
+        
+        const typeMap = {
+            // PDF文件
+            'pdf': {
+                icon: 'picture_as_pdf',
+                type: 'pdf'
+            },
+            // Word文件
+            'doc': {
+                icon: 'description',
+                type: 'word'
+            },
+            'docx': {
+                icon: 'description',
+                type: 'word'
+            },
+            // Excel文件
+            'xls': {
+                icon: 'table_chart',
+                type: 'spreadsheet excel'
+            },
+            'xlsx': {
+                icon: 'table_chart',
+                type: 'spreadsheet excel'
+            },
+            // 文本文件
+            'txt': {
+                icon: 'article',
+                type: 'text'
+            },
+            'default': {
+                icon: 'insert_drive_file',
+                type: 'default'
+            }
+        };
+        
+        const fileType = typeMap[ext] || typeMap.default;
+        return { ...fileType, ext: ext.toUpperCase(), size };
+    }
+
+// 辅助函数：格式化文件大小
+function formatFileSize(bytes) {
+    if (bytes === 0) return '0 B';
+    const k = 1024;
+    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+}
+
+    // 辅助函数：获取文件图标
+function getFileIcon(fileType) {
+    if (fileType.includes('pdf')) return 'picture_as_pdf';
+    if (fileType.includes('word')) return 'description';
+    if (fileType.includes('sheet') || fileType.includes('excel')) return 'table_chart';
+    if (fileType.includes('presentation') || fileType.includes('powerpoint')) return 'slideshow';
+    return 'insert_drive_file';
+}
+
+function handleMediaFiles(input) {
+    const previewGrid = input.closest('.record-item-content').querySelector('.media-preview-grid');
+    const files = Array.from(input.files);
+    const maxFiles = 8;
+    
+    // 检查当前文件数量
+    const currentFiles = previewGrid.querySelectorAll('.media-card').length;
+    
+    // 获取已存在的文件名
+    const existingFileNames = Array.from(previewGrid.querySelectorAll('.media-card')).map(card => 
+        card.dataset.name
+    );
+    
+    // 过滤重复文件
+    const newFiles = files.filter(file => !existingFileNames.includes(file.name));
+    
+    if (currentFiles + newFiles.length > maxFiles) {
+        alert(`最多只能上传${maxFiles}个文件`);
+        input.value = '';
+        return;
+    }
+    
+    // 处理新文件
+    newFiles.forEach(file => {
+        const reader = new FileReader();
+        const mediaCard = document.createElement('div');
+        mediaCard.className = 'media-card';
+        mediaCard.dataset.type = file.type || getMimeTypeByExtension(file.name);
+        mediaCard.dataset.name = file.name;
+        mediaCard.dataset.size = formatFileSize(file.size);
+        
+        reader.onload = function(e) {
+            const fileUrl = e.target.result;
+            mediaCard.dataset.url = fileUrl;
+            
+            let previewContent = '';
+            const fileInfo = getFileTypeInfo(file);
+            
+            // 根据文件类型生成预览内容
+            if (file.type.startsWith('image/')) {
+                previewContent = `<img src="${fileUrl}" alt="${file.name}">`;
+            } else {
+                previewContent = `
+                    <div class="file-preview" data-type="${fileInfo.type}">
+                        <span class="material-icons">${fileInfo.icon}</span>
+                        <span class="file-name">${file.name}</span>
+                        <span class="file-ext">${fileInfo.ext}</span>
+                        <span class="file-size">${fileInfo.size}</span>
+                    </div>
+                `;
+            }
+            
+            mediaCard.innerHTML = `
+                ${previewContent}
+                <div class="media-overlay">
+                    <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            `;
+        };
+        
+        reader.readAsDataURL(file);
+        previewGrid.appendChild(mediaCard);
+    });
+    
+    input.value = '';
+    updateUploadArea(input);
+}
+
+// 根据文件扩展名获取MIME类型
+function getMimeTypeByExtension(filename) {
+    const ext = filename.split('.').pop().toLowerCase();
+    const mimeTypes = {
+        'pdf': 'application/pdf',
+        'doc': 'application/msword',
+        'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'xls': 'application/vnd.ms-excel',
+        'xlsx': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        'ppt': 'application/vnd.ms-powerpoint',
+        'pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        'txt': 'text/plain',
+        'csv': 'text/csv',
+        'webm': 'audio/webm',
+        'mp3': 'audio/mpeg',
+        'wav': 'audio/wav'
+    };
+    return mimeTypes[ext] || 'application/octet-stream';
+}
+
+    // 预览媒体文件
+    function previewMedia(btn) {
+        try {
+            const mediaCard = btn.closest('.media-card');
+            if (!mediaCard) return;
+
+            // 获取预览所需的文件信息
+            const previewElement = mediaCard.querySelector('img, video');
+            const filePreview = mediaCard.querySelector('.file-preview');
+            
+            let fileType, fileUrl, fileName, fileSize;
+            
+            if (previewElement) {
+                // 对于图片和视频文件
+                if (previewElement.tagName.toLowerCase() === 'img') {
+                    fileType = 'image/jpeg';
+                } else if (previewElement.tagName.toLowerCase() === 'video') {
+                    fileType = 'video/mp4';
+                } else if (previewElement.tagName.toLowerCase() === 'audio') {
+                    fileType = 'audio/webm';
+                }
+                fileUrl = previewElement.src;
+                fileName = previewElement.alt || '未命名文件';
+                fileSize = mediaCard.querySelector('.file-size')?.textContent || '';
+            } else if (filePreview) {
+                // 对于其他类型的文件
+                fileType = filePreview.querySelector('audio') ? 'audio/webm' : (filePreview.dataset.type || 'application/octet-stream');
+                fileName = filePreview.querySelector('.file-name')?.textContent || '未命名文件';
+                fileSize = filePreview.querySelector('.file-size')?.textContent || '';
+                // 检查是否为录音文件
+                const audioElement = filePreview.querySelector('audio');
+                if (audioElement && audioElement.src) {
+                    fileUrl = audioElement.src;
+                    fileType = 'audio/webm';
+                } else {
+                    fileUrl = filePreview.dataset.url || '';
+                }
+            } else {
+                console.error('无法获取文件信息');
+                return;
+            }
+
+            // 创建预览容器
+            const previewContent = `
+                <div class="preview-container" style="
+                    width: 90vw;
+                    height: 90vh;
+                    background: white;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                ">
+                    <div class="preview-header" style="
+                        padding: 16px;
+                        border-bottom: 1px solid #eee;
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                    ">
+                        <div class="file-info">
+                            <h3 style="margin: 0;">${fileName}</h3>
+                            <span style="color: #666;">${fileSize}</span>
+                        </div>
+                        <button onclick="this.closest('.preview-modal').remove()" class="close-btn">
+                            <span class="material-icons">close</span>
+                        </button>
+                    </div>
+                    <div class="preview-content" style="flex: 1; overflow: auto; padding: 20px;">
+                        <div id="preview-viewer"></div>
+                    </div>
+                </div>
+            `;
+
+            const previewModal = document.createElement('div');
+            previewModal.className = 'preview-modal';
+            previewModal.innerHTML = previewContent;
+            document.body.appendChild(previewModal);
+
+            const viewer = previewModal.querySelector('#preview-viewer');
+
+            // 根据文件类型处理预览
+            if (fileType.startsWith('image/')) {
+                // 图片预览
+                viewer.innerHTML = `<img src="${fileUrl}" style="max-width: 100%; max-height: 80vh; object-fit: contain;">`;
+            } else if (fileType.startsWith('video/')) {
+                // 视频预览
+                viewer.innerHTML = `<video src="${fileUrl}" controls style="max-width: 100%; max-height: 80vh;"></video>`;
+            } else if (fileType.startsWith('audio/')) {
+                // 音频预览
+                viewer.innerHTML = `
+                    <div style="text-align: center; padding: 20px;">
+                        <span class="material-icons" style="font-size: 48px; color: #2196f3;">audio_file</span>
+                        <div style="margin-top: 20px;">
+                            <audio src="${fileUrl}" controls style="width: 100%; max-width: 500px;"></audio>
+                        </div>
+                    </div>
+                `;
+                
+                // 确保音频可以播放
+                const audioElement = viewer.querySelector('audio');
+                audioElement.load();
+                audioElement.addEventListener('error', function(e) {
+                    console.error('音频加载错误:', e);
+                    viewer.innerHTML = `
+                        <div class="preview-error">
+                            <span class="material-icons" style="font-size: 48px; color: #ff5252;">error_outline</span>
+                            <p>无法加载音频文件</p>
+                        </div>
+                    `;
+                });
+
+            } else if (fileType.includes('pdf')) {
+                // PDF 预览
+                const loadingTask = pdfjsLib.getDocument(fileUrl);
+                loadingTask.promise.then(function(pdf) {
+                    pdf.getPage(1).then(function(page) {
+                        const canvas = document.createElement('canvas');
+                        const context = canvas.getContext('2d');
+                        const viewport = page.getViewport({ scale: 1.5 });
+
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        viewer.appendChild(canvas);
+
+                        page.render({
+                            canvasContext: context,
+                            viewport: viewport
+                        });
+                    });
+                });
+            } else if (fileType.includes('word') || fileType.includes('docx')) {
+                // Word 文档预览
+                fetch(fileUrl)
+                    .then(response => response.arrayBuffer())
+                    .then(buffer => {
+                        mammoth.convertToHtml({ arrayBuffer: buffer })
+                            .then(result => {
+                                viewer.innerHTML = result.value;
+                            });
+                    });
+            } else if (fileType.includes('powerpoint') || fileType.includes('presentation')) {
+                // PPT 预览 - 由于浏览器限制，提供下载选项
+                viewer.innerHTML = `
+                    <div class="preview-error">
+                        <span class="material-icons" style="font-size: 48px; color: #ff9800;">slideshow</span>
+                        <p>演示文稿需要使用本地应用程序打开</p>
+                        <div class="action-buttons">
+                            <a href="${fileUrl}" download="${fileName}" class="download-btn">
+                                <span class="material-icons">download</span>
+                                下载文件
+                            </a>
+                        </div>
+                    </div>
+                `;
+            } else if (fileType.includes('excel') || fileType.includes('xlsx') || fileType.includes('csv') || fileType.includes('spreadsheetml.sheet')) {
+                // Excel 预览
+                try {
+                    // 添加加载提示
+                    viewer.innerHTML = `
+                        <div class="loading-indicator">
+                            <div class="spinner"></div>
+                            <p>正在加载表格...</p>
+                        </div>
+                    `;
+
+                    // 从 base64 URL 提取数据
+                    const base64Data = fileUrl.split(',')[1];
+                    const binaryData = atob(base64Data);
+                    const arrayBuffer = new ArrayBuffer(binaryData.length);
+                    const uint8Array = new Uint8Array(arrayBuffer);
+                    
+                    for (let i = 0; i < binaryData.length; i++) {
+                        uint8Array[i] = binaryData.charCodeAt(i);
+                    }
+
+                    // 使用 SheetJS 读取文件
+                    const workbook = XLSX.read(uint8Array, { type: 'array' });
+                    
+                    // 创建标签页和表格内容
+                    const sheetTabs = workbook.SheetNames.map(sheetName => `
+                        <button class="sheet-tab" data-sheet="${sheetName}">${sheetName}</button>
+                    `).join('');
+
+                    const sheetTables = workbook.SheetNames.map(sheetName => {
+                        const sheet = workbook.Sheets[sheetName];
+                        const htmlTable = XLSX.utils.sheet_to_html(sheet, {
+                            editable: false,
+                            header: '<table class="excel-table">',
+                            footer: '</table>'
+                        });
+                        return `<div class="sheet-content" data-sheet="${sheetName}">${htmlTable}</div>`;
+                    }).join('');
+                    
+                    // 添加表格容器和样式
+                    viewer.innerHTML = `
+                        <div class="excel-viewer">
+                            <div class="excel-toolbar">
+                                <div class="sheet-tabs">${sheetTabs}</div>
+                                <div class="excel-actions">
+                                    <a href="${fileUrl}" download="${fileName}" class="action-btn">
+                                        <span class="material-icons">download</span>
+                                        下载
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="excel-container">
+                                ${sheetTables}
+                            </div>
+                        </div>
+                    `;
+
+                    // 添加表格样式
+                    const tables = viewer.querySelectorAll('.excel-table');
+                    tables.forEach(table => {
+                        const cells = table.querySelectorAll('td, th');
+                        cells.forEach(cell => {
+                            cell.style.cssText = `
+                                border: 1px solid #e0e0e0;
+                                padding: 8px;
+                                text-align: left;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 300px;
+                                background: white;
+                            `;
+                        });
+                    });
+
+                    // 添加标签页切换功能
+                    const sheetContents = viewer.querySelectorAll('.sheet-content');
+                    const tabs = viewer.querySelectorAll('.sheet-tab');
+
+                    // 默认显示第一个工作表
+                    if (sheetContents.length > 0 && tabs.length > 0) {
+                        sheetContents[0].style.display = 'block';
+                        tabs[0].classList.add('active');
+                    }
+
+                    // 标签页点击事件
+                    tabs.forEach(tab => {
+                        tab.addEventListener('click', () => {
+                            const sheetName = tab.dataset.sheet;
+                            
+                            // 更新标签页状态
+                            tabs.forEach(t => t.classList.remove('active'));
+                            tab.classList.add('active');
+                            
+                            // 更新内容显示
+                            sheetContents.forEach(content => {
+                                content.style.display = content.dataset.sheet === sheetName ? 'block' : 'none';
+                            });
+                        });
+                    });
+                } catch (error) {
+                    console.error('Excel预览错误:', error);
+                    showExcelError(viewer, fileUrl, fileName);
+                }
+            }
+
+            // 点击背景关闭预览
+            previewModal.addEventListener('click', (e) => {
+                if (e.target === previewModal) {
+                    previewModal.remove();
+                }
+            });
+
+        } catch (error) {
+            console.error('预览出错:', error);
+        }
+    }
+
+    // 删除媒体文件
+    function deleteMedia(btn) {
+        if (confirm('确定要删除这个文件吗？')) {
+            const mediaCard = btn.closest('.media-card');
+            const previewGrid = mediaCard.parentElement;
+            const input = previewGrid.closest('.record-item').querySelector('input[type="file"]');
+            
+            // 从input的files中移除对应文件
+            const dt = new DataTransfer();
+            Array.from(input.files)
+                .filter((_, index) => index !== Array.from(previewGrid.children).indexOf(mediaCard))
+                .forEach(file => dt.items.add(file));
+            
+            input.files = dt.files;
+            mediaCard.remove();
+            
+            // 更新上传区域状态
+            updateUploadArea(input);
+        }
+    }
+
+    // 更新上传区域状态
+    function updateUploadArea(input) {
+        const uploadArea = input.closest('.media-upload');
+        const previewGrid = uploadArea.nextElementSibling;
+        const hasFiles = previewGrid.children.length > 0;
+        
+        uploadArea.classList.toggle('has-files', hasFiles);
+        const placeholder = uploadArea.querySelector('.upload-placeholder');
+        
+        if (hasFiles) {
+            placeholder.style.opacity = '0.6';
+            placeholder.style.transform = 'scale(0.9)';
+        } else {
+            placeholder.style.opacity = '1';
+            placeholder.style.transform = 'scale(1)';
+        }
+    }
+
+    // 添加 Excel 错误显示函数
+    function showExcelError(viewer, fileUrl, fileName) {
+        viewer.innerHTML = `
+            <div class="preview-error">
+                <span class="material-icons" style="font-size: 48px; color: #ff5252;">error_outline</span>
+                <p>无法预览此 Excel 文件</p>
+                <div class="action-buttons">
+                    <a href="${fileUrl}" download="${fileName}" class="download-btn">
+                        <span class="material-icons">download</span>
+                        下载文件
+                    </a>
+                </div>
+            </div>
+        `;
+    }
+    </script>
+
+    <!-- 添加生长阶段处理逻辑 -->
+    <script>
+    // 更新生长阶段处理逻辑
+    const growthStages = {
+        fruit: [
+            { value: 'seed', label: '种子期' },
+            { value: 'germination', label: '发芽期' },
+            { value: 'seedling', label: '幼苗期' },
+            { value: 'vegetative', label: '营养生长期' },
+            { value: 'flowering', label: '开花期' },
+            { value: 'fruit_development', label: '果实发育期' },
+            { value: 'ripening', label: '成熟期' }
+        ],
+        leaf: [
+            { value: 'seed', label: '种子期' },
+            { value: 'germination', label: '发芽期' },
+            { value: 'seedling', label: '幼苗期' },
+            { value: 'vegetative', label: '营养生长期' },
+            { value: 'mature', label: '成熟期' },
+            { value: 'harvest', label: '采收期' }
+        ],
+        flower: [
+            { value: 'seed', label: '种子期' },
+            { value: 'germination', label: '发芽期' },
+            { value: 'seedling', label: '幼苗期' },
+            { value: 'vegetative', label: '营养生长期' },
+            { value: 'bud', label: '花芽分化期' },
+            { value: 'flowering', label: '开花期' },
+            { value: 'post_flowering', label: '花后期' }
+        ],
+        herb: [
+            { value: 'seed', label: '种子期' },
+            { value: 'germination', label: '发芽期' },
+            { value: 'seedling', label: '幼苗期' },
+            { value: 'vegetative', label: '营养生长期' },
+            { value: 'mature', label: '成熟期' },
+            { value: 'harvest', label: '采收期' }
+        ]
+    };
+
+    // 更新生长阶段选项
+    function updateGrowthStages(plantType) {
+        const growthStageSelect = document.getElementById('growthStage');
+        
+        if (!growthStageSelect) return;
+        
+        // 重置生长阶段选择器
+        growthStageSelect.innerHTML = '';
+        growthStageSelect.disabled = !plantType;
+        
+        if (!plantType) {
+            growthStageSelect.innerHTML = '<option value="">请先选择植物类型</option>';
+            return;
+        }
+        
+        // 添加生长阶段选项
+        growthStageSelect.innerHTML = '<option value="">请选择生长阶段</option>';
+        const stages = growthStages[plantType] || [];
+        stages.forEach(stage => {
+            const option = document.createElement('option');
+            option.value = stage.value;
+            option.textContent = stage.label;
+            growthStageSelect.appendChild(option);
+        });
+    }
+
+    // 在页面加载时初始化
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const plantTypeSelect = document.getElementById('plantType');
+    //     if (plantTypeSelect) {
+    //         plantTypeSelect.addEventListener('change', function() {
+    //             updateGrowthStages(this.value);
+                
+    //             // 根据植物类型更新植物选择网格的显示
+    //             const plantOptions = document.querySelectorAll('.plant-option');
+    //             plantOptions.forEach(option => {
+    //                 const plantValue = option.querySelector('input').value;
+    //                 const plantCategory = getPlantCategory(plantValue);
+    //                 option.style.display = plantCategory === this.value ? '' : 'none';
+    //             });
+    //         });
+    //     }
+    // });
+
+    // 获取植物所属类别
+    function getPlantCategory(plantValue) {
+        const categoryMap = {
+            'tomato': 'fruit',
+            'cucumber': 'fruit',
+            'pepper': 'fruit',
+            'lettuce': 'leaf',
+            'spinach': 'leaf',
+            'cabbage': 'leaf',
+            'rose': 'flower',
+            'lily': 'flower',
+            'basil': 'herb',
+            'mint': 'herb'
+            // 可以继续添加更多植物映射
+        };
+        return categoryMap[plantValue] || '';
+    }
+    </script>
+
+    <!-- 图片记录模板 -->
+    <template id="imageRecordTemplate">
+        <div class="record-item media-record-item">
+            <div class="record-item-header">
+                <span class="record-item-title">图片记录 #<span class="record-number"></span></span>
+                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+            <div class="record-item-content">
+                <div class="media-upload-actions">
+                    <div class="media-upload">
+                        <input type="file" accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.txt" multiple onchange="handleMediaFiles(this)">
+                        <div class="upload-placeholder">
+                            <span class="material-icons">add_photo_alternate</span>
+                            <span>点击上传文件</span>
+                            <span class="upload-hint">支持图片、视频、音频和文档等格式</span>
+                        </div>
+                    </div>
+                    <button type="button" class="server-images-btn" onclick="showServerImages(this)">
+                        <span class="material-icons">cloud_upload</span>
+                        从服务器选择
+                    </button>
+                </div>
+                <div class="media-preview-grid"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 添加服务器图片选择弹窗 -->
+    <div class="server-images-modal" id="serverImagesModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>选择服务器图片</h3>
+                <button class="close-btn" onclick="closeServerImagesModal()">
+                    <span class="material-icons">close</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="server-images-grid">
+                    <!-- 图片将在这里动态加载 -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="cancel-btn" onclick="closeServerImagesModal()">
+                    <span class="material-icons">close</span>
+                    取消
+                </button>
+                <button class="confirm-btn" onclick="addSelectedImages()">
+                    <span class="material-icons">add_photo_alternate</span>
+                    确认添加
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 数据记录模板 -->
+    <template id="dataRecordTemplate">
+        <div class="record-item">
+            <div class="record-item-header">
+                <span class="record-item-title">数据记录 #<span class="record-number"></span></span>
+                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+            <div class="record-item-content">
+                <div class="data-grid">
+                    <div class="form-group">
+                        <label>温度(℃)</label>
+                        <input type="number" placeholder="请输入温度">
+                    </div>
+                    <div class="form-group">
+                        <label>湿度(%)</label>
+                        <input type="number" placeholder="请输入湿度">
+                    </div>
+                    <div class="form-group">
+                        <label>光照强度(lux)</label>
+                        <input type="number" placeholder="请输入光照强度">
+                    </div>
+                    <div class="form-group">
+                        <label>营养液浓度(ppm)</label>
+                        <input type="number" placeholder="请输入营养液浓度">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 文件记录模板 -->
+    <template id="fileRecordTemplate">
+        <div class="record-item media-record-item">
+            <div class="record-item-header">
+                <span class="record-item-title">文件记录 #<span class="record-number"></span></span>
+                <button type="button" class="delete-record-btn" onclick="deleteRecord(this)">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+            <div class="record-item-content">
+                <div class="media-upload">
+                    <input type="file" multiple onchange="handleMediaFiles(this)">
+                    <div class="upload-placeholder">
+                        <span class="material-icons">upload_file</span>
+                        <span>点击上传文件</span>
+                        <span class="upload-hint">支持doc、pdf、xlsx等格式</span>
+                    </div>
+                </div>
+                <div class="media-preview-grid"></div>
+            </div>
+        </div>
+    </template>
+
+    <!-- 添加录音处理逻辑 -->
+    <script>
+    // 添加录音处理逻辑
+    function initAudioRecorder(recordItem) {
+        const recordBtn = recordItem.querySelector('.record-btn');
+        const stopBtn = recordItem.querySelector('.stop-btn');
+        const recordingStatus = recordItem.querySelector('.recording-status');
+        const recordTime = recordItem.querySelector('.record-time');
+        const previewGrid = recordItem.querySelector('.media-preview-grid');
+        
+        let mediaRecorder;
+        let recordedChunks = [];
+        let startTime;
+        let timeInterval;
+
+        // 更新录音时间显示
+        function updateRecordTime() {
+            const now = Date.now();
+            const diff = now - startTime;
+            const seconds = Math.floor(diff / 1000);
+            const minutes = Math.floor(seconds / 60);
+            recordTime.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+        }
+
+        recordBtn.addEventListener('click', async () => {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                mediaRecorder = new MediaRecorder(stream);
+                recordedChunks = [];
+                
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) {
+                        recordedChunks.push(e.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+                    const audioUrl = URL.createObjectURL(blob);
+                    
+                    // 创建音频预览卡片
+                    const mediaCard = document.createElement('div');
+                    mediaCard.className = 'media-card';
+                    mediaCard.innerHTML = `
+                        <div class="file-preview" data-type="audio/webm">
+                            <span class="material-icons">audiotrack</span>
+                            <span class="file-name">录音_${new Date().toLocaleTimeString()}</span>
+                            <span class="file-ext">WEBM</span>
+                            <audio src="${audioUrl}" controls></audio>
+                        </div>
+                        <div class="media-overlay">
+                            <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </div>
+                    `;
+                    
+                    previewGrid.appendChild(mediaCard);
+                    
+                    // 停止所有轨道
+                    stream.getTracks().forEach(track => track.stop());
+                };
+
+                // 开始录音
+                mediaRecorder.start();
+                startTime = Date.now();
+                timeInterval = setInterval(updateRecordTime, 1000);
+                
+                // 更新UI状态
+                recordBtn.style.display = 'none';
+                recordingStatus.style.display = 'flex';
+                
+            } catch (err) {
+                console.error('录音失败:', err);
+                alert('无法访问麦克风');
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                clearInterval(timeInterval);
+                
+                // 重置UI状态
+                recordBtn.style.display = 'flex';
+                recordingStatus.style.display = 'none';
+                recordTime.textContent = '00:00';
+            }
+        });
+    }
+
+    // 修改addNewRecord函数，添加录音和标签初始化
+    const originalAddNewRecord = addNewRecord;
+    addNewRecord = function(type) {
+        originalAddNewRecord(type);
+        
+        if (type === 'audio') {
+            const recordList = document.querySelector(`#${type}Record .record-list`);
+            const lastRecord = recordList.lastElementChild;
+            if (lastRecord) {
+                initAudioRecorder(lastRecord);
+            }
+        } else if (type === 'text') {
+            const recordList = document.querySelector(`#${type}Record .record-list`);
+            const lastRecord = recordList.lastElementChild;
+            if (lastRecord) {
+                initTagsInput(lastRecord);
+            }
+        }
+    };
+
+    // 标签相关功能
+    function initTagsInput(recordItem) {
+        const tagsContainer = recordItem.querySelector('.tags-input-container');
+        const tagsList = tagsContainer.querySelector('.tags-list');
+        const tagInput = tagsContainer.querySelector('.tag-input');
+
+        tagInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && tagInput.value.trim()) {
+                e.preventDefault();
+                const tagText = tagInput.value.trim();
+                addTag(tagsList, tagText);
+                tagInput.value = '';
+            }
+        });
+    }
+
+    function addTag(tagsList, text) {
+        const tag = document.createElement('div');
+        tag.className = 'tag-item';
+        tag.innerHTML = `
+            ${text}
+            <button class="remove-tag" onclick="this.parentElement.remove()">
+                <span class="material-icons" style="font-size: 14px;">close</span>
+            </button>
+        `;
+        tagsList.appendChild(tag);
+    };
+    </script>
+
+    <!-- 在main标签结束前添加 -->
+    <button class="add-planting-btn" onclick="showRecordModal()">
+        <span class="material-icons">add</span>
+    </button>
+
+    <!-- 修改showRecordModal函数 -->
+    <script>
+    function showRecordModal(type = 'record') {
+        const modal = document.getElementById('recordModal');
+        const modalTitle = modal.querySelector('.modal-header h3');
+        const operationTypeGroup = modal.querySelector('.operation-type-group');
+        
+        // 根据类型设置不同的标题和显示/隐藏操作类型选择
+        if (type === 'new') {
+            modalTitle.textContent = '新建种植';
+            operationTypeGroup.style.display = 'none';
+        } else {
+            modalTitle.textContent = '添加种植记录';
+            operationTypeGroup.style.display = 'block';
+        }
+        
+        modal.style.display = 'flex';
+    }
+    </script>
+
+    <!-- 添加操作类型切换处理 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const operationTypeSelect = document.getElementById('operationType');
+        
+        if (operationTypeSelect) {
+            operationTypeSelect.addEventListener('change', function() {
+                const selectedType = this.value;
+                const recordTypeCheckboxes = document.querySelectorAll('.record-type-checkboxes input[type="checkbox"]');
+                
+                // 根据不同的操作类型预选对应的记录类型
+                recordTypeCheckboxes.forEach(checkbox => checkbox.checked = false);
+                
+                switch (selectedType) {
+                    case 'growth_status':
+                        // 生长状态默认选择文字和图片记录
+                        checkRecordTypes(['text', 'image']);
+                        break;
+                    case 'watering':
+                    case 'fertilizing':
+                        // 浇水和施肥默认选择文字和视频记录
+                        checkRecordTypes(['text', 'video']);
+                        break;
+                    case 'environment':
+                        // 环境数据默认选择数据记录
+                        checkRecordTypes(['data']);
+                        break;
+                    case 'planting':
+                        // 开始种植默认选择文字、图片和文件记录
+                        checkRecordTypes(['text', 'image', 'file']);
+                        break;
+                    // ... 其他类型的处理
+                }
+            });
+        }
+        
+        function checkRecordTypes(types) {
+            types.forEach(type => {
+                const checkbox = document.querySelector(`.record-type-checkboxes input[value="${type}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                    checkbox.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+    });
+    </script>
+
+    <!-- 修改植物选择逻辑 -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const plantOptions = document.querySelectorAll('.plant-option input[type="checkbox"]');
+        const plantTypeSelect = document.getElementById('plantType');
+        const growthStageSelect = document.getElementById('growthStage');
+        
+        // 植物多选处理
+        plantOptions.forEach(option => {
+            option.addEventListener('change', function() {
+                const selectedCount = Array.from(plantOptions).filter(opt => opt.checked).length;
+                updateSelectedCount(selectedCount);
+            });
+        });
+        
+        // 植物类型选择处理 - 只处理生长阶段联动
+        if (plantTypeSelect) {
+            plantTypeSelect.addEventListener('change', function() {
+                const selectedType = this.value;
+                updateGrowthStages(selectedType);
+            });
+        }
+        
+        function updateSelectedCount(count) {
+            const countText = document.querySelector('.selected-count');
+            if (countText) {
+                countText.textContent = `已选择 ${count} 个植物`;
+            }
+        }
+    });
+    </script>
+
+    <!-- 修改文件预览初始化代码 -->
+    <script>
+    // 修改文件预览初始化代码
+    document.addEventListener('DOMContentLoaded', function() {
+        // 初始化文件预览处理
+        function initFileHandlers() {
+            const recordTypes = ['image', 'video', 'file'];
+            
+            recordTypes.forEach(type => {
+                const inputs = document.querySelectorAll(`#${type}Record .media-upload input[type="file"]`);
+                inputs.forEach(input => {
+                    const previewGrid = input.closest('.record-item-content').querySelector('.media-preview-grid');
+                    if (input && previewGrid) {
+                        handleFileSelect(input, previewGrid, type);
+                    }
+                });
+            });
+        }
+
+        // 监听记录类型复选框变化，当新增记录时初始化文件处理
+        const recordTypeCheckboxes = document.querySelectorAll('.record-type-checkboxes input[type="checkbox"]');
+        recordTypeCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function(e) {
+                if (e.target.checked) {
+                    // 延迟执行以确保DOM已更新
+                    setTimeout(initFileHandlers, 100);
+                }
+            });
+        });
+
+        // 初始化已存在的文件处理器
+        initFileHandlers();
+    });
+
+    // 修改handleFileSelect函数
+    function handleFileSelect(input, previewGrid, type) {
+        if (!input || !previewGrid) return;
+        
+        const maxFiles = 8;
+        
+        input.addEventListener('change', function(e) {
+            const files = Array.from(e.target.files);
+            const uploadArea = input.closest('.media-upload');
+            const currentFiles = previewGrid.children.length;
+            
+            // 检查是否超出最大文件数量限制
+            if (currentFiles + files.length > maxFiles) {
+                alert(`最多只能上传${maxFiles}个文件`);
+                input.value = ''; // 清空选择
+                return;
+            }
+            
+            // 检查文件是否已存在
+            const existingFiles = Array.from(previewGrid.querySelectorAll('.file-name')).map(el => el.textContent);
+            const newFiles = files.filter(file => !existingFiles.includes(file.name));
+            
+            if (files.length !== newFiles.length) {
+                alert('已过滤重复文件');
+            }
+            
+            newFiles.forEach(file => {
+                const reader = new FileReader();
+                const mediaCard = document.createElement('div');
+                mediaCard.className = 'media-card';
+                
+                reader.onload = function(e) {
+                    let previewContent = '';
+                    
+                    if (file.type.startsWith('audio/') || getMimeTypeByExtension(file.name).startsWith('audio/')) {
+                        previewContent = `
+                            <div class="file-preview" data-type="audio/webm">
+                                <span class="material-icons">audio_file</span>
+                                <span class="file-name">${file.name}</span>
+                                <span class="file-ext">${fileInfo.ext}</span>
+                                <span class="file-size">${fileInfo.size}</span>
+                                <audio src="${e.target.result}" style="display: none;"></audio>
+                            </div>
+                        `;
+                    } else if (file.type.startsWith('image/')) {
+                        previewContent = `<img src="${e.target.result}" alt="${file.name}">`;
+                    } else if (type === 'video') {
+                        previewContent = `<video src="${e.target.result}" controls></video>`;
+                    } else {
+                        const fileInfo = getFileTypeInfo(file);
+                        previewContent = `
+                            <div class="file-preview" data-type="${fileInfo.type}">
+                                <span class="material-icons">${fileInfo.icon}</span>
+                                <span class="file-name">${file.name}</span>
+                                <span class="file-ext">${fileInfo.ext}</span>
+                                <span class="file-size">${fileInfo.size}</span>
+                            </div>
+                        `;
+                    }
+                    
+                    mediaCard.innerHTML = `
+                        ${previewContent}                        <div class="media-overlay">
+                            <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+                                <span class="material-icons">delete</span>
+                            </button>
+                        </div>
+                    `;
+                };
+                
+                reader.readAsDataURL(file);
+                previewGrid.appendChild(mediaCard);
+            });
+            
+            // 清空input，防止重复选择同一文件时不触发change事件
+            input.value = '';
+            updateUploadArea(input);
+        });
+    }
+    </script>
+
+    <!-- 添加服务器图片相关功能 -->
+    <script>
+    // 添加服务器图片相关功能
+    function showServerImages(btn) {
+        const previewGrid = btn.closest('.record-item-content').querySelector('.media-preview-grid');
+        const modal = document.createElement('div');
+        modal.id = 'serverImagesModal';
+        modal.dataset.targetGrid = previewGrid.id || `grid_${Date.now()}`;
+        if (!previewGrid.id) previewGrid.id = modal.dataset.targetGrid;
+        
+        modal.innerHTML = `
+            <div class="server-images-container">
+                <div class="server-images-header">
+                    <h3>选择图片</h3>
+                    <button type="button" class="close-btn" onclick="closeServerImagesModal()">
+                        <span class="material-icons">close</span>
+                    </button>
+                </div>
+                <div class="server-images-grid"></div>
+                <div class="server-images-footer">
+                    <button type="button" class="cancel-btn" onclick="closeServerImagesModal()">取消</button>
+                    <button type="button" class="confirm-btn" onclick="confirmAddImages()">
+                        确认添加 (<span class="selected-count">0</span>)
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        document.body.appendChild(modal);
+        
+        // 添加点击遮罩关闭功能
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeServerImagesModal();
+            }
+        });
+        
+        requestAnimationFrame(() => {
+            modal.style.display = 'flex';
+            loadServerImages(modal.querySelector('.server-images-grid'));
+        });
+    }
+
+    function confirmAddImages() {
+        const modal = document.getElementById('serverImagesModal');
+        if (!modal) return;
+        
+        const targetGrid = document.getElementById(modal.dataset.targetGrid);
+        const selectedImages = modal.querySelectorAll('.image-item.selected img');
+        
+        if (selectedImages.length === 0) {
+            alert('请至少选择一张图片');
+            return;
+        }
+        
+        selectedImages.forEach(img => {
+            const mediaCard = document.createElement('div');
+            mediaCard.className = 'media-card';
+            mediaCard.dataset.type = 'image';
+            mediaCard.dataset.name = img.alt;
+            mediaCard.dataset.url = img.src;
+            
+            mediaCard.innerHTML = `
+                <img src="${img.src}" alt="${img.alt}">
+                <div class="media-overlay">
+                    <button type="button" class="media-action-btn preview-btn" onclick="previewMedia(this)">
+                        <span class="material-icons">visibility</span>
+                    </button>
+                    <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            `;
+            
+            targetGrid.appendChild(mediaCard);
+        });
+        
+        closeServerImagesModal();
+    }
+
+    function closeServerImagesModal() {
+        const modal = document.getElementById('serverImagesModal');
+        if (modal) {
+            modal.style.display = 'none';
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+        }
+    }
+
+    async function loadServerImages(grid) {
+        if (!grid) return; // 添加安全检查
+        grid.innerHTML = ''; // 清空现有内容
+        
+        try {
+            // 模拟按日期分组的图片数据
+            const imageGroups = {
+                '2024-03-01': [
+                    {
+                        url: './images/plants/mini-tomato.jpg',
+                        time: '2024-03-01 10:30'
+                    },
+                    {
+                        url: './images/plants/butter-lettuce.jpg',
+                        time: '2024-03-01 14:20'
+                    }
+                ],
+                '2024-02-28': [
+                    {
+                        url: './images/plants/chives.jpg',
+                        time: '2024-02-28 09:15'
+                    },
+                    {
+                        url: './images/plants/chrysanthemum.jpg',
+                        time: '2024-02-28 16:45'
+                    }
+                ],
+                '2024-02-27': [
+                    {
+                        url: './images/plants/coriander.jpg',
+                        time: '2024-02-27 11:20'
+                    },
+                    {
+                        url: './images/plants/grape.jpg',
+                        time: '2024-02-27 15:30'
+                    }
+                ]
+            };
+
+            // 创建日期分组容器
+            Object.entries(imageGroups).forEach(([date, images]) => {
+                const dateGroup = document.createElement('div');
+                dateGroup.className = 'date-group';
+                
+                // 添加日期标题
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'date-header';
+                dateHeader.innerHTML = `
+                    <div class="date-header-left">
+                        <span class="material-icons expand-icon">expand_more</span>
+                        <span class="date-text">${date}</span>
+                        <span class="image-count">${images.length}张图片</span>
+                    </div>
+                `;
+                
+                // 添加点击收缩功能
+                dateHeader.addEventListener('click', () => {
+                    dateGroup.classList.toggle('collapsed');
+                    const icon = dateHeader.querySelector('.expand-icon');
+                    icon.style.transform = dateGroup.classList.contains('collapsed') ? 'rotate(-90deg)' : 'rotate(0)';
+                });
+                
+                dateGroup.appendChild(dateHeader);
+                
+                // 创建图片网格
+                const imagesGrid = document.createElement('div');
+                imagesGrid.className = 'images-grid';
+                
+                // 添加图片
+                images.forEach(image => {
+                    const imageItem = document.createElement('div');
+                    imageItem.className = 'image-item';
+                    imageItem.onclick = function(e) {
+                        e.stopPropagation(); // 防止事件冒泡到日期组标题
+                        toggleImageSelection(this); // 使用统一的选择处理函数
+                    };
+
+                    const img = document.createElement('img');
+                    img.src = image.url;
+                    img.alt = image.url.split('/').pop().replace('.jpg', '').replace(/-/g, ' ');
+
+                    const imageInfo = document.createElement('div');
+                    imageInfo.className = 'image-info';
+                    imageInfo.innerHTML = `
+                        <span class="image-name">${img.alt}</span>
+                        <span class="image-time">${image.time.split(' ')[1]}</span>
+                    `;
+
+                    imageItem.appendChild(img);
+                    imageItem.appendChild(imageInfo);
+                    imagesGrid.appendChild(imageItem);
+                });
+
+                dateGroup.appendChild(imagesGrid);
+                grid.appendChild(dateGroup);
+            });
+        } catch (error) {
+            console.error('加载图片失败:', error);
+            grid.innerHTML = '<div class="error-message">加载图片失败，请重试</div>';
+        }
+    }
+
+    function toggleImageSelection(item) {
+        item.classList.toggle('selected');
+        updateSelectedCount();
+    }
+
+    function updateSelectedCount() {
+        const modal = document.getElementById('serverImagesModal');
+        if (!modal) return;
+        
+        const count = modal.querySelectorAll('.image-item.selected').length;
+        const countElement = modal.querySelector('.selected-count');
+        if (countElement) {
+            countElement.textContent = count;
+        }
+    }
+
+    function addSelectedImages() {
+        const targetGrid = document.getElementById(document.getElementById('serverImagesModal').dataset.targetGrid);
+        const selectedImages = document.querySelectorAll('.image-item.selected img');
+        
+        selectedImages.forEach(img => {
+            const mediaCard = document.createElement('div');
+            mediaCard.className = 'media-card';
+            mediaCard.dataset.type = 'image';
+            mediaCard.dataset.name = img.alt;
+            mediaCard.dataset.url = img.src;
+            
+            mediaCard.innerHTML = `
+                <img src="${img.src}" alt="${img.alt}">
+                <div class="media-overlay">
+                    <button type="button" class="media-action-btn preview-btn" onclick="previewMedia(this)">
+                        <span class="material-icons">visibility</span>
+                    </button>
+                    <button type="button" class="media-action-btn delete-btn" onclick="deleteMedia(this)">
+                        <span class="material-icons">delete</span>
+                    </button>
+                </div>
+            `;
+            
+            targetGrid.appendChild(mediaCard);
+        });
+        
+        closeServerImagesModal();
+    }
+    </script>
+
+    <!-- 添加滚动指示器功能 -->
+    <script>
+    // 添加滚动指示器功能
+    document.addEventListener('DOMContentLoaded', function() {
+        const grid = document.querySelector('.plant-selection-grid');
+        const header = document.querySelector('.plant-selection-header');
+        
+        // 创建滚动指示器
+        const indicator = document.createElement('div');
+        indicator.className = 'scroll-indicator';
+        const totalDots = Math.ceil(grid.scrollWidth / grid.clientWidth);
+        
+        for (let i = 0; i < totalDots; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'scroll-dot' + (i === 0 ? ' active' : '');
+            indicator.appendChild(dot);
+        }
+        
+        header.appendChild(indicator);
+        
+        // 监听滚动更新指示器
+        grid.addEventListener('scroll', () => {
+            const scrollPercentage = grid.scrollLeft / (grid.scrollWidth - grid.clientWidth);
+            const activeDotIndex = Math.round(scrollPercentage * (totalDots - 1));
+            
+            indicator.querySelectorAll('.scroll-dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === activeDotIndex);
+            });
+        });
+        
+        // 添加触摸滑动支持
+        let startX;
+        let scrollLeft;
+        
+        grid.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].pageX - grid.offsetLeft;
+            scrollLeft = grid.scrollLeft;
+        });
+        
+        grid.addEventListener('touchmove', (e) => {
+            if (!startX) return;
+            const x = e.touches[0].pageX - grid.offsetLeft;
+            const walk = (x - startX) * 2;
+            grid.scrollLeft = scrollLeft - walk;
+        });
+        
+        grid.addEventListener('touchend', () => {
+            startX = null;
+        });
+    });
+    </script>
+
+    <!-- 添加滚动控制功能 -->
+    <script>
+    // 修改滑动控制函数
+    function scrollPlants(direction) {
+        const grid = document.querySelector('.plant-selection-grid');
+        const cardWidth = 136; // 卡片宽度 + 间距
+        const visibleCards = Math.floor(grid.clientWidth / cardWidth);
+        const scrollAmount = cardWidth * visibleCards;
+        
+        if (direction === 'prev') {
+            grid.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        } else {
+            grid.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        }
+        
+        // 更新按钮状态
+        setTimeout(updateScrollButtons, 300);
+    }
+
+    function updateScrollButtons() {
+        const grid = document.querySelector('.plant-selection-grid');
+        const prevBtn = document.querySelector('.scroll-button.prev');
+        const nextBtn = document.querySelector('.scroll-button.next');
+        
+        if (grid && prevBtn && nextBtn) {
+            const canScrollLeft = grid.scrollLeft > 0;
+            const canScrollRight = grid.scrollLeft < (grid.scrollWidth - grid.clientWidth);
+            
+            prevBtn.style.display = canScrollLeft ? 'flex' : 'none';
+            nextBtn.style.display = canScrollRight ? 'flex' : 'none';
+        }
+    }
+
+    // 添加初始化函数
+    document.addEventListener('DOMContentLoaded', function() {
+        const grid = document.querySelector('.plant-selection-grid');
+        if (grid) {
+            updateScrollButtons();
+            grid.addEventListener('scroll', updateScrollButtons);
+            window.addEventListener('resize', updateScrollButtons);
+        }
+    });
+    </script>
 </body>
-</html> 
+</html>
+
 

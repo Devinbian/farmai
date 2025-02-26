@@ -1,0 +1,51 @@
+/* 修改导航按钮样式 */
+.shelf-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex !important; /* 强制显示 */
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.shelf-nav.prev {
+    left: 10px;
+}
+
+.shelf-nav.next {
+    right: 10px;
+}
+
+.shelf-nav:not(:disabled) {
+    opacity: 1;
+}
+
+.shelf-nav:disabled {
+    opacity: 0;
+    pointer-events: none;
+    cursor: default;
+}
+
+.shelf-nav:not(:disabled):hover {
+    background: #f5f5f5;
+    color: #00C853;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.shelf-nav .material-icons {
+    font-size: 24px;
+    color: #666;
+}
+
+.shelf-nav:hover .material-icons {
+    color: #00C853;
+} 
