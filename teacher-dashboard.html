@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>教师工作台 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <style>
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dashboard-header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-message h1 {
+            font-size: 24px;
+            color: #333;
+            margin: 0 0 5px 0;
+        }
+        
+        .welcome-message p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .user-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 8px 16px;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 4px;
+            color: #333;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+        
+        .action-btn:hover {
+            background: #e0e0e0;
+        }
+        
+        .logout-btn {
+            background: #ff5252;
+            color: white;
+        }
+        
+        .logout-btn:hover {
+            background: #ff3838;
+        }
+        
+        .content-area {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .dashboard-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dashboard-card.full-width {
+            grid-column: span 2;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 18px;
+            color: #333;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .card-title .material-icons {
+            color: #1976d2;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .card-action {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card-action:hover {
+            color: #1976d2;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .stat-card {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: 500;
+            color: #1976d2;
+            margin: 5px 0;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .class-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .class-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: all 0.3s;
+        }
+        
+        .class-item:last-child {
+            border-bottom: none;
+        }
+        
+        .class-item:hover {
+            background: #f9f9f9;
+        }
+        
+        .class-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #e3f2fd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .class-icon .material-icons {
+            color: #1976d2;
+        }
+        
+        .class-info {
+            flex: 1;
+        }
+        
+        .class-name {
+            font-weight: 500;
+            color: #333;
+            margin: 0 0 5px 0;
+        }
+        
+        .class-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .class-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .class-meta-item .material-icons {
+            font-size: 16px;
+        }
+        
+        .class-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .class-action-btn {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .class-action-btn:hover {
+            color: #1976d2;
+        }
+        
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        
+        .task-checkbox {
+            margin-right: 10px;
+        }
+        
+        .task-content {
+            flex: 1;
+        }
+        
+        .task-title {
+            margin: 0 0 5px 0;
+            color: #333;
+        }
+        
+        .task-due {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .task-priority {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+        
+        .priority-high {
+            background: #ffebee;
+            color: #e53935;
+        }
+        
+        .priority-medium {
+            background: #fff8e1;
+            color: #ffb300;
+        }
+        
+        .priority-low {
+            background: #e8f5e9;
+            color: #43a047;
+        }
+        
+        .add-class-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            background: #1976d2;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-class-btn:hover {
+            background: #1565c0;
+        }
+        
+        @media (max-width: 992px) {
+            .content-area {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-card.full-width {
+                grid-column: span 1;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* 添加导航菜单的折叠/展开样式 */
+        .nav-group {
+            margin-bottom: 5px;
+        }
+        
+        .nav-title {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            gap: 10px;
+            color: #555;
+        }
+        
+        .nav-title:hover {
+            background: #f0f0f0;
+        }
+        
+        .sub-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            padding-left: 35px;
+        }
+        
+        .nav-group.active .sub-menu {
+            max-height: 500px; /* 足够大的值以容纳所有子菜单项 */
+        }
+        
+        .nav-group.active .nav-title {
+            color: #1976d2;
+            font-weight: 500;
+        }
+        
+        .nav-title .toggle-icon {
+            margin-left: auto;
+            transition: transform 0.3s;
+        }
+        
+        .nav-group.active .nav-title .toggle-icon {
+            transform: rotate(180deg);
+        }
+    </style>
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+    <div class="main-content">
+        <!-- 添加移动端菜单按钮和遮罩层 -->
+        <button class="mobile-menu-btn">
+            <span class="material-icons">menu</span>
+        </button>
+        <div class="sidebar-overlay"></div>
+
+        <div class="profile-container">
+            <!-- 左侧边栏 -->
+            <div class="profile-sidebar">
+                <div class="sidebar-header">
+                    <div class="user-avatar">
+                        <img src="images/avatar.jpeg" alt="用户头像">
+                    </div>
+                    <div class="user-info">
+                        <h3 class="user-name" id="username">王老师</h3>
+                        <p class="user-role">教师</p>
+                    </div>
+                </div>
+                <nav class="sidebar-nav">
+                    <ul>
+                        <!-- 教务管理 -->
+                        <li class="nav-group active">
+                            <div class="nav-title">
+                                <span class="material-icons">school</span>
+                                教务管理
+                                <span class="material-icons toggle-icon">expand_more</span>
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item active" data-section="dashboard">
+                                    工作台
+                                </li>
+                                <li class="nav-item" data-section="user-management">
+                                    用户管理
+                                </li>
+                                <li class="nav-item" data-section="class-management">
+                                    班级管理
+                                </li>
+                                <li class="nav-item" data-section="class-homework">
+                                    班级作业
+                                </li>
+                                <li class="nav-item" data-section="course-package">
+                                    课程包管理
+                                </li>
+                                <li class="nav-item" data-section="course-unit">
+                                    课程单元管理
+                                </li>
+                                <li class="nav-item" data-section="scratch-resources">
+                                    scratch素材库
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 考试管理 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">assignment</span>
+                                考试管理
+                                <span class="material-icons toggle-icon">expand_more</span>
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="question-bank">
+                                    题库管理
+                                </li>
+                                <li class="nav-item" data-section="question-management">
+                                    试题管理
+                                </li>
+                                <li class="nav-item" data-section="exam-paper">
+                                    试卷管理
+                                </li>
+                                <li class="nav-item" data-section="exam-management">
+                                    考试管理
+                                </li>
+                                <li class="nav-item" data-section="marking-management">
+                                    阅卷管理
+                                </li>
+                                <li class="nav-item" data-section="score-statistics">
+                                    成绩统计
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 资源中心 -->
+                        <li class="nav-group">
+                            <div class="nav-title">
+                                <span class="material-icons">folder</span>
+                                资源中心
+                                <span class="material-icons toggle-icon">expand_more</span>
+                            </div>
+                            <ul class="sub-menu">
+                                <li class="nav-item" data-section="teaching-materials">
+                                    教学资料
+                                </li>
+                                <li class="nav-item" data-section="shared-resources">
+                                    共享资源
+                                </li>
+                            </ul>
+                        </li>
+
+                        <!-- 添加退出登录按钮 -->
+                        <li class="nav-item" id="logout-btn" style="margin-top: 20px; padding: 10px 15px;">
+                            <span class="material-icons" style="margin-right: 10px;">logout</span>
+                            退出登录
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- 右侧内容区 -->
+            <div class="profile-content">
+                <!-- 工作台 -->
+                <div class="content-section active" id="dashboard">
+                    <h2>教师工作台</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>欢迎回来，<span id="welcome-username">王老师</span></h1>
+                            <p>今天是 <span id="current-date"></span></p>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">insights</span>
+                                    教学概览
+                                </h2>
+                                <div class="card-actions">
+                                    <button class="card-action">
+                                        <span class="material-icons">refresh</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-value">5</div>
+                                    <div class="stat-label">当前课程</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">86</div>
+                                    <div class="stat-label">学生总数</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-label">待批作业</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">class</span>
+                                    我的课程
+                                </h2>
+                                <button class="add-class-btn">
+                                    <span class="material-icons">add</span>
+                                    添加课程
+                                </button>
+                            </div>
+                            <ul class="class-list">
+                                <li class="class-item">
+                                    <div class="class-icon">
+                                        <span class="material-icons">spa</span>
+                                    </div>
+                                    <div class="class-info">
+                                        <h3 class="class-name">水培技术基础</h3>
+                                        <div class="class-meta">
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">people</span>
+                                                32名学生
+                                            </div>
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">event</span>
+                                                周一、周三
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="class-actions">
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">visibility</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="class-item">
+                                    <div class="class-icon">
+                                        <span class="material-icons">science</span>
+                                    </div>
+                                    <div class="class-info">
+                                        <h3 class="class-name">营养液配置与调整</h3>
+                                        <div class="class-meta">
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">people</span>
+                                                28名学生
+                                            </div>
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">event</span>
+                                                周二、周四
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="class-actions">
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">visibility</span>
+                                        </button>
+                                    </div>
+                                </li>
+                                <li class="class-item">
+                                    <div class="class-icon">
+                                        <span class="material-icons">eco</span>
+                                    </div>
+                                    <div class="class-info">
+                                        <h3 class="class-name">植物生长环境控制</h3>
+                                        <div class="class-meta">
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">people</span>
+                                                26名学生
+                                            </div>
+                                            <div class="class-meta-item">
+                                                <span class="material-icons">event</span>
+                                                周五
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="class-actions">
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">edit</span>
+                                        </button>
+                                        <button class="class-action-btn">
+                                            <span class="material-icons">visibility</span>
+                                        </button>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">assignment</span>
+                                    待办事项
+                                </h2>
+                                <div class="card-actions">
+                                    <button class="card-action">
+                                        <span class="material-icons">add</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <ul class="task-list">
+                                <li class="task-item">
+                                    <input type="checkbox" class="task-checkbox">
+                                    <div class="task-content">
+                                        <h3 class="task-title">批改《水培技术基础》作业<span class="task-priority priority-high">紧急</span></h3>
+                                        <p class="task-due">截止日期：今天</p>
+                                    </div>
+                                </li>
+                                <li class="task-item">
+                                    <input type="checkbox" class="task-checkbox">
+                                    <div class="task-content">
+                                        <h3 class="task-title">准备下周实验材料<span class="task-priority priority-medium">中等</span></h3>
+                                        <p class="task-due">截止日期：明天</p>
+                                    </div>
+                                </li>
+                                <li class="task-item">
+                                    <input type="checkbox" class="task-checkbox">
+                                    <div class="task-content">
+                                        <h3 class="task-title">更新课程PPT<span class="task-priority priority-low">普通</span></h3>
+                                        <p class="task-due">截止日期：3天后</p>
+                                    </div>
+                                </li>
+                                <li class="task-item">
+                                    <input type="checkbox" class="task-checkbox">
+                                    <div class="task-content">
+                                        <h3 class="task-title">参加教研组会议<span class="task-priority priority-medium">中等</span></h3>
+                                        <p class="task-due">截止日期：周五</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 其他内容区域 -->
+                <!-- 教务管理相关内容 -->
+                <div class="content-section" id="user-management">
+                    <h2>用户管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>学生用户管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">86</span> 名学生</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">person_add</span>
+                                添加学生
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">file_upload</span>
+                                批量导入
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">filter_list</span>
+                                筛选
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <!-- 班级选择卡片 -->
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">class</span>
+                                    班级筛选
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: flex; flex-direction: row; gap: 10px;">
+                                    <button style="width: 20%; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>全部班级</span>
+                                        <span>86人</span>
+                                    </button>
+                                    <button style="width: 20%; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>水培1班</span>
+                                        <span>32人</span>
+                                    </button>
+                                    <button style="width: 20%; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>水培2班</span>
+                                        <span>28人</span>
+                                    </button>
+                                    <button style="width: 20%; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+                                        <span>水培3班</span>
+                                        <span>26人</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 学生列表 -->
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">people</span>
+                                    学生列表
+                                </h2>
+                                <div class="card-actions">
+                                    <div style="position: relative;">
+                                        <input type="text" placeholder="搜索学生..." style="padding: 8px 32px 8px 12px; border: 1px solid #ddd; border-radius: 4px; width: 200px;">
+                                        <span class="material-icons" style="position: absolute; right: 8px; top: 50%; transform: translateY(-50%); color: #666; cursor: pointer;">search</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">学号</th>
+                                        <th style="padding: 12px; text-align: left;">姓名</th>
+                                        <th style="padding: 12px; text-align: center;">班级</th>
+                                        <th style="padding: 12px; text-align: center;">课程数</th>
+                                        <th style="padding: 12px; text-align: center;">平均成绩</th>
+                                        <th style="padding: 12px; text-align: center;">考勤率</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">2024001</td>
+                                        <td style="padding: 12px;">李明</td>
+                                        <td style="padding: 12px; text-align: center;">水培1班</td>
+                                        <td style="padding: 12px; text-align: center;">3</td>
+                                        <td style="padding: 12px; text-align: center;">89.5</td>
+                                        <td style="padding: 12px; text-align: center;">98%</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                详情
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                删除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">2024002</td>
+                                        <td style="padding: 12px;">张华</td>
+                                        <td style="padding: 12px; text-align: center;">水培1班</td>
+                                        <td style="padding: 12px; text-align: center;">3</td>
+                                        <td style="padding: 12px; text-align: center;">92.0</td>
+                                        <td style="padding: 12px; text-align: center;">100%</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                详情
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                删除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <!-- 更多学生记录 -->
+                                </tbody>
+                            </table>
+                            <!-- 分页控件 -->
+                            <div style="padding: 15px; display: flex; justify-content: center; align-items: center; gap: 10px;">
+                                <button style="padding: 4px 8px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">
+                                    <span class="material-icons">chevron_left</span>
+                                </button>
+                                <button style="padding: 4px 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">1</button>
+                                <button style="padding: 4px 12px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">2</button>
+                                <button style="padding: 4px 12px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">3</button>
+                                <button style="padding: 4px 8px; background: #f5f5f5; border: none; border-radius: 4px; cursor: pointer;">
+                                    <span class="material-icons">chevron_right</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="class-management">
+                    <h2>班级管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>班级管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">3</span> 个班级</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                创建班级
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">settings</span>
+                                批量设置
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <!-- 班级概览卡片 -->
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">analytics</span>
+                                    班级概览
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #1976d2;">总体情况</h3>
+                                        <p style="margin: 5px 0;">总班级数：3个</p>
+                                        <p style="margin: 5px 0;">总学生数：86人</p>
+                                        <p style="margin: 5px 0;">平均出勤率：96%</p>
+                                    </div>
+                                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #4caf50;">教学进度</h3>
+                                        <p style="margin: 5px 0;">已完成课时：24/48</p>
+                                        <p style="margin: 5px 0;">已完成作业：15/30</p>
+                                        <p style="margin: 5px 0;">已完成考试：2/4</p>
+                                    </div>
+                                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #ff9800;">成绩情况</h3>
+                                        <p style="margin: 5px 0;">平均分：85.6</p>
+                                        <p style="margin: 5px 0;">及格率：96%</p>
+                                        <p style="margin: 5px 0;">优秀率：25%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 班级列表 -->
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">groups</span>
+                                    班级列表
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                                    <!-- 水培1班 -->
+                                    <div style="border: 1px solid #eee; border-radius: 8px; padding: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                            <h3 style="margin: 0;">水培1班</h3>
+                                            <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 4px;">班主任：王老师</span>
+                                        </div>
+                                        <div style="margin-bottom: 15px;">
+                                            <p style="margin: 5px 0;">学生人数：32人</p>
+                                            <p style="margin: 5px 0;">课程进度：50%</p>
+                                            <p style="margin: 5px 0;">平均成绩：88.5</p>
+                                            <p style="margin: 5px 0;">出勤率：98%</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="flex: 1; padding: 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                班级详情
+                                            </button>
+                                            <button style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                学生管理
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 水培2班 -->
+                                    <div style="border: 1px solid #eee; border-radius: 8px; padding: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                            <h3 style="margin: 0;">水培2班</h3>
+                                            <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 4px;">班主任：张老师</span>
+                                        </div>
+                                        <div style="margin-bottom: 15px;">
+                                            <p style="margin: 5px 0;">学生人数：28人</p>
+                                            <p style="margin: 5px 0;">课程进度：45%</p>
+                                            <p style="margin: 5px 0;">平均成绩：85.2</p>
+                                            <p style="margin: 5px 0;">出勤率：96%</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="flex: 1; padding: 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                班级详情
+                                            </button>
+                                            <button style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                学生管理
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 水培3班 -->
+                                    <div style="border: 1px solid #eee; border-radius: 8px; padding: 15px;">
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                            <h3 style="margin: 0;">水培3班</h3>
+                                            <span style="background: #e3f2fd; color: #1976d2; padding: 4px 8px; border-radius: 4px;">班主任：李老师</span>
+                                        </div>
+                                        <div style="margin-bottom: 15px;">
+                                            <p style="margin: 5px 0;">学生人数：26人</p>
+                                            <p style="margin: 5px 0;">课程进度：48%</p>
+                                            <p style="margin: 5px 0;">平均成绩：86.8</p>
+                                            <p style="margin: 5px 0;">出勤率：95%</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="flex: 1; padding: 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                班级详情
+                                            </button>
+                                            <button style="flex: 1; padding: 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                学生管理
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="class-homework">
+                    <h2>班级作业</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>作业管理</h1>
+                            <p>待批改作业：<span style="color: #f44336; font-weight: 500;">12</span> 份</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                布置作业
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">assessment</span>
+                                作业统计
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">assignment</span>
+                                    待批改作业
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">作业标题</th>
+                                        <th style="padding: 12px; text-align: center;">班级</th>
+                                        <th style="padding: 12px; text-align: center;">提交人数</th>
+                                        <th style="padding: 12px; text-align: center;">截止日期</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">水培技术基础 - 实验报告</td>
+                                        <td style="padding: 12px; text-align: center;">水培1班</td>
+                                        <td style="padding: 12px; text-align: center;">28/32</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-20</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #fff3e0; color: #ff9800; padding: 4px 8px; border-radius: 4px;">待批改</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                批改作业
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">history</span>
+                                    已批改作业
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">作业标题</th>
+                                        <th style="padding: 12px; text-align: center;">班级</th>
+                                        <th style="padding: 12px; text-align: center;">平均分</th>
+                                        <th style="padding: 12px; text-align: center;">完成时间</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">营养液配置 - 课后练习</td>
+                                        <td style="padding: 12px; text-align: center;">水培2班</td>
+                                        <td style="padding: 12px; text-align: center;">88.5</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-15</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #e8f5e9; color: #4caf50; padding: 4px 8px; border-radius: 4px;">已完成</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                查看详情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="course-package">
+                    <h2>课程包管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>课程包管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">5</span> 个课程包</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                新建课程包
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">file_upload</span>
+                                导入课程包
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">school</span>
+                                    水培技术基础课程包
+                                </h2>
+                            </div>
+                            <div style="padding: 15px 0;">
+                                <div style="margin-bottom: 15px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="color: #666;">包含：16课时 | 5个实验 | 10次作业</div>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            编辑课程
+                                        </button>
+                                        <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            发布课程
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">science</span>
+                                    营养液配置课程包
+                                </h2>
+                            </div>
+                            <div style="padding: 15px 0;">
+                                <div style="margin-bottom: 15px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="color: #666;">包含：20课时 | 8个实验 | 15次作业</div>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            编辑课程
+                                        </button>
+                                        <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            发布课程
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="course-unit">
+                    <h2>课程单元管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>课程单元管理</h1>
+                            <p>选择课程包以管理单元内容</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">playlist_add</span>
+                                添加单元
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">view_list</span>
+                                    水培技术基础 - 课程单元
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">第一单元：水培基础知识</h3>
+                                            <p style="margin: 0; color: #666;">4课时 | 2个实验 | 3次作业</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">第二单元：营养液管理</h3>
+                                            <p style="margin: 0; color: #666;">4课时 | 1个实验 | 2次作业</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="scratch-resources">
+                    <h2>Scratch素材库</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>Scratch素材管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">25</span> 个素材资源</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">upload_file</span>
+                                上传素材
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">category</span>
+                                分类管理
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">widgets</span>
+                                    基础组件
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">智能浇水系统模拟器</h3>
+                                            <p style="margin: 0; color: #666;">使用次数：156 | 评分：4.8</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding: 15px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">营养液配比计算器</h3>
+                                            <p style="margin: 0; color: #666;">使用次数：128 | 评分：4.6</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">extension</span>
+                                    高级组件
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">植物生长环境监控系统</h3>
+                                            <p style="margin: 0; color: #666;">使用次数：98 | 评分：4.7</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 资源中心相关内容 -->
+                <div class="content-section" id="teaching-materials">
+                    <h2>教学资料</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>教学资料管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">36</span> 个教学资源</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">upload_file</span>
+                                上传资料
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">folder_shared</span>
+                                资料分类
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">menu_book</span>
+                                    教材与讲义
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">水培技术基础教材</h3>
+                                            <p style="margin: 0; color: #666;">PDF | 15MB | 下载次数：256</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                下载
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding: 15px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">营养液配置课程讲义</h3>
+                                            <p style="margin: 0; color: #666;">PPT | 8MB | 下载次数：189</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                下载
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">video_library</span>
+                                    视频课程
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">水培技术基础 - 视频课程合集</h3>
+                                            <p style="margin: 0; color: #666;">16课时 | 总时长：8小时</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                预览
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="shared-resources">
+                    <h2>共享资源</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>资源共享平台</h1>
+                            <p>已分享 <span style="color: #4caf50; font-weight: 500;">15</span> 个资源，获得 <span style="color: #2196f3; font-weight: 500;">128</span> 次下载</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">upload_file</span>
+                                上传资源
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">sort</span>
+                                排序
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">folder_shared</span>
+                                    最新共享
+                                </h2>
+                                <div class="card-actions">
+                                    <button class="card-action">
+                                        <span class="material-icons">refresh</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">资源名称</th>
+                                        <th style="padding: 12px; text-align: center;">分享者</th>
+                                        <th style="padding: 12px; text-align: center;">分享时间</th>
+                                        <th style="padding: 12px; text-align: center;">下载次数</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">水培番茄种植心得分享</td>
+                                        <td style="padding: 12px; text-align: center;">张华</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-15</td>
+                                        <td style="padding: 12px; text-align: center;">45</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                查看
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                下载
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">trending_up</span>
+                                    热门资源
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">水培技术学习笔记精选</h3>
+                                            <p style="margin: 0; color: #666;">下载次数：156 | 评分：4.8分</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #ff9800; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                下载资源
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 考试管理相关内容 -->
+                <div class="content-section" id="question-bank">
+                    <h2>题库管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>题库管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">520</span> 道题目</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                添加题目
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">file_upload</span>
+                                批量导入
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">folder</span>
+                                    题目分类
+                                </h2>
+                            </div>
+                            <ul style="list-style: none; padding: 0; margin: 0;">
+                                <li style="padding: 15px; border-bottom: 1px solid #eee;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">水培基础知识</h3>
+                                            <p style="margin: 0; color: #666;">180题 | 已使用：120次</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                管理题目
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li style="padding: 15px;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                                        <div>
+                                            <h3 style="margin: 0 0 5px 0;">营养液配置</h3>
+                                            <p style="margin: 0; color: #666;">150题 | 已使用：95次</p>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                管理题目
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">analytics</span>
+                                    题目统计
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="margin-bottom: 20px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <div>选择题</div>
+                                        <div>280题</div>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 60%; height: 100%; background: #1976d2; border-radius: 3px;"></div>
+                                    </div>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <div>填空题</div>
+                                        <div>150题</div>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 40%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                        <div>实验题</div>
+                                        <div>90题</div>
+                                    </div>
+                                    <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                        <div style="width: 20%; height: 100%; background: #ff9800; border-radius: 3px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="question-management">
+                    <h2>试题管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>试题管理</h1>
+                            <p>最近更新：<span style="color: #1976d2; font-weight: 500;">15</span> 道题目</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">filter_list</span>
+                                筛选
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">search</span>
+                                搜索
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">list</span>
+                                    试题列表
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">题目</th>
+                                        <th style="padding: 12px; text-align: center;">类型</th>
+                                        <th style="padding: 12px; text-align: center;">难度</th>
+                                        <th style="padding: 12px; text-align: center;">使用次数</th>
+                                        <th style="padding: 12px; text-align: center;">正确率</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">水培技术中pH值的调节方法</td>
+                                        <td style="padding: 12px; text-align: center;">选择题</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="color: #ff9800;">中等</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">28</td>
+                                        <td style="padding: 12px; text-align: center;">85%</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px;">
+                                                编辑
+                                            </button>
+                                            <button style="padding: 4px 8px; background: #f44336; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                删除
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="exam-paper">
+                    <h2>试卷管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>试卷管理</h1>
+                            <p>当前共有 <span style="color: #1976d2; font-weight: 500;">12</span> 份试卷</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                新建试卷
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">content_copy</span>
+                                试卷模板
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">description</span>
+                                    水培技术基础期中考试
+                                </h2>
+                            </div>
+                            <div style="padding: 15px 0;">
+                                <div style="margin-bottom: 15px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="color: #666;">总分：100分 | 题目：25道 | 时长：120分钟</div>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            编辑试卷
+                                        </button>
+                                        <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            预览试卷
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">description</span>
+                                    营养液配置阶段测试
+                                </h2>
+                            </div>
+                            <div style="padding: 15px 0;">
+                                <div style="margin-bottom: 15px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="color: #666;">总分：50分 | 题目：15道 | 时长：60分钟</div>
+                                    </div>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button style="padding: 5px 10px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            编辑试卷
+                                        </button>
+                                        <button style="padding: 5px 10px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                            预览试卷
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="content-section" id="exam-management">
+                    <h2>考试管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>考试管理</h1>
+                            <p>进行中考试：<span style="color: #f44336; font-weight: 500;">2</span> 场</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">add</span>
+                                安排考试
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">assessment</span>
+                                成绩统计
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">event</span>
+                                    进行中的考试
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">考试名称</th>
+                                        <th style="padding: 12px; text-align: center;">考试时间</th>
+                                        <th style="padding: 12px; text-align: center;">参考人数</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">水培技术基础 - 期中考试</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-20 14:00-16:00</td>
+                                        <td style="padding: 12px; text-align: center;">32/32</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #fff3e0; color: #ff9800; padding: 4px 8px; border-radius: 4px;">进行中</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                监考管理
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">history</span>
+                                    已结束的考试
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">考试名称</th>
+                                        <th style="padding: 12px; text-align: center;">考试时间</th>
+                                        <th style="padding: 12px; text-align: center;">平均分</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">营养液配置 - 阶段测试</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-15</td>
+                                        <td style="padding: 12px; text-align: center;">88.5</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #e8f5e9; color: #4caf50; padding: 4px 8px; border-radius: 4px;">已完成</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                查看成绩
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 阅卷管理 -->
+                <div class="content-section" id="marking-management">
+                    <h2>阅卷管理</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>阅卷管理</h1>
+                            <p>待批改：<span style="color: #f44336; font-weight: 500;">35</span> 份试卷</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">filter_list</span>
+                                筛选
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">sort</span>
+                                排序
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">rate_review</span>
+                                    待批改试卷
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">考试名称</th>
+                                        <th style="padding: 12px; text-align: center;">学生</th>
+                                        <th style="padding: 12px; text-align: center;">考试时间</th>
+                                        <th style="padding: 12px; text-align: center;">客观题得分</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">水培技术基础期中考试</td>
+                                        <td style="padding: 12px; text-align: center;">李明</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-20</td>
+                                        <td style="padding: 12px; text-align: center;">45/60</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #fff3e0; color: #ff9800; padding: 4px 8px; border-radius: 4px;">待批改</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #4caf50; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                批改试卷
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="dashboard-card full-width">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">history</span>
+                                    已批改试卷
+                                </h2>
+                            </div>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background: #f5f5f5;">
+                                        <th style="padding: 12px; text-align: left;">考试名称</th>
+                                        <th style="padding: 12px; text-align: center;">学生</th>
+                                        <th style="padding: 12px; text-align: center;">批改时间</th>
+                                        <th style="padding: 12px; text-align: center;">总分</th>
+                                        <th style="padding: 12px; text-align: center;">状态</th>
+                                        <th style="padding: 12px; text-align: center;">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #eee;">
+                                        <td style="padding: 12px;">营养液配置阶段测试</td>
+                                        <td style="padding: 12px; text-align: center;">张华</td>
+                                        <td style="padding: 12px; text-align: center;">2024-03-15</td>
+                                        <td style="padding: 12px; text-align: center;">88</td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <span style="background: #e8f5e9; color: #4caf50; padding: 4px 8px; border-radius: 4px;">已完成</span>
+                                        </td>
+                                        <td style="padding: 12px; text-align: center;">
+                                            <button style="padding: 4px 8px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer;">
+                                                查看详情
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 成绩统计 -->
+                <div class="content-section" id="score-statistics">
+                    <h2>成绩统计</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>成绩统计分析</h1>
+                            <p>本学期已完成考试：<span style="color: #1976d2; font-weight: 500;">8</span> 场</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">file_download</span>
+                                导出报告
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">print</span>
+                                打印报告
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <!-- 添加班级选择卡片 -->
+                        <div class="dashboard-card full-width" style="margin-bottom: 20px;">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">class</span>
+                                    选择班级
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: flex; gap: 10px;">
+                                    <button style="flex: 1; padding: 12px; background: #1976d2; color: white; border: none; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        全部班级
+                                    </button>
+                                    <button style="flex: 1; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        水培1班
+                                    </button>
+                                    <button style="flex: 1; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        水培2班
+                                    </button>
+                                    <button style="flex: 1; padding: 12px; background: #f5f5f5; color: #333; border: none; border-radius: 4px; cursor: pointer; text-align: center;">
+                                        水培3班
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 成绩概览卡片 -->
+                        <div class="dashboard-card full-width" style="margin-bottom: 20px;">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">analytics</span>
+                                    成绩概览
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #1976d2;">平均分</h3>
+                                        <p style="margin: 0; font-size: 24px; font-weight: 500;">85.6</p>
+                                    </div>
+                                    <div style="background: #e8f5e9; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #4caf50;">及格率</h3>
+                                        <p style="margin: 0; font-size: 24px; font-weight: 500;">96%</p>
+                                    </div>
+                                    <div style="background: #fff3e0; padding: 15px; border-radius: 8px;">
+                                        <h3 style="margin: 0 0 10px 0; color: #ff9800;">优秀率</h3>
+                                        <p style="margin: 0; font-size: 24px; font-weight: 500;">25%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">analytics</span>
+                                    成绩分布
+                                </h2>
+                                <div class="card-actions">
+                                    <select style="padding: 8px; border: 1px solid #ddd; border-radius: 4px; background: white;">
+                                        <option>水培技术基础期中考试</option>
+                                        <option>营养液配置阶段测试</option>
+                                        <option>植物生长环境控制测试</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="margin-bottom: 20px;">
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <div>90分以上</div>
+                                            <div>8人</div>
+                                        </div>
+                                        <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 25%; height: 100%; background: #4caf50; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <div>80-89分</div>
+                                            <div>15人</div>
+                                        </div>
+                                        <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 45%; height: 100%; background: #2196f3; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-bottom: 10px;">
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <div>70-79分</div>
+                                            <div>6人</div>
+                                        </div>
+                                        <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 20%; height: 100%; background: #ff9800; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                            <div>70分以下</div>
+                                            <div>3人</div>
+                                        </div>
+                                        <div style="width: 100%; height: 6px; background: #e0e0e0; border-radius: 3px; overflow: hidden;">
+                                            <div style="width: 10%; height: 100%; background: #f44336; border-radius: 3px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card">
+                            <div class="card-header">
+                                <h2 class="card-title">
+                                    <span class="material-icons">insights</span>
+                                    成绩趋势
+                                </h2>
+                            </div>
+                            <div style="padding: 15px;">
+                                <div style="margin-bottom: 20px;">
+                                    <h3 style="margin: 0 0 10px 0;">班级平均分走势</h3>
+                                    <table style="width: 100%; border-collapse: collapse;">
+                                        <thead>
+                                            <tr style="background: #f5f5f5;">
+                                                <th style="padding: 8px;">考试名称</th>
+                                                <th style="padding: 8px; text-align: center;">平均分</th>
+                                                <th style="padding: 8px; text-align: center;">及格率</th>
+                                                <th style="padding: 8px; text-align: center;">优秀率</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr style="border-bottom: 1px solid #eee;">
+                                                <td style="padding: 8px;">期中考试</td>
+                                                <td style="padding: 8px; text-align: center;">85.6</td>
+                                                <td style="padding: 8px; text-align: center;">96%</td>
+                                                <td style="padding: 8px; text-align: center;">25%</td>
+                                            </tr>
+                                            <tr style="border-bottom: 1px solid #eee;">
+                                                <td style="padding: 8px;">阶段测试三</td>
+                                                <td style="padding: 8px; text-align: center;">82.3</td>
+                                                <td style="padding: 8px; text-align: center;">94%</td>
+                                                <td style="padding: 8px; text-align: center;">22%</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding: 8px;">阶段测试二</td>
+                                                <td style="padding: 8px; text-align: center;">79.8</td>
+                                                <td style="padding: 8px; text-align: center;">92%</td>
+                                                <td style="padding: 8px; text-align: center;">18%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    
+    <script type="module">
+        // 使用全局变量 window.siteConfig
+        import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
+        import { createFooter } from './components/layout/footer.js';
+        
+        // 初始化页面组件
+        document.getElementById('header').innerHTML = createHeader();
+        document.getElementById('footer').innerHTML = createFooter();
+        
+        // 设置页面标题
+        updateNavTitle('教师工作台');
+        
+        // 初始化导航栏
+        initializeNavbar();
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 检查登录状态
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const userRole = localStorage.getItem('userRole');
+            const username = localStorage.getItem('username');
+            
+            // 如果未登录或不是老师，重定向到登录页面
+            if (!isLoggedIn || userRole !== 'teacher') {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // 显示用户名
+            document.getElementById('username').textContent = username || '王老师';
+            document.getElementById('welcome-username').textContent = username || '王老师';
+            
+            // 显示当前日期
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('zh-CN', options);
+            
+            // 退出登录
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                // 清除登录状态
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userRole');
+                localStorage.removeItem('username');
+                
+                // 重定向到登录页面
+                window.location.href = 'login.html';
+            });
+            
+            // 侧边栏导航
+            const navItems = document.querySelectorAll('.nav-item');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            navItems.forEach(item => {
+                if (item.id !== 'logout-btn') {
+                    item.addEventListener('click', function() {
+                        const sectionId = this.getAttribute('data-section');
+                        
+                        // 移除所有active类
+                        navItems.forEach(navItem => {
+                            if (navItem.id !== 'logout-btn') {
+                                navItem.classList.remove('active');
+                            }
+                        });
+                        contentSections.forEach(section => section.classList.remove('active'));
+                        
+                        // 添加active类到当前点击的菜单项和对应的内容区域
+                        this.classList.add('active');
+                        document.getElementById(sectionId).classList.add('active');
+                        
+                        // 确保父菜单组是展开的
+                        const parentGroup = this.closest('.nav-group');
+                        if (parentGroup && !parentGroup.classList.contains('active')) {
+                            // 先关闭所有已展开的菜单组
+                            document.querySelectorAll('.nav-group').forEach(group => {
+                                if (group !== parentGroup) {
+                                    group.classList.remove('active');
+                                }
+                            });
+                            // 展开当前菜单组
+                            parentGroup.classList.add('active');
+                        }
+                    });
+                }
+            });
+            
+            // 一级菜单点击事件 - 折叠/展开二级菜单
+            const navTitles = document.querySelectorAll('.nav-title');
+            navTitles.forEach(title => {
+                title.addEventListener('click', function() {
+                    const parentGroup = this.parentElement;
+                    
+                    // 切换当前菜单组的展开/折叠状态
+                    parentGroup.classList.toggle('active');
+                    
+                    // 如果是展开当前菜单，则关闭其他菜单
+                    if (parentGroup.classList.contains('active')) {
+                        document.querySelectorAll('.nav-group').forEach(group => {
+                            if (group !== parentGroup) {
+                                group.classList.remove('active');
+                            }
+                        });
+                    }
+                });
+            });
+            
+            // 移动端菜单
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const sidebarOverlay = document.querySelector('.sidebar-overlay');
+            const profileSidebar = document.querySelector('.profile-sidebar');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                profileSidebar.classList.toggle('active');
+                sidebarOverlay.classList.toggle('active');
+            });
+            
+            sidebarOverlay.addEventListener('click', function() {
+                profileSidebar.classList.remove('active');
+                sidebarOverlay.classList.remove('active');
+            });
+            
+            // 任务复选框点击事件
+            const taskCheckboxes = document.querySelectorAll('.task-checkbox');
+            taskCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const taskItem = this.closest('.task-item');
+                    if (this.checked) {
+                        taskItem.style.opacity = '0.5';
+                        taskItem.style.textDecoration = 'line-through';
+                    } else {
+                        taskItem.style.opacity = '1';
+                        taskItem.style.textDecoration = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

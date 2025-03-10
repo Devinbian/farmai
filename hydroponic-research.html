@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>水培技术农业实验研究 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <style>
+        /* 水培研究页面特定样式 */
+        body {
+            background: linear-gradient(to bottom, #e8f5e9, #c8e6c9, #a5d6a7, #81c784);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .research-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .research-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding: 40px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .research-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #27ae60, #2ecc71, #27ae60);
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .research-header h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 16px;
+        }
+        
+        .research-header p {
+            font-size: 16px;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .research-section {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .research-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #27ae60, #2ecc71, #27ae60);
+            opacity: 0.7;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .research-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+        
+        .research-section h2 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .research-section h2 .material-icons {
+            margin-right: 10px;
+            color: #27ae60;
+        }
+        
+        .research-section h3 {
+            font-size: 20px;
+            color: #34495e;
+            margin: 20px 0 15px;
+        }
+        
+        .research-section p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .research-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .research-card {
+            background: rgba(249, 249, 249, 0.9);
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            border-left: 4px solid #27ae60;
+        }
+        
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .research-card h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .research-card p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .research-card .card-icon {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .research-card .card-icon .material-icons {
+            font-size: 24px;
+            color: #27ae60;
+            margin-right: 10px;
+        }
+        
+        .timeline {
+            position: relative;
+            margin: 30px 0;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: linear-gradient(to bottom, #e0e0e0, #27ae60, #e0e0e0);
+            border-radius: 4px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -34px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #27ae60;
+            border: 4px solid #fff;
+            box-shadow: 0 0 0 2px #27ae60;
+        }
+        
+        .timeline-item h4 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .timeline-item p {
+            font-size: 15px;
+            color: #666;
+        }
+        
+        .timeline-item .timeline-duration {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .requirements-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .requirements-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 15px;
+            color: #555;
+        }
+        
+        .requirements-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #27ae60;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+        
+        .cta-button:hover {
+            background: linear-gradient(to right, #219653, #27ae60);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .research-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .research-header h1 {
+                font-size: 26px;
+            }
+            
+            .research-section {
+                padding: 20px;
+            }
+        }
+    </style>
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <div class="research-container">
+            <div class="research-header">
+                <h1>水培技术农业实验研究</h1>
+                <p>探索现代农业技术，培养科研能力，推动农业现代化发展</p>
+            </div>
+            
+            <!-- 项目背景 -->
+            <div class="research-section">
+                <h2><span class="material-icons">eco</span>项目背景</h2>
+                <p>随着现代农业技术的不断发展，水培技术作为一种高效、清洁且可控的种植方式，越来越受到关注。通过水培实验研究，不仅能够深入了解植物生长机制，优化种植条件，还能培养科研人员的观察能力、数据分析能力以及对农业领域前沿技术的掌握，为推动农业现代化发展提供理论支持和实践经验。</p>
+            </div>
+            
+            <!-- 研究目标 -->
+            <div class="research-section">
+                <h2><span class="material-icons">track_changes</span>研究目标</h2>
+                <div class="research-grid">
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">science</span>
+                            <h4>探究影响因素</h4>
+                        </div>
+                        <p>利用水培技术开展一系列农业相关实验，探究不同因素（如营养液配方、光照强度、温度等）对植物生长的影响。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">school</span>
+                            <h4>培养科研能力</h4>
+                        </div>
+                        <p>培养科研人员在实验设计、数据采集与分析、结果讨论等方面的科研能力。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">auto_stories</span>
+                            <h4>形成研究成果</h4>
+                        </div>
+                        <p>积累实验数据，形成系统的研究报告和相关学术成果，为农业生产提供可借鉴的技术方案。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验材料与设备 -->
+            <div class="research-section">
+                <h2><span class="material-icons">inventory_2</span>实验材料与设备</h2>
+                <div class="research-grid">
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">grass</span>
+                            <h4>植物种子</h4>
+                        </div>
+                        <p>选择多种常见且具有代表性的农作物种子，如生菜、番茄、黄瓜等。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">water</span>
+                            <h4>水培设备</h4>
+                        </div>
+                        <p>小型水培装置（具备营养液循环系统、定植篮等基本结构）和大型水培种植架（可调节高度和光照角度）。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">wb_sunny</span>
+                            <h4>光照培养箱</h4>
+                        </div>
+                        <p>可精确控制光照强度、光照时间、温度和湿度等环境参数。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">science</span>
+                            <h4>水质监测设备</h4>
+                        </div>
+                        <p>如 pH 计、电导率仪等，用于实时监测营养液的酸碱度和养分浓度。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">opacity</span>
+                            <h4>营养液</h4>
+                        </div>
+                        <p>配备不同配方的标准植物营养液，以及各种单一营养元素的储备液。</p>
+                    </div>
+                    
+                    <div class="research-card">
+                        <div class="card-icon">
+                            <span class="material-icons">build</span>
+                            <h4>辅助材料</h4>
+                        </div>
+                        <p>如消毒剂、标签纸、记号笔、定植海绵、剪刀等。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 实验设计 -->
+            <div class="research-section">
+                <h2><span class="material-icons">biotech</span>实验设计</h2>
+                
+                <h3>种子预处理实验</h3>
+                <p>设计不同消毒剂种类、浓度和处理时间对种子萌发率、芽鲜重和芽干重的影响实验。研究不同浸泡液（如清水、植物激素溶液等）对种子萌发和幼苗生长的作用。</p>
+                
+                <h3>营养液配方优化实验</h3>
+                <p>对营养液中各主要元素（氮、磷、钾等）的不同浓度组合进行实验，观察植物的生长指标（株高、叶片数量、叶面积等）和生理指标（叶绿素含量、光合速率等）变化。探索添加微量元素（铁、锌、锰等）对植物生长的影响，确定最佳的微量元素添加量。</p>
+                
+                <h3>环境因素对水培植物生长影响实验</h3>
+                <p>研究不同光照强度（光照强度梯度设置）下植物的光合作用、形态建成和产量形成。探讨不同温度（设定多个温度处理组）和湿度条件对植物生长发育的影响。</p>
+                
+                <h3>病害防治与营养调控实验</h3>
+                <p>模拟常见水培植物病害（如根腐病、叶斑病等），研究不同营养液添加剂（如杀菌剂、生物防治剂等）对病害的防治效果。分析营养液成分调整对提高植物的抗逆性（如耐盐性、耐旱性等）的作用。</p>
+            </div>
+            
+            <!-- 科研能力培养内容 -->
+            <div class="research-section">
+                <h2><span class="material-icons">psychology</span>科研能力培养内容</h2>
+                
+                <h3>实验方案制定与实施</h3>
+                <p>要求科研人员根据实验目的和需求，独立设计详细的实验方案，包括实验处理设置、样本选择、数据采集方法等。在导师或专业人员的指导下，开展实验操作，熟悉水培设备的使用、营养液的配制、植物种植流程等实际操作技能。</p>
+                
+                <h3>数据记录与整理</h3>
+                <p>制定规范的数据记录表格，指导科研人员在实验过程中准确、及时地记录各项实验数据。学习数据整理的基本方法，如数据的分类、排序和初步统计，确保数据的完整性和准确性。</p>
+                
+                <h3>数据分析与结果呈现</h3>
+                <p>传授常用的数据分析软件（如 Excel、SPSS 等）和统计分析方法，要求科研人员对实验数据进行深入分析，如方差分析、相关性分析等。学习如何以图表（如柱状图、折线图、散点图等）和文字相结合的方式清晰、准确地呈现实验结果，使复杂的数据易于理解和解释。</p>
+                
+                <h3>文献查阅与研究讨论</h3>
+                <p>指导科研人员如何有效利用学术数据库（如知网、万方、Web of Science 等）查阅与水培技术和农业相关的研究文献，了解前人在相关领域的研究进展和成果。定期组织实验讨论会，要求科研人员对实验过程和结果进行深入讨论，分享研究思路和经验，培养批判性思维和团队合作精神。</p>
+            </div>
+            
+            <!-- 成果要求 -->
+            <div class="research-section">
+                <h2><span class="material-icons">emoji_events</span>成果要求</h2>
+                <ul class="requirements-list">
+                    <li>每位参与实验的科研人员在项目结束时提交一份详细的研究报告，包括实验背景、目的、方法、过程、结果讨论以及对实验的反思和建议等内容。</li>
+                    <li>形成至少3篇学术论文或研究报告，在相关的农业学术期刊或会议上发表，以推动研究成果的交流与应用。</li>
+                    <li>整理并形成一套完整的水培技术农业实验操作规范和数据处理模板，为后续的研究和实践提供参考。</li>
+                </ul>
+            </div>
+            
+            <!-- 时间安排 -->
+            <div class="research-section">
+                <h2><span class="material-icons">schedule</span>时间安排</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>准备阶段</h4>
+                        <span class="timeline-duration">第1-2周</span>
+                        <p>采购实验所需的材料、设备，并完成设备的安装调试。组建科研团队，开展实验培训，使科研人员熟悉实验目的、内容和操作流程。</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>实验开展阶段</h4>
+                        <span class="timeline-duration">第3-10周</span>
+                        <p>按照实验设计方案，逐步开展各项实验，记录实验数据。定期组织实验进展汇报会，检查实验进度和质量，解决实验中出现的问题。</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>数据分析与总结阶段</h4>
+                        <span class="timeline-duration">第11-14周</span>
+                        <p>对实验数据进行深入分析和总结，撰写研究报告初稿。组织学术交流活动，邀请相关领域专家对研究成果进行评审和指导。</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4>成果整理与发表阶段</h4>
+                        <span class="timeline-duration">第15-16周</span>
+                        <p>根据专家意见修改完善研究报告，整理实验数据和成果。完成学术论文的撰写和投稿，在相关学术期刊或会议上发表研究成果。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 人员要求 -->
+            <div class="research-section">
+                <h2><span class="material-icons">people</span>人员要求</h2>
+                <ul class="requirements-list">
+                    <li>科研人员应具备一定的生物学、农学或相关学科背景知识，对水培技术和农业实验有基本的了解。</li>
+                    <li>具有较强的学习能力和动手能力，能够熟练操作实验设备和记录实验数据。</li>
+                    <li>具备良好的团队合作精神和沟通能力，积极配合团队的工作安排，共同完成实验任务。</li>
+                </ul>
+            </div>
+            
+            <!-- 资源支持 -->
+            <div class="research-section">
+                <h2><span class="material-icons">support</span>资源支持</h2>
+                <ul class="requirements-list">
+                    <li>提供实验场地和必要的办公设施，确保科研人员有良好的工作环境。</li>
+                    <li>保障实验设备和材料的充足供应，并定期进行维护和更新。</li>
+                    <li>为科研人员提供相关的培训和技术支持，邀请领域专家进行指导和交流。</li>
+                </ul>
+                
+                <a href="#" class="cta-button">申请参与研究</a>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script src="js/common.js"></script>
+    <script>
+        // 加载公共头部和底部
+        loadHeader();
+        loadFooter();
+    </script>
+</body>
+</html> 

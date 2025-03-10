@@ -1,7 +1,26 @@
 export function createHeader() {
   // 使用全局变量
   const baseUrl = window.siteConfig?.BASE_URL || "";
-  const isLoggedIn = true; // 这里应该从实际的登录状态获取
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const userRole = localStorage.getItem("userRole");
+
+  // 根据用户角色确定个人中心链接
+  let profileLink = `${baseUrl}/profile.html`;
+  if (isLoggedIn && userRole) {
+    switch (userRole) {
+      case "admin":
+        profileLink = `${baseUrl}/admin-dashboard.html`;
+        break;
+      case "teacher":
+        profileLink = `${baseUrl}/teacher-dashboard.html`;
+        break;
+      case "student":
+        profileLink = `${baseUrl}/student-dashboard.html`;
+        break;
+      default:
+        profileLink = `${baseUrl}/profile.html`;
+    }
+  }
 
   const userMenu = isLoggedIn
     ? `
@@ -10,7 +29,7 @@ export function createHeader() {
         <img src="${baseUrl}/images/avatar.jpeg" alt="用户头像" class="user-avatar">
       </div>
       <div class="dropdown-menu">
-        <a href="${baseUrl}/profile.html" class="menu-item">
+        <a href="${profileLink}" class="menu-item">
           <span class="material-icons">person</span>
           个人中心
         </a>
@@ -26,7 +45,7 @@ export function createHeader() {
     </div>
   `
     : `
-    <a href="${baseUrl}/profile.html">
+    <a href="${baseUrl}/login.html">
       <button class="login-btn">登录</button>
     </a>
   `;
@@ -99,8 +118,13 @@ export function initializeNavbar() {
 
     // 退出登录
     logoutBtn?.addEventListener("click", () => {
-      // 这里添加退出登录的逻辑
-      console.log("退出登录");
+      // 清除登录状态
+      localStorage.removeItem("isLoggedIn");
+      localStorage.removeItem("userRole");
+      localStorage.removeItem("username");
+
+      // 重定向到首页
+      window.location.href = "index.html";
     });
   }
 }

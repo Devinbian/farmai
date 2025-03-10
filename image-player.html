@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智能互动图片播放器 - 智慧微农场Smart Mini-farm</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom, #e8f5e9, #c8e6c9, #a5d6a7, #81c784);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .player-container {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 20px;
+        }
+        
+        .player-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            padding: 40px 20px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+        
+        .player-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(to right, #27ae60, #2ecc71, #27ae60);
+            border-radius: 12px 12px 0 0;
+        }
+        
+        .player-header h1 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 16px;
+        }
+        
+        .player-header p {
+            font-size: 16px;
+            color: #7f8c8d;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .image-player {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .image-player::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #27ae60, #2ecc71, #27ae60);
+            opacity: 0.7;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .image-slider {
+            position: relative;
+            width: 100%;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .slider-container {
+            display: flex;
+            transition: transform 0.5s ease;
+            height: 100%;
+        }
+        
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+        }
+        
+        .slide img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .slider-arrow {
+            background: rgba(39, 174, 96, 0.8);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 2;
+        }
+        
+        .slider-arrow:hover {
+            background: rgba(39, 174, 96, 1);
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .slider-arrow:active {
+            transform: scale(0.95);
+        }
+        
+        .slider-arrow .material-icons {
+            font-size: 28px;
+        }
+        
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .slider-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #ddd;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+        }
+        
+        .slider-dot.active {
+            background: #27ae60;
+            transform: scale(1.2);
+            border-color: #fff;
+        }
+        
+        .slider-dot:hover {
+            background: #bbb;
+            transform: scale(1.1);
+        }
+        
+        .slider-thumbnails {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        .slider-thumbnail {
+            width: 100px;
+            height: 75px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            opacity: 0.7;
+        }
+        
+        .slider-thumbnail.active {
+            border-color: #27ae60;
+            transform: scale(1.05);
+            opacity: 1;
+            box-shadow: 0 5px 10px rgba(39, 174, 96, 0.3);
+        }
+        
+        .slider-thumbnail:hover {
+            opacity: 0.9;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .slider-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .slider-thumbnail:hover img {
+            transform: scale(1.1);
+        }
+        
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3);
+        }
+        
+        .back-button:hover {
+            background: linear-gradient(to right, #219653, #27ae60);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .image-slider {
+                height: 300px;
+            }
+            
+            .slider-thumbnails {
+                flex-wrap: wrap;
+            }
+            
+            .player-header h1 {
+                font-size: 26px;
+            }
+        }
+    </style>
+    <!-- 先加载配置 -->
+    <script type="module">
+        import { config } from './js/config.js';
+        // 将 config 设置为全局变量
+        window.siteConfig = config;
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <main class="main-content">
+        <div class="player-container">
+            <!-- <div class="player-header">
+                <h1>智能互动图片播放器</h1>
+                <p>探索智慧微农场的幼儿互动场景，激发孩子们的农业兴趣和创造力</p>
+            </div> -->
+            
+            <div class="image-player">
+                <div class="image-slider">
+                    <div class="slider-container">
+                        <div class="slide">
+                            <img src="images/7a0119971565c.png" alt="互动场景1">
+                        </div>
+                        <div class="slide">
+                            <img src="images/846c917c3ba2e.png" alt="互动场景2">
+                        </div>
+                        <div class="slide">
+                            <img src="images/129582b5abbaf.png" alt="互动场景3">
+                        </div>
+                        <div class="slide">
+                            <img src="images/cd53a49921ce6.png" alt="互动场景4">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="slider-dots">
+                    <div class="slider-dot active" data-index="0"></div>
+                    <div class="slider-dot" data-index="1"></div>
+                    <div class="slider-dot" data-index="2"></div>
+                    <div class="slider-dot" data-index="3"></div>
+                </div>
+                
+                <div class="slider-controls">
+                    <button class="slider-arrow prev">
+                        <span class="material-icons">arrow_back</span>
+                    </button>
+                    <button class="slider-arrow next">
+                        <span class="material-icons">arrow_forward</span>
+                    </button>
+                </div>
+                
+                <div class="slider-thumbnails">
+                    <div class="slider-thumbnail active" data-index="0">
+                        <img src="images/7a0119971565c.png" alt="缩略图1">
+                    </div>
+                    <div class="slider-thumbnail" data-index="1">
+                        <img src="images/846c917c3ba2e.png" alt="缩略图2">
+                    </div>
+                    <div class="slider-thumbnail" data-index="2">
+                        <img src="images/129582b5abbaf.png" alt="缩略图3">
+                    </div>
+                    <div class="slider-thumbnail" data-index="3">
+                        <img src="images/cd53a49921ce6.png" alt="缩略图4">
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="index.html" class="back-button">
+                        <span class="material-icons" style="vertical-align: middle; margin-right: 5px;">arrow_back</span>
+                        返回首页
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="footer"></div>
+
+    <script type="module">
+        // 使用全局变量 window.siteConfig
+        
+        // 导入和初始化头部和底部组件
+        import { createHeader, updateNavTitle, initializeNavbar } from './components/layout/header.js';
+        import { createFooter } from './components/layout/footer.js';
+        
+        document.getElementById('header').innerHTML = createHeader();
+        document.getElementById('footer').innerHTML = createFooter();
+        
+        updateNavTitle('智能互动图片播放器');
+        initializeNavbar();
+    </script>
+    
+    <script>
+        // 图片播放器功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const sliderContainer = document.querySelector('.slider-container');
+            const slides = document.querySelectorAll('.slide');
+            const dots = document.querySelectorAll('.slider-dot');
+            const thumbnails = document.querySelectorAll('.slider-thumbnail');
+            const prevBtn = document.querySelector('.slider-arrow.prev');
+            const nextBtn = document.querySelector('.slider-arrow.next');
+            
+            let currentIndex = 0;
+            const slideCount = slides.length;
+            
+            // 自动播放设置
+            let autoplayInterval;
+            const autoplayDelay = 5000; // 5秒切换一次
+            
+            // 更新滑块位置
+            function updateSlider() {
+                sliderContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // 更新指示点状态
+                dots.forEach((dot, index) => {
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+                
+                // 更新缩略图状态
+                thumbnails.forEach((thumbnail, index) => {
+                    if (index === currentIndex) {
+                        thumbnail.classList.add('active');
+                    } else {
+                        thumbnail.classList.remove('active');
+                    }
+                });
+                
+                // 重置自动播放
+                resetAutoplay();
+            }
+            
+            // 下一张
+            function nextSlide() {
+                currentIndex = (currentIndex + 1) % slideCount;
+                updateSlider();
+            }
+            
+            // 上一张
+            function prevSlide() {
+                currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                updateSlider();
+            }
+            
+            // 重置自动播放
+            function resetAutoplay() {
+                clearInterval(autoplayInterval);
+                autoplayInterval = setInterval(nextSlide, autoplayDelay);
+            }
+            
+            // 初始化自动播放
+            resetAutoplay();
+            
+            // 事件监听
+            prevBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                prevSlide();
+            });
+            
+            nextBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                nextSlide();
+            });
+            
+            // 点击指示点切换
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
+            // 点击缩略图切换
+            thumbnails.forEach((thumbnail, index) => {
+                thumbnail.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    currentIndex = index;
+                    updateSlider();
+                });
+            });
+            
+            // 触摸滑动支持
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            const slider = document.querySelector('.image-slider');
+            
+            slider.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            });
+            
+            slider.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            });
+            
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    // 左滑，下一张
+                    nextSlide();
+                } else if (touchEndX > touchStartX + swipeThreshold) {
+                    // 右滑，上一张
+                    prevSlide();
+                }
+            }
+            
+            // 鼠标悬停时暂停自动播放
+            slider.addEventListener('mouseenter', () => {
+                clearInterval(autoplayInterval);
+            });
+            
+            slider.addEventListener('mouseleave', () => {
+                resetAutoplay();
+            });
+            
+            // 确保初始状态正确
+            updateSlider();
+            
+            // 添加键盘支持
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
