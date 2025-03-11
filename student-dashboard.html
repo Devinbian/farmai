@@ -413,6 +413,59 @@
             white-space: nowrap; /* 防止按钮文字换行 */
             min-width: fit-content; /* 确保按钮不会被压缩 */
         }
+
+        /* AI功能相关样式 */
+        .chat-message {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.3s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* 暗色主题样式 */
+        .content-section[id^="ai-"] .dashboard-card {
+            background: #1a1a1a;
+            border: 1px solid #2a2a2a;
+        }
+
+        .content-section[id^="ai-"] .card-title {
+            color: white;
+        }
+
+        .content-section[id^="ai-"] .action-btn {
+            background: #2a2a2a;
+            color: white;
+        }
+
+        .content-section[id^="ai-"] .action-btn:hover {
+            background: #333;
+        }
+
+        /* 动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .content-section[id^="ai-"] .action-btn:active {
+            animation: pulse 0.3s;
+        }
     </style>
     <!-- 先加载配置 -->
     <script type="module">
@@ -525,6 +578,12 @@
                                     Scratch项目
                                 </li>
                             </ul>
+                        </li>
+
+                        <!-- 添加AI平台链接 -->
+                        <li class="nav-item" onclick="window.location.href='ai-platform.html'" style="padding: 10px 15px; cursor: pointer;">
+                            <span class="material-icons" style="margin-right: 10px;">smart_toy</span>
+                            AI平台
                         </li>
 
                         <!-- 添加退出登录按钮 -->
@@ -2314,6 +2373,185 @@
                                     </div>
                                 </li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI大模型相关内容 -->
+                <div class="content-section" id="ai-chat">
+                    <h2>AI对话</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>智能对话助手</h1>
+                            <p>基于大语言模型，为您提供智能问答服务</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">refresh</span>
+                                新会话
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">history</span>
+                                历史记录
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width" style="height: calc(100vh - 300px); display: flex; flex-direction: column;">
+                            <div class="chat-container" style="flex: 1; overflow-y: auto; padding: 20px; background: #1a1a1a; border-radius: 12px; margin-bottom: 20px;">
+                                <div class="chat-message ai" style="margin-bottom: 20px; display: flex; align-items: flex-start;">
+                                    <div class="avatar" style="width: 40px; height: 40px; border-radius: 50%; background: #4CAF50; display: flex; align-items: center; justify-content: center; margin-right: 15px;">
+                                        <span class="material-icons" style="color: white;">smart_toy</span>
+                                    </div>
+                                    <div class="message" style="background: #2a2a2a; padding: 15px; border-radius: 12px; color: #fff; max-width: 80%;">
+                                        你好！我是你的AI学习助手。我可以帮助你解答问题、提供学习建议，让我们开始对话吧！
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input" style="display: flex; gap: 10px;">
+                                <input type="text" placeholder="输入你的问题..." style="flex: 1; padding: 15px; border: none; border-radius: 8px; background: #2a2a2a; color: white;">
+                                <button style="padding: 0 20px; background: #4CAF50; color: white; border: none; border-radius: 8px; display: flex; align-items: center; gap: 5px;">
+                                    <span class="material-icons">send</span>
+                                    发送
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section" id="ai-image">
+                    <h2>AI绘画</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>AI图像生成</h1>
+                            <p>支持文生图和图生图两种模式</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">image</span>
+                                我的作品
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">style</span>
+                                模板
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card" style="background: #1a1a1a;">
+                            <div class="card-header">
+                                <h2 class="card-title" style="color: white;">
+                                    <span class="material-icons">description</span>
+                                    文生图
+                                </h2>
+                            </div>
+                            <div style="padding: 20px;">
+                                <textarea placeholder="描述你想创建的图像..." style="width: 100%; height: 100px; padding: 15px; border: none; border-radius: 8px; background: #2a2a2a; color: white; margin-bottom: 15px;"></textarea>
+                                <div style="display: flex; gap: 10px;">
+                                    <button style="flex: 1; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 8px;">
+                                        生成图像
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card" style="background: #1a1a1a;">
+                            <div class="card-header">
+                                <h2 class="card-title" style="color: white;">
+                                    <span class="material-icons">filter</span>
+                                    图生图
+                                </h2>
+                            </div>
+                            <div style="padding: 20px;">
+                                <div style="border: 2px dashed #2a2a2a; border-radius: 8px; padding: 40px; text-align: center; margin-bottom: 15px;">
+                                    <span class="material-icons" style="font-size: 48px; color: #4CAF50;">cloud_upload</span>
+                                    <p style="color: white; margin-top: 10px;">点击或拖拽上传图片</p>
+                                </div>
+                                <div style="display: flex; gap: 10px;">
+                                    <button style="flex: 1; padding: 12px; background: #4CAF50; color: white; border: none; border-radius: 8px;">
+                                        开始转换
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-section" id="ai-video">
+                    <h2>AI视频</h2>
+                    <div class="dashboard-header">
+                        <div class="welcome-message">
+                            <h1>AI视频生成</h1>
+                            <p>通过文字描述生成精彩视频</p>
+                        </div>
+                        <div class="user-actions">
+                            <button class="action-btn">
+                                <span class="material-icons">movie</span>
+                                我的视频
+                            </button>
+                            <button class="action-btn">
+                                <span class="material-icons">featured_play_list</span>
+                                创作向导
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="content-area">
+                        <div class="dashboard-card full-width" style="background: #1a1a1a;">
+                            <div class="card-header">
+                                <h2 class="card-title" style="color: white;">
+                                    <span class="material-icons">movie_creation</span>
+                                    视频生成
+                                </h2>
+                            </div>
+                            <div style="padding: 20px;">
+                                <div style="margin-bottom: 20px;">
+                                    <textarea placeholder="描述你想创建的视频场景..." style="width: 100%; height: 120px; padding: 15px; border: none; border-radius: 8px; background: #2a2a2a; color: white;"></textarea>
+                                </div>
+                                <div style="display: flex; gap: 15px; margin-bottom: 20px;">
+                                    <div style="flex: 1;">
+                                        <label style="display: block; color: white; margin-bottom: 8px;">视频时长</label>
+                                        <select style="width: 100%; padding: 10px; border: none; border-radius: 8px; background: #2a2a2a; color: white;">
+                                            <option>15秒</option>
+                                            <option>30秒</option>
+                                            <option>60秒</option>
+                                        </select>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <label style="display: block; color: white; margin-bottom: 8px;">视频风格</label>
+                                        <select style="width: 100%; padding: 10px; border: none; border-radius: 8px; background: #2a2a2a; color: white;">
+                                            <option>写实风格</option>
+                                            <option>动画风格</option>
+                                            <option>艺术风格</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button style="width: 100%; padding: 15px; background: #4CAF50; color: white; border: none; border-radius: 8px; font-size: 16px;">
+                                    开始生成
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card full-width" style="background: #1a1a1a;">
+                            <div class="card-header">
+                                <h2 class="card-title" style="color: white;">
+                                    <span class="material-icons">history</span>
+                                    最近生成
+                                </h2>
+                            </div>
+                            <div style="padding: 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+                                <div style="background: #2a2a2a; border-radius: 8px; overflow: hidden;">
+                                    <div style="height: 150px; background: #333; display: flex; align-items: center; justify-content: center;">
+                                        <span class="material-icons" style="font-size: 48px; color: #4CAF50;">play_circle</span>
+                                    </div>
+                                    <div style="padding: 15px;">
+                                        <h3 style="color: white; margin: 0 0 5px 0;">智慧农场介绍</h3>
+                                        <p style="color: #888; margin: 0; font-size: 14px;">生成于 2024-03-18</p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
