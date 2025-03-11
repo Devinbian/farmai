@@ -47,6 +47,8 @@
         .user-actions {
             display: flex;
             gap: 10px;
+            min-width: 240px; /* 添加最小宽度 */
+            justify-content: flex-end; /* 确保按钮靠右对齐 */
         }
         
         .action-btn {
@@ -60,6 +62,7 @@
             align-items: center;
             gap: 5px;
             transition: all 0.3s;
+            white-space: nowrap; /* 防止按钮文字换行 */
         }
         
         .action-btn:hover {
