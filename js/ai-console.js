@@ -309,10 +309,8 @@ function initChat() {
                 `;
 
           historyItem.addEventListener("click", (e) => {
-            if (
-              !e.target.closest(".chat-actions") &&
-              !e.target.closest(".chat-title")
-            ) {
+            if (!e.target.closest(".chat-actions") && 
+                !e.target.closest(".chat-action-btn")) {
               currentChatId = chat.id;
               updateChatUI(chat);
               updateHistoryList();

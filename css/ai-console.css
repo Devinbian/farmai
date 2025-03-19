@@ -316,6 +316,8 @@
     position: relative;
     background: none;
     transform: none;
+    user-select: none;
+    margin-bottom: 4px;
 }
 
 .chat-sidebar .history-item:hover {
@@ -339,8 +341,8 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     font-size: 0.9rem;
-    cursor: pointer;
     transition: all 0.3s ease;
+    pointer-events: none;
 }
 
 /* 移除标题hover效果 */
@@ -364,7 +366,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 4px;
     gap: 4px;
-    z-index: 1;
+    z-index: 10;  /* 提高优先级 */
 }
 
 .chat-sidebar .history-item:hover .chat-actions {
@@ -379,6 +381,7 @@
     cursor: pointer;
     border-radius: 4px;
     transition: all 0.3s ease;
+    z-index: 11;  /* 确保按钮可点击 */
 }
 
 .chat-sidebar .history-item .chat-action-btn:hover {
