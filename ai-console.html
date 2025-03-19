@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI控制台 - FarmAI</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/ai-console.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+</head>
+<body>
+    <div class="ai-console-container">
+        <!-- 左侧导航栏 -->
+        <div class="ai-sidebar">
+            <div class="ai-logo">
+                <img src="images/speaking.png" alt="FarmAI Logo">
+                <span>AI控制台</span>
+            </div>
+            <nav class="ai-nav">
+                <a href="#chat" class="active">
+                    <i class="ri-chat-3-line"></i>
+                    <span>AI对话</span>
+                </a>
+                <a href="#image">
+                    <i class="ri-image-2-line"></i>
+                    <span>AI绘画</span>
+                </a>
+                <a href="#video">
+                    <i class="ri-video-line"></i>
+                    <span>AI视频</span>
+                </a>
+            </nav>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="ai-main-content">
+            <!-- AI对话区域 -->
+            <section id="chat" class="ai-section active">
+                <div class="chat-container">
+                    <!-- 左侧对话列表 -->
+                    <div class="chat-sidebar">
+                        <div class="chat-header-actions">
+                            <button class="new-chat-btn">
+                                <i class="ri-add-line"></i>
+                                <span>新对话</span>
+                            </button>
+                            <button class="history-toggle-btn">
+                                <i class="ri-arrow-right-s-line"></i>
+                            </button>
+                        </div>
+                        <div class="chat-history">
+                            <div class="history-list" id="chatHistoryList">
+                                <!-- 历史对话列表将通过JavaScript动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 右侧聊天区域 -->
+                    <div class="chat-main">
+                        <div class="chat-header">
+                            <div class="chat-title" id="currentChatTitle">新对话</div>
+                            <div class="chat-actions">
+                                <button class="action-btn" title="重命名对话">
+                                    <i class="ri-edit-line"></i>
+                                </button>
+                                <button class="action-btn" title="清空对话">
+                                    <i class="ri-delete-bin-line"></i>
+                                </button>
+                                <button class="action-btn" title="导出对话">
+                                    <i class="ri-download-line"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- 消息内容将通过JavaScript动态添加 -->
+                        </div>
+                        <div class="chat-input-container">
+                            <textarea id="chatInput" placeholder="输入您的问题..." rows="1"></textarea>
+                            <button id="sendMessage" class="send-btn">
+                                <i class="ri-send-plane-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI绘画区域 -->
+            <section id="image" class="ai-section">
+                <div class="image-generation-container">
+                    <!-- 左侧创意描述区域 -->
+                    <div class="image-creation-area">
+                        <!-- 顶部创意描述卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <i class="ri-lightbulb-line"></i>
+                                <span>创意描述</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="prompt-input">
+                                    <textarea id="imagePrompt" placeholder="请描述您想生成的图片内容，或查看使用指南提升生成效果" rows="3"></textarea>
+                                </div>
+                                <div class="prompt-suggestions">
+                                    <div class="tag-list">
+                                        <span class="tag">控火术</span>
+                                        <span class="tag">情绪负担</span>
+                                        <span class="tag">青年写真</span>
+                                        <span class="tag">背光大片</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 中间参考图卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <div class="header-left">
+                                    <i class="ri-image-line"></i>
+                                    <span>上传参考图</span>
+                                </div>
+                                <div class="header-right">
+                                    <span class="tip-text">(非必填)</span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="upload-area" id="uploadArea">
+                                    <div class="upload-icon">
+                                        <i class="ri-upload-2-line"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        <p>点击/拖拽</p>
+                                        <p>从历史创作选择</p>
+                                    </div>
+                                    <div class="upload-tip">支持jpg/png格式</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 底部参数设置卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <i class="ri-settings-3-line"></i>
+                                <span>参数设置</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="param-group">
+                                    <div class="param-label">图片比例</div>
+                                    <div class="ratio-options">
+                                        <button class="ratio-btn active" data-ratio="1:1">1:1</button>
+                                        <button class="ratio-btn" data-ratio="16:9">16:9</button>
+                                        <button class="ratio-btn" data-ratio="9:16">9:16</button>
+                                        <button class="ratio-btn" data-ratio="4:3">4:3</button>
+                                    </div>
+                                </div>
+                                <div class="param-group">
+                                    <div class="param-label">生成数量</div>
+                                    <div class="number-input">
+                                        <button class="number-btn minus">-</button>
+                                        <input type="number" id="generateCount" value="1" min="1" max="4">
+                                        <button class="number-btn plus">+</button>
+                                    </div>
+                                </div>
+                                <button id="generateImage" class="primary-btn">
+                                    <i class="ri-magic-line"></i>
+                                    立即生成
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 中间预览区域 -->
+                    <div class="image-preview-container">
+                        <div class="preview-area" id="imagePreview">
+                            <div class="empty-preview">
+                                <i class="ri-image-2-line"></i>
+                                <p>快去生成你的创意吧~</p>
+                            </div>
+                        </div>
+                        <div class="preview-footer">
+                            <p>内容由人工智能模型生成，不代表平台的观点，立场或态度，请合理使用和参考</p>
+                        </div>
+                    </div>
+
+                    <!-- 右侧历史记录 -->
+                    <div class="image-history">
+                        <div class="history-header">
+                            <div class="header-left">
+                                <span>历史</span>
+                            </div>
+                            <div class="header-right">
+                                <button class="batch-btn">
+                                    <i class="ri-file-copy-line"></i>
+                                    批量操作
+                                </button>
+                            </div>
+                        </div>
+                        <div class="history-content">
+                            <div class="history-list" id="imageHistoryList">
+                                <!-- 历史记录将通过JavaScript动态添加 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AI视频区域 -->
+            <section id="video" class="ai-section">
+                <div class="video-generation-container">
+                    <div class="prompt-input">
+                        <textarea id="videoPrompt" placeholder="描述您想要生成的视频..." rows="3"></textarea>
+                        <div class="video-options">
+                            <select id="videoStyle">
+                                <option value="realistic">写实风格</option>
+                                <option value="anime">动漫风格</option>
+                                <option value="documentary">纪录片风格</option>
+                            </select>
+                            <button id="generateVideo" class="primary-btn">生成视频</button>
+                        </div>
+                    </div>
+                    <div class="video-preview" id="videoPreview">
+                        <!-- 视频预览区域 -->
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- 重命名对话框 -->
+    <div class="dialog-overlay" id="renameDialogOverlay" style="display: none;">
+        <div class="rename-dialog">
+            <h3>重命名对话</h3>
+            <input type="text" id="renameInput" placeholder="输入新的对话名称">
+            <div class="dialog-actions">
+                <button class="dialog-btn cancel-btn" id="cancelRename">取消</button>
+                <button class="dialog-btn confirm-btn" id="confirmRename">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/ai-console.js"></script>
+</body>
+</html> 
