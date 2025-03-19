@@ -967,7 +967,7 @@
 
 /* 右侧历史记录 */
 .image-history {
-    width: 550px;
+    width: 550px; /* 调整容器宽度 */
     background: #ffffff;
     border-left: 1px solid #e9ecef;
     transition: width 0.3s ease;
@@ -977,381 +977,86 @@
 }
 
 .image-history.collapsed {
-    width: 200px;
+    width: 166px; /* 调整收起状态的宽度，刚好放下一个卡片加间距 */
 }
 
-/* 展开/收起按钮样式 */
-.image-history .toggle-btn {
-    position: absolute;
-    left: -20px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 60px;
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-right: none;
-    border-radius: 4px 0 0 4px;
-    color: #6c757d;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; /* 提高层级 */
-    transition: all 0.3s;
-}
-
-.image-history .toggle-btn:hover {
-    color: #2e7d32;
-    background: #f8f9fa;
-}
-
-.image-history .history-content {
-    flex: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative; /* 添加相对定位 */
-    z-index: 1; /* 确保内容在按钮下层 */
-}
-
-.image-history .history-header {
+/* 历史区域头部样式 */
+.history-header {
     padding: 16px;
     border-bottom: 1px solid #e9ecef;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #ffffff;
 }
 
-.image-history .header-left span {
-    color: #2c3e50;
+.header-left span {
     font-size: 14px;
+    color: #2c3e50;
 }
 
-.image-history .header-right {
+.header-right {
     display: flex;
+    align-items: center;
     gap: 8px;
+}
+
+/* 视图切换按钮样式 */
+.view-toggle {
+    display: flex;
     align-items: center;
 }
 
-.image-history .view-btn,
-.image-history .batch-btn {
+.view-btn {
     display: flex;
     align-items: center;
     gap: 4px;
-    background: none;
-    border: none;
     padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
+    border: none;
+    background: none;
     color: #6c757d;
     font-size: 13px;
-    transition: all 0.2s;
+    cursor: pointer;
+    border-radius: 4px;
 }
 
-.image-history .view-btn i,
-.image-history .batch-btn i {
-    font-size: 16px;
-}
-
-.image-history .view-btn:hover,
-.image-history .batch-btn:hover {
+.view-btn.active {
     color: #2e7d32;
     background: rgba(46, 125, 50, 0.05);
 }
 
-.image-history.collapsed .view-btn span,
-.image-history.collapsed .batch-btn span {
-    display: none;
+.view-btn i {
+    font-size: 16px;
 }
 
-.image-history.collapsed .view-btn,
-.image-history.collapsed .batch-btn {
-    padding: 6px;
+/* 历史内容区域的基础样式 */
+.history-content {
+    padding: 8px; /* 减小内边距 */
+    overflow-y: auto;
+    height: calc(100% - 60px);
 }
 
-.image-history .favorite-btn {
-    z-index: 10;
-    position: relative;
-    background: none;
-    border: none;
-    padding: 8px;
-    cursor: pointer;
-    color: #6c757d;
-    transition: all 0.2s;
-}
-
-.image-history .favorite-btn:hover {
-    color: #2e7d32;
-}
-
-.image-history .favorite-btn.active {
-    color: #2e7d32;
-}
-
-/* 空状态样式 */
-.history-empty-state {
-    height: 100%;
+/* 层级视图和平铺视图的共同样式 */
+.history-list.tree-view,
+.history-list.grid-view {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    color: #6c757d;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    flex-wrap: wrap;
+    gap: 8px;
     width: 100%;
+    padding: 0; /* 移除内边距 */
+    padding-left: 7px;
+    justify-content: flex-start;
 }
 
-.history-empty-state .empty-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: rgba(46, 125, 50, 0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 16px;
-}
-
-.history-empty-state .empty-icon i {
-    font-size: 24px;
-    color: #2e7d32;
-}
-
-.history-empty-state .empty-text {
-    margin: 4px 0;
-    font-size: 13px;
-    color: #6c757d;
-    width: 100%;
-    text-align: center;
-}
-
-/* 收缩状态下的空状态样式 */
-.image-history.collapsed .history-empty-state {
-    padding: 12px;
-    width: 100%;
-}
-
-.image-history.collapsed .history-empty-state .empty-text {
-    display: none;
-}
-
-.image-history.collapsed .history-empty-state .empty-icon {
-    width: 32px;
-    height: 32px;
-    margin-bottom: 0;
-}
-
-.image-history.collapsed .history-empty-state .empty-icon i {
-    font-size: 18px;
-}
-
-/* 历史记录列表样式 */
-.history-list {
-    padding: 16px;
-    height: 100%;
-}
-
-/* 层级视图样式 */
-.history-list.tree-view {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-    padding: 16px;
-}
-
-/* 收缩状态下的层级视图样式 */
-.image-history.collapsed .history-list.tree-view {
-    grid-template-columns: 1fr;
-}
-
-/* 收缩状态下调整图片组的大小 */
-.image-history.collapsed .history-list.tree-view .history-group {
-    width: 100%;
-    aspect-ratio: 1;
-}
-
-.history-list.tree-view .history-group {
+/* 统一卡片大小 */
+.history-list.tree-view .history-group,
+.history-list.grid-view .history-item {
+    width: 120px;
+    height: 120px;
     background: #ffffff;
     border: 1px solid #e9ecef;
     border-radius: 12px;
     overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s;
     position: relative;
-    aspect-ratio: 1;
-}
-
-.history-list.tree-view .history-group:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.history-list.tree-view .group-header {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    padding: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 2;
-}
-
-.history-list.tree-view .group-title {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #ffffff;
-    font-size: 14px;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-.history-list.tree-view .group-title i {
-    font-size: 16px;
-}
-
-.history-list.tree-view .group-images {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.history-list.tree-view .group-preview {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.history-list.tree-view .group-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.history-list.tree-view .group-count {
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
-    background: rgba(0, 0, 0, 0.6);
-    color: #ffffff;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    backdrop-filter: blur(4px);
-}
-
-/* 平铺视图样式 */
-.history-list.grid-view {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 16px;
-    padding: 16px;
-}
-
-.history-list.grid-view .history-item {
-    background: #ffffff;
-    border: 1px solid #e9ecef;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s;
-    position: relative;
-    aspect-ratio: 1;
-}
-
-.history-list.grid-view .history-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.history-list.grid-view .history-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* 图片操作按钮 */
-.history-item .image-actions,
-.history-group .group-actions {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 8px;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 2;
-}
-
-.history-item:hover .image-actions,
-.history-group:hover .group-actions {
-    opacity: 1;
-}
-
-.image-action-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.95);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    color: #2c3e50;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.image-action-btn:hover {
-    background: #ffffff;
-    color: #2e7d32;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-/* 保持原有的视图切换按钮样式 */
-.view-toggle {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 4px;
-    background: #f8f9fa;
-    border-radius: 6px;
-}
-
-.view-toggle button {
-    padding: 6px 12px;
-    border: none;
-    background: none;
-    color: #6c757d;
-    font-size: 13px;
-    cursor: pointer;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transition: all 0.3s;
-}
-
-.view-toggle button.active {
-    background: #ffffff;
-    color: #2e7d32;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.view-toggle button:hover:not(.active) {
-    color: #2c3e50;
-}
-
-.view-toggle i {
-    font-size: 16px;
 }
 
 /* 响应式设计 */
@@ -1503,4 +1208,161 @@
 .image-history.collapsed .history-list.grid-view .image-item,
 .image-history.collapsed .history-list.grid-view .history-item {
     width: 100%;
+}
+
+/* 历史内容区域的基础样式 */
+.history-content {
+    padding: 16px;
+    overflow-y: auto;
+    height: calc(100% - 60px);
+}
+
+/* 层级视图样式 */
+.history-list.tree-view .history-group {
+    margin-bottom: 20px;
+}
+
+.history-list.tree-view .group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.history-list.tree-view .group-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    font-size: 14px;
+}
+
+.history-list.tree-view .group-images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.history-list.tree-view .group-images img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+/* 空状态样式调整 */
+.history-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #999;
+}
+
+.empty-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.empty-text {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* 展开/收起按钮样式 */
+.image-history .toggle-btn {
+    position: absolute;
+    left: -16px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 32px;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #6c757d;
+    padding: 0;
+    transition: all 0.3s ease;
+}
+
+.image-history .toggle-btn:hover {
+    color: #2c3e50;
+    background: #f8f9fa;
+}
+
+.image-history.collapsed .toggle-btn i {
+    transform: rotate(180deg);
+}
+
+/* 历史区域的图片操作按钮样式 */
+.history-list .image-actions {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: none;
+    gap: 4px;
+}
+
+.history-list .history-item:hover .image-actions,
+.history-list .history-group:hover .image-actions {
+    display: flex;
+}
+
+/* 只保留收藏按钮 */
+.history-list .image-action-btn:not([title="收藏"]) {
+    display: none;
+}
+
+.history-list .image-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.history-list .image-action-btn:hover {
+    background: #ffffff;
+    color: #2e7d32;
+    transform: scale(1.1);
+}
+
+/* 收起状态下的历史区域头部按钮样式 */
+.image-history.collapsed .view-btn span,
+.image-history.collapsed .batch-btn span {
+    display: none;
+}
+
+.image-history.collapsed .view-btn {
+    padding: 6px;
+}
+
+.image-history.collapsed .batch-btn {
+    padding: 6px;
+}
+
+/* 统一收起状态下的卡片大小 */
+.image-history.collapsed .history-list.tree-view .history-group,
+.image-history.collapsed .history-list.tree-view .group-images img,
+.image-history.collapsed .history-list.grid-view .history-item {
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+}
+
+.image-history.collapsed .history-list.tree-view .group-images img {
+    border: 1px solid #e9ecef;
 } 

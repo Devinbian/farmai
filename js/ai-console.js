@@ -1001,3 +1001,29 @@ function handleDownload(imageUrl) {
 document.addEventListener("DOMContentLoaded", () => {
   const controller = new ImageGenerationController();
 });
+
+// 视图切换功能
+document.addEventListener('DOMContentLoaded', function() {
+    const viewButtons = document.querySelectorAll('.view-btn');
+    const treeView = document.getElementById('treeViewList');
+    const gridView = document.getElementById('gridViewList');
+
+    viewButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // 移除所有按钮的active类
+            viewButtons.forEach(btn => btn.classList.remove('active'));
+            // 给当前点击的按钮添加active类
+            this.classList.add('active');
+
+            // 根据按钮的data-view属性切换视图
+            const viewType = this.getAttribute('data-view');
+            if (viewType === 'tree') {
+                treeView.style.display = 'flex';
+                gridView.style.display = 'none';
+            } else {
+                treeView.style.display = 'none';
+                gridView.style.display = 'flex';
+            }
+        });
+    });
+});
