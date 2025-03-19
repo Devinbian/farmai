@@ -1,16 +1,10 @@
-// 页面加载完成后执行
 document.addEventListener("DOMContentLoaded", () => {
-  // 初始化导航切换
   initNavigation();
-  // 初始化聊天功能
   initChat();
-  // 初始化图片生成功能
   initImageGeneration();
-  // 初始化视频生成功能
   initVideoGeneration();
 });
 
-// 导航切换功能
 function initNavigation() {
   const navLinks = document.querySelectorAll(".ai-nav a");
   const sections = document.querySelectorAll(".ai-section");
@@ -20,11 +14,9 @@ function initNavigation() {
       e.preventDefault();
       const targetId = link.getAttribute("href").substring(1);
 
-      // 更新导航状态
       navLinks.forEach((l) => l.classList.remove("active"));
       link.classList.add("active");
 
-      // 更新内容区域显示
       sections.forEach((section) => {
         section.classList.remove("active");
         if (section.id === targetId) {
@@ -35,7 +27,6 @@ function initNavigation() {
   });
 }
 
-// 聊天功能初始化
 function initChat() {
   const chatInput = document.getElementById("chatInput");
   const sendButton = document.getElementById("sendMessage");
@@ -51,11 +42,9 @@ function initChat() {
     '.action-btn[title="重命名对话"]',
   );
 
-  // 存储对话历史
   let chats = [];
   let currentChatId = null;
 
-  // 生成mock数据
   function generateMockData() {
     const now = new Date();
     const mockChats = [
@@ -153,7 +142,6 @@ function initChat() {
     chats = mockChats;
   }
 
-  // 获取对话分组
   function getChatGroups() {
     const now = new Date();
     const groups = {
@@ -182,7 +170,6 @@ function initChat() {
     return groups;
   }
 
-  // 初始化历史对话列表收缩功能
   function initHistoryToggle() {
     const historyToggleBtn = document.querySelector(".history-toggle-btn");
     const chatHistory = document.querySelector(".chat-history");
@@ -194,21 +181,18 @@ function initChat() {
 
     historyToggleBtn.addEventListener("click", () => {
       chatSidebar.classList.toggle("collapsed");
-      // 保存收缩状态到localStorage
       localStorage.setItem(
         "chatSidebarCollapsed",
         chatSidebar.classList.contains("collapsed"),
       );
     });
 
-    // 从localStorage恢复收缩状态
     const isCollapsed = localStorage.getItem("chatSidebarCollapsed") === "true";
     if (isCollapsed) {
       chatSidebar.classList.add("collapsed");
     }
   }
 
-  // 创建新对话
   function createNewChat() {
     const chatId = Date.now().toString();
     const chat = {
@@ -218,12 +202,11 @@ function initChat() {
       createdAt: new Date(),
       isFavorite: false,
     };
-    chats.unshift(chat); // 使用unshift将新对话添加到数组开头
+    chats.unshift(chat);
     currentChatId = chatId;
     updateChatUI(chat);
     updateHistoryList();
 
-    // 添加开场白和建议
     chatMessages.innerHTML = `
         <div class="welcome-message">
             <h2>欢迎使用 FarmAI 助手 👋</h2>
@@ -254,7 +237,6 @@ function initChat() {
     return chat;
   }
 
-  // 更新聊天界面
   function updateChatUI(chat) {
     currentChatTitle.textContent = chat.title || "新对话";
     chatMessages.innerHTML = "";
@@ -264,7 +246,6 @@ function initChat() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // 更新历史对话列表
   function updateHistoryList() {
     const historyList = document.getElementById("chatHistoryList");
     if (!historyList) return;
@@ -272,7 +253,6 @@ function initChat() {
     historyList.innerHTML = "";
     const groups = getChatGroups();
 
-    // 按固定顺序显示分组
     const groupOrder = ["今天", "本周", "本月", "更早"];
 
     groupOrder.forEach((groupName) => {
@@ -315,7 +295,6 @@ function initChat() {
                     </div>
                 `;
 
-          // 点击切换对话
           historyItem.addEventListener("click", (e) => {
             if (
               !e.target.closest(".chat-actions") &&
@@ -327,20 +306,12 @@ function initChat() {
             }
           });
 
-          // 收藏按钮事件
           const favoriteBtn = historyItem.querySelector(".favorite-btn");
           favoriteBtn.addEventListener("click", (e) => {
             e.stopPropagation();
             chat.isFavorite = !chat.isFavorite;
             updateHistoryList();
           });
-
-          // 标题点击事件
-          // const titleSpan = historyItem.querySelector(".chat-title");
-          // titleSpan.addEventListener("click", (e) => {
-          //   e.stopPropagation();
-          //   renameChat(chat.id);
-          // });
 
           groupDiv.appendChild(historyItem);
         });
@@ -350,7 +321,6 @@ function initChat() {
     });
   }
 
-  // 添加消息到聊天界面
   function addMessage(type, content, timestamp = new Date()) {
     const messageDiv = document.createElement("div");
     messageDiv.className = `message ${type}-message`;
@@ -364,19 +334,16 @@ function initChat() {
     chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 
-  // 发送消息
   async function sendMessage() {
     const message = chatInput.value.trim();
     if (!message) return;
 
-    // 如果没有当前对话，创建新对话
     if (!currentChatId) {
       createNewChat();
     }
 
     const currentChat = chats.find((chat) => chat.id === currentChatId);
 
-    // 添加用户消息
     const userMessage = {
       type: "user",
       content: message,
@@ -385,7 +352,6 @@ function initChat() {
     currentChat.messages.push(userMessage);
     addMessage("user", message);
 
-    // 更新对话标题（使用第一条消息的前20个字符）
     if (!currentChat.title || currentChat.title === "新对话") {
       currentChat.title =
         message.length > 20 ? message.slice(0, 20) + "..." : message;
@@ -397,10 +363,8 @@ function initChat() {
     chatInput.style.height = "auto";
 
     try {
-      // 这里需要替换为实际的API调用
       const response = await mockAIResponse(message);
 
-      // 添加AI回复
       const aiMessage = {
         type: "ai",
         content: response,
@@ -419,7 +383,6 @@ function initChat() {
     }
   }
 
-  // 清空当前对话
   function clearCurrentChat() {
     if (!currentChatId) return;
 
@@ -432,7 +395,6 @@ function initChat() {
     }
   }
 
-  // 导出对话
   function exportChat() {
     if (!currentChatId) return;
 
@@ -460,7 +422,6 @@ function initChat() {
     }
   }
 
-  // 模拟AI响应
   async function mockAIResponse(message) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const responses = [
@@ -473,7 +434,6 @@ function initChat() {
     return responses[Math.floor(Math.random() * responses.length)];
   }
 
-  // 应用建议问题
   function applySuggestion(question) {
     chatInput.value = question;
     chatInput.style.height = "auto";
@@ -481,7 +441,6 @@ function initChat() {
     chatInput.focus();
   }
 
-  // 删除对话
   function deleteChat(chatId) {
     if (!confirm("确定要删除这个对话吗？")) return;
 
@@ -501,7 +460,6 @@ function initChat() {
     }
   }
 
-  // 重命名对话
   function renameChat(chatId) {
     const chat = chats.find((c) => c.id === chatId);
     if (!chat) return;
@@ -516,14 +474,12 @@ function initChat() {
     }
   }
 
-  // 绑定事件
   function initEvents() {
     newChatBtn.addEventListener("click", createNewChat);
     sendButton.addEventListener("click", sendMessage);
     clearChatBtn.addEventListener("click", clearCurrentChat);
     exportChatBtn.addEventListener("click", exportChat);
 
-    // 绑定右上角重命名按钮事件
     if (renameChatBtn) {
       renameChatBtn.addEventListener("click", () => {
         if (currentChatId) {
@@ -532,7 +488,6 @@ function initChat() {
       });
     }
 
-    // 绑定回车发送
     chatInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter" && !e.shiftKey) {
         e.preventDefault();
@@ -540,43 +495,32 @@ function initChat() {
       }
     });
 
-    // 自动调整输入框高度
     chatInput.addEventListener("input", () => {
       chatInput.style.height = "auto";
       chatInput.style.height = chatInput.scrollHeight + "px";
     });
   }
 
-  // 初始化
   function init() {
-    // 生成mock数据
     generateMockData();
-    // 初始化历史对话列表收缩功能
     initHistoryToggle();
-    // 初始化事件绑定
     initEvents();
-    // 更新历史列表显示
     updateHistoryList();
-    // 如果没有当前对话，创建新对话
     if (!currentChatId && chats.length === 0) {
       createNewChat();
     } else if (chats.length > 0) {
-      // 显示第一个对话
       currentChatId = chats[0].id;
       updateChatUI(chats[0]);
     }
   }
 
-  // 将函数暴露到全局作用域
   window.renameChat = renameChat;
   window.deleteChat = deleteChat;
   window.applySuggestion = applySuggestion;
 
-  // 开始初始化
   init();
 }
 
-// 图片生成功能初始化
 function initImageGeneration() {
   const imagePrompt = document.getElementById("imagePrompt");
   const imageStyle = document.getElementById("imageStyle");
@@ -587,7 +531,6 @@ function initImageGeneration() {
   );
   const suggestionTags = document.querySelectorAll(".tag");
 
-  // 添加标签点击事件
   suggestionTags.forEach((tag) => {
     tag.addEventListener("click", () => {
       const tagText = tag.textContent;
@@ -599,7 +542,6 @@ function initImageGeneration() {
     });
   });
 
-  // 清空画廊
   clearGalleryBtn.addEventListener("click", () => {
     if (confirm("确定要清空所有创作记录吗？")) {
       imageGallery.innerHTML = `
@@ -620,21 +562,17 @@ function initImageGeneration() {
       return;
     }
 
-    // 显示加载状态
     generateButton.disabled = true;
     generateButton.innerHTML = '<i class="ri-loader-4-line"></i>创作中...';
 
     try {
-      // 移除空画廊提示
       const emptyGallery = imageGallery.querySelector(".empty-gallery");
       if (emptyGallery) {
         emptyGallery.remove();
       }
 
-      // 这里需要替换为实际的API调用
       const imageUrl = await mockImageGeneration(prompt, style);
 
-      // 添加生成的图片到画廊
       const imageCard = document.createElement("div");
       imageCard.className = "image-card";
       imageCard.innerHTML = `
@@ -653,15 +591,12 @@ function initImageGeneration() {
     }
   });
 
-  // 模拟图片生成
   async function mockImageGeneration(prompt, style) {
-    // 这里需要替换为实际的API调用
     await new Promise((resolve) => setTimeout(resolve, 2000));
     return "https://via.placeholder.com/400x400?text=AI+Generated+Image";
   }
 }
 
-// 视频生成功能初始化
 function initVideoGeneration() {
   const videoPrompt = document.getElementById("videoPrompt");
   const videoStyle = document.getElementById("videoStyle");
@@ -677,15 +612,12 @@ function initVideoGeneration() {
       return;
     }
 
-    // 显示加载状态
     generateButton.disabled = true;
     generateButton.textContent = "生成中...";
 
     try {
-      // 这里需要替换为实际的API调用
       const videoUrl = await mockVideoGeneration(prompt, style);
 
-      // 更新视频预览
       videoPreview.innerHTML = `
                 <video controls>
                     <source src="${videoUrl}" type="video/mp4">
@@ -700,15 +632,12 @@ function initVideoGeneration() {
     }
   });
 
-  // 模拟视频生成
   async function mockVideoGeneration(prompt, style) {
-    // 这里需要替换为实际的API调用
     await new Promise((resolve) => setTimeout(resolve, 3000));
     return "https://example.com/sample-video.mp4";
   }
 }
 
-// AI绘画部分的控制代码
 class ImageGenerationController {
   constructor() {
     this.initElements();
@@ -722,10 +651,35 @@ class ImageGenerationController {
     this.isGenerating = false;
     this.currentRatio = "1:1";
     this.currentCount = 1;
+
+    // 初始化历史区域为空状态
+    const treeViewList = document.getElementById("treeViewList");
+    const gridViewList = document.getElementById("gridViewList");
+
+    if (treeViewList) {
+      treeViewList.innerHTML = `
+        <div class="history-empty-state">
+          <div class="empty-icon">
+            <i class="ri-image-2-line"></i>
+          </div>
+          <p class="empty-text">暂无生成记录</p>
+        </div>
+      `;
+    }
+
+    if (gridViewList) {
+      gridViewList.innerHTML = `
+        <div class="history-empty-state">
+          <div class="empty-icon">
+            <i class="ri-image-2-line"></i>
+          </div>
+          <p class="empty-text">暂无生成记录</p>
+        </div>
+      `;
+    }
   }
 
   initElements() {
-    // 初始化DOM元素
     this.prompt = document.querySelector(".prompt-input textarea");
     this.generateBtn = document.querySelector(".primary-btn");
     this.previewArea = document.querySelector(".preview-area");
@@ -736,7 +690,6 @@ class ImageGenerationController {
     this.imageHistory = document.querySelector(".image-history");
     this.historyToggleBtn = document.querySelector(".toggle-btn");
 
-    // 从localStorage恢复状态
     if (this.imageHistory) {
       const isCollapsed =
         localStorage.getItem("imageHistoryCollapsed") === "true";
@@ -754,7 +707,6 @@ class ImageGenerationController {
   }
 
   elementsExist() {
-    // 检查必要的元素是否存在
     const elements = {
       prompt: this.prompt,
       generateBtn: this.generateBtn,
@@ -765,7 +717,6 @@ class ImageGenerationController {
       historyToggleBtn: this.historyToggleBtn,
     };
 
-    // 输出缺失的元素
     Object.entries(elements).forEach(([name, element]) => {
       if (!element) {
         console.warn(`Missing element: ${name}`);
@@ -776,10 +727,8 @@ class ImageGenerationController {
   }
 
   bindEvents() {
-    // 生成按钮点击事件
     this.generateBtn.addEventListener("click", () => this.handleGenerate());
 
-    // 数量控制
     const minusBtn = document.querySelector(".number-btn.minus");
     const plusBtn = document.querySelector(".number-btn.plus");
     if (minusBtn && plusBtn) {
@@ -790,22 +739,19 @@ class ImageGenerationController {
       this.generateCount.addEventListener("change", () => this.validateCount());
     }
 
-    // 比例选择
     const ratioButtons = document.querySelectorAll(".ratio-btn");
     ratioButtons.forEach((btn) => {
       btn.addEventListener("click", () => this.handleRatioChange(btn));
     });
 
-    // 历史记录展开/收起
     if (this.historyToggleBtn) {
       this.historyToggleBtn.addEventListener("click", (e) => {
-        e.preventDefault(); // 阻止默认行为
-        e.stopPropagation(); // 阻止事件冒泡
+        e.preventDefault();
+        e.stopPropagation();
         this.toggleHistory();
       });
     }
 
-    // 文件上传
     if (this.uploadArea) {
       this.uploadArea.addEventListener("click", () => this.handleUpload());
       this.uploadArea.addEventListener("dragover", (e) => e.preventDefault());
@@ -825,20 +771,16 @@ class ImageGenerationController {
     this.isGenerating = true;
     this.generateBtn.disabled = true;
 
-    // 显示预览网格
     this.emptyPreview.style.display = "none";
     this.previewGrid.style.display = "grid";
     this.previewGrid.setAttribute("data-count", this.currentCount);
 
-    // 清空现有内容
     this.previewGrid.innerHTML = "";
 
-    // 添加生成中的占位符
     for (let i = 0; i < this.currentCount; i++) {
       this.previewGrid.appendChild(this.createGeneratingItem());
     }
 
-    // 模拟生成过程
     setTimeout(() => {
       this.handleGenerateComplete();
     }, 3000);
@@ -875,10 +817,8 @@ class ImageGenerationController {
     this.isGenerating = false;
     this.generateBtn.disabled = false;
 
-    // 清空预览网格
     this.previewGrid.innerHTML = "";
 
-    // 使用本地示例图片（这里需要替换为实际的图片路径）
     const demoImages = [
       "/images/demo/image1.jpg",
       "/images/demo/image2.jpg",
@@ -886,14 +826,83 @@ class ImageGenerationController {
       "/images/demo/image4.jpg",
     ];
 
-    // 添加生成的图片
+    const now = new Date();
+    const timeString = `${now.getHours().toString().padStart(2, "0")}:${now
+      .getMinutes()
+      .toString()
+      .padStart(2, "0")}`;
+
+    // 生成所有图片URL
+    const generatedImages = [];
     for (let i = 0; i < this.currentCount; i++) {
-      // 使用占位图片服务作为备选
       const imageUrl =
         demoImages[i] ||
         `https://via.placeholder.com/800x800.png?text=Generated+Image+${i + 1}`;
+      generatedImages.push(imageUrl);
+
+      // 添加到预览区
       this.previewGrid.appendChild(this.createImageItem(imageUrl));
     }
+
+    // 创建层级视图的图片组
+    const historyGroup = document.createElement("div");
+    historyGroup.className = "history-group";
+    historyGroup.innerHTML = `
+      <div class="group-header">
+        <div class="group-title">
+          <i class="ri-image-2-line"></i>
+          <span>生成于 ${timeString}</span>
+        </div>
+        <div class="group-actions">
+          <button class="image-action-btn" title="下载">
+            <i class="ri-download-line"></i>
+          </button>
+          <button class="image-action-btn" title="删除">
+            <i class="ri-delete-bin-line"></i>
+          </button>
+        </div>
+      </div>
+      <div class="group-images">
+        <div class="group-preview">
+          <img src="${generatedImages[0]}" alt="组预览图片">
+          <div class="group-count">${this.currentCount}张</div>
+        </div>
+      </div>
+    `;
+
+    // 添加到层级视图
+    const treeViewList = document.getElementById("treeViewList");
+    const emptyState = treeViewList.querySelector(".history-empty-state");
+    if (emptyState) {
+      emptyState.remove();
+    }
+    treeViewList.insertBefore(historyGroup, treeViewList.firstChild);
+
+    // 添加到平铺视图
+    const gridViewList = document.getElementById("gridViewList");
+    generatedImages.forEach((imageUrl) => {
+      const historyItem = document.createElement("div");
+      historyItem.className = "history-item";
+      historyItem.innerHTML = `
+        <img src="${imageUrl}" alt="生成图片">
+        <div class="history-item-info">
+          <div class="history-item-title">生成于 ${timeString}</div>
+        </div>
+        <div class="image-actions">
+          <button class="image-action-btn" title="下载">
+            <i class="ri-download-line"></i>
+          </button>
+          <button class="image-action-btn" title="删除">
+            <i class="ri-delete-bin-line"></i>
+          </button>
+        </div>
+      `;
+      const gridEmptyState = gridViewList.querySelector(".history-empty-state");
+      if (gridEmptyState) {
+        gridEmptyState.remove();
+      }
+      gridViewList.insertBefore(historyItem, gridViewList.firstChild);
+    });
   }
 
   updateCount(delta) {
@@ -921,7 +930,6 @@ class ImageGenerationController {
   toggleHistory() {
     if (this.imageHistory) {
       this.imageHistory.classList.toggle("collapsed");
-      // 更新按钮图标
       const icon = this.historyToggleBtn.querySelector("i");
       if (icon) {
         if (this.imageHistory.classList.contains("collapsed")) {
@@ -936,7 +944,6 @@ class ImageGenerationController {
           );
         }
       }
-      // 保存状态到localStorage
       localStorage.setItem(
         "imageHistoryCollapsed",
         this.imageHistory.classList.contains("collapsed"),
@@ -973,7 +980,6 @@ class ImageGenerationController {
   }
 }
 
-// 收藏和下载功能
 function handleFavorite(btn) {
   const icon = btn.querySelector("i");
   if (icon.classList.contains("ri-heart-line")) {
@@ -992,7 +998,6 @@ function handleDownload(imageUrl) {
   link.click();
 }
 
-// 等待DOM加载完成后初始化
 document.addEventListener("DOMContentLoaded", () => {
   const controller = new ImageGenerationController();
 });

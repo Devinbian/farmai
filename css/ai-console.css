@@ -1099,6 +1099,11 @@
     padding: 20px;
     color: #6c757d;
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }
 
 .history-empty-state .empty-icon {
@@ -1121,11 +1126,14 @@
     margin: 4px 0;
     font-size: 13px;
     color: #6c757d;
+    width: 100%;
+    text-align: center;
 }
 
 /* 收缩状态下的空状态样式 */
 .image-history.collapsed .history-empty-state {
-    padding: 12px 0;
+    padding: 12px;
+    width: 100%;
 }
 
 .image-history.collapsed .history-empty-state .empty-text {
@@ -1148,61 +1156,202 @@
     height: 100%;
 }
 
-.history-item {
+/* 层级视图样式 */
+.history-list.tree-view {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 16px;
+}
+
+/* 收缩状态下的层级视图样式 */
+.image-history.collapsed .history-list.tree-view {
+    grid-template-columns: 1fr;
+}
+
+/* 收缩状态下调整图片组的大小 */
+.image-history.collapsed .history-list.tree-view .history-group {
+    width: 100%;
+    aspect-ratio: 1;
+}
+
+.history-list.tree-view .history-group {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    aspect-ratio: 1;
+}
+
+.history-list.tree-view .history-group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.history-list.tree-view .group-header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 2;
+}
+
+.history-list.tree-view .group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.history-list.tree-view .group-title i {
+    font-size: 16px;
+}
+
+.history-list.tree-view .group-images {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.history-list.tree-view .group-preview {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.history-list.tree-view .group-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.history-list.tree-view .group-count {
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.6);
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    backdrop-filter: blur(4px);
+}
+
+/* 平铺视图样式 */
+.history-list.grid-view {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    padding: 16px;
+}
+
+.history-list.grid-view .history-item {
     background: #ffffff;
     border: 1px solid #e9ecef;
     border-radius: 8px;
     overflow: hidden;
-    margin-bottom: 12px;
     cursor: pointer;
     transition: all 0.3s;
     position: relative;
-}
-
-.history-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
-.history-item img {
-    width: 100%;
     aspect-ratio: 1;
+}
+
+.history-list.grid-view .history-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.history-list.grid-view .history-item img {
+    width: 100%;
+    height: 100%;
     object-fit: cover;
 }
 
-.history-item-info {
-    padding: 12px;
+/* 图片操作按钮 */
+.history-item .image-actions,
+.history-group .group-actions {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2;
 }
 
-.history-item-title {
+.history-item:hover .image-actions,
+.history-group:hover .group-actions {
+    opacity: 1;
+}
+
+.image-action-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.05);
     color: #2c3e50;
-    font-size: 14px;
-    margin-bottom: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.history-item-time {
+.image-action-btn:hover {
+    background: #ffffff;
+    color: #2e7d32;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* 保持原有的视图切换按钮样式 */
+.view-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px;
+    background: #f8f9fa;
+    border-radius: 6px;
+}
+
+.view-toggle button {
+    padding: 6px 12px;
+    border: none;
+    background: none;
     color: #6c757d;
-    font-size: 12px;
-}
-
-/* 收缩状态下的历史记录列表样式 */
-.image-history.collapsed .history-list {
-    padding: 8px;
-}
-
-.image-history.collapsed .history-item {
-    padding: 8px;
-    margin-bottom: 8px;
-}
-
-.image-history.collapsed .history-item img {
-    width: 44px;
-    height: 44px;
+    font-size: 13px;
+    cursor: pointer;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s;
 }
 
-.image-history.collapsed .history-item-info {
-    display: none;
+.view-toggle button.active {
+    background: #ffffff;
+    color: #2e7d32;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.view-toggle button:hover:not(.active) {
+    color: #2c3e50;
+}
+
+.view-toggle i {
+    font-size: 16px;
 }
 
 /* 响应式设计 */
@@ -1302,4 +1451,56 @@
 .suggestion-item i {
     font-size: 20px;
     color: #2e7d32;
+}
+
+/* 平铺视图下的图片组样式 */
+.history-list.grid-view .history-group {
+    display: contents;
+}
+
+.history-list.grid-view .history-group .group-images {
+    display: contents;
+}
+
+.history-list.grid-view .history-group .group-preview {
+    display: none;
+}
+
+.history-list.grid-view .history-group .group-header,
+.history-list.grid-view .history-group .group-count {
+    display: none;
+}
+
+.history-list.grid-view .history-group .image-item {
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    aspect-ratio: 1;
+}
+
+.history-list.grid-view .history-group .image-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.history-list.grid-view .history-group .image-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 收缩状态下的网格布局调整 */
+.image-history.collapsed .history-list.grid-view {
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+}
+
+.image-history.collapsed .history-list.grid-view .image-item,
+.image-history.collapsed .history-list.grid-view .history-item {
+    width: 100%;
 } 

@@ -213,25 +213,79 @@
                                 <span>历史</span>
                             </div>
                             <div class="header-right">
-                                <button class="view-btn" title="层级视图">
-                                    <i class="ri-list-check-2"></i>
-                                    <span>层级视图</span>
-                                </button>
+                                <div class="view-toggle">
+                                    <button class="view-btn active" data-view="tree" title="层级视图">
+                                        <i class="ri-list-check-2"></i>
+                                        <span>层级</span>
+                                    </button>
+                                    <button class="view-btn" data-view="grid" title="平铺视图">
+                                        <i class="ri-grid-line"></i>
+                                        <span>平铺</span>
+                                    </button>
+                                </div>
                                 <button class="batch-btn">
                                     <i class="ri-file-copy-line"></i>
-                                    <span>批量操作</span>
+                                    <span>批量</span>
                                 </button>
                             </div>
                         </div>
                         <div class="history-content">
-                            <div class="history-list" id="imageHistoryList">
-                                <!-- 默认内容 -->
+                            <!-- 层级视图 -->
+                            <div class="history-list tree-view" id="treeViewList">
+                                <!-- 图片组示例 -->
+                                <div class="history-group">
+                                    <!-- <div class="group-header">
+                                        <div class="group-title">
+                                            <i class="ri-image-2-line"></i>
+                                            <span>生成于 14:30</span>
+                                        </div>
+                                        <div class="group-actions">
+                                            <button class="image-action-btn" title="下载">
+                                                <i class="ri-download-line"></i>
+                                            </button>
+                                            <button class="image-action-btn" title="删除">
+                                                <i class="ri-delete-bin-line"></i>
+                                            </button>
+                                        </div>
+                                    </div> -->
+                                    <div class="group-images">
+                                        <!-- 动态插入生成的图片 -->
+                                    </div>
+                                </div>
+                                <!-- 默认空状态 -->
                                 <div class="history-empty-state">
                                     <div class="empty-icon">
-                                        <i class="ri-heart-3-line"></i>
+                                        <i class="ri-image-add-line"></i>
                                     </div>
-                                    <p class="empty-text">点击收藏按钮</p>
-                                    <p class="empty-text">收藏喜欢的作品</p>
+                                    <p class="empty-text">生成图片后</p>
+                                    <p class="empty-text">将在这里显示</p>
+                                </div>
+                            </div>
+
+                            <!-- 平铺视图 -->
+                            <div class="history-list grid-view" id="gridViewList" style="display: none;">
+                                <!-- 单张图片示例 -->
+                                <div class="history-item">
+                                    <img src="" alt="生成图片">
+                                    <div class="history-item-info">
+                                        <div class="history-item-title">生成于 14:30</div>
+                                    </div>
+                                    <div class="image-actions">
+                                        <button class="image-action-btn" title="下载">
+                                            <i class="ri-download-line"></i>
+                                        </button>
+                                        <button class="image-action-btn" title="删除">
+                                            <i class="ri-delete-bin-line"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- 默认空状态 -->
+                                <div class="history-empty-state">
+                                    <div class="empty-icon">
+                                        <i class="ri-image-add-line"></i>
+                                    </div>
+                                    <p class="empty-text">生成图片后</p>
+                                    <p class="empty-text">将在这里显示</p>
                                 </div>
                             </div>
                         </div>
