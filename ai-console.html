@@ -13,22 +13,54 @@
         <!-- 左侧导航栏 -->
         <div class="ai-sidebar">
             <div class="ai-logo">
+                <button class="sidebar-toggle-btn">
+                    <i class="ri-menu-fold-line"></i>
+                </button>
                 <img src="images/speaking.png" alt="FarmAI Logo">
                 <span>AI控制台</span>
             </div>
             <nav class="ai-nav">
-                <a href="#chat" class="active">
-                    <i class="ri-chat-3-line"></i>
-                    <span>AI对话</span>
-                </a>
-                <a href="#image">
-                    <i class="ri-image-2-line"></i>
-                    <span>AI绘画</span>
-                </a>
-                <a href="#video">
-                    <i class="ri-video-line"></i>
-                    <span>AI视频</span>
-                </a>
+                <!-- AI创作菜单 -->
+                <div class="nav-group">
+                    <div class="nav-group-title">
+                        <i class="ri-magic-line"></i>
+                        <span>AI创作</span>
+                        <i class="ri-arrow-down-s-line dropdown-icon"></i>
+                    </div>
+                    <div class="nav-submenu">
+                        <a href="#chat" class="active">
+                            <i class="ri-chat-3-line"></i>
+                            <span>AI对话</span>
+                        </a>
+                        <a href="#image">
+                            <i class="ri-image-2-line"></i>
+                            <span>AI绘画</span>
+                        </a>
+                        <a href="#video">
+                            <i class="ri-video-line"></i>
+                            <span>AI视频</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 我的资产菜单 -->
+                <div class="nav-group">
+                    <div class="nav-group-title">
+                        <i class="ri-folder-2-line"></i>
+                        <span>我的资产</span>
+                        <i class="ri-arrow-down-s-line dropdown-icon"></i>
+                    </div>
+                    <div class="nav-submenu">
+                        <a href="#files">
+                            <i class="ri-file-list-line"></i>
+                            <span>素材管理</span>
+                        </a>
+                        <a href="#favorites">
+                            <i class="ri-star-line"></i>
+                            <span>我的收藏</span>
+                        </a>
+                    </div>
+                </div>
             </nav>
         </div>
 
@@ -127,7 +159,6 @@
                                     </div>
                                     <div class="upload-text">
                                         <p>点击/拖拽</p>
-                                        <p>从历史创作选择</p>
                                     </div>
                                     <div class="upload-tip">支持jpg/png格式</div>
                                 </div>
@@ -185,7 +216,7 @@
                                 
                                 <!-- 已生成的图片项 -->
                                 <div class="preview-item">
-                                    <img src="path/to/image.jpg" alt="生成的图片">
+                                    <img src="https://imgapi.cn/api.php?zd=mobile&fl=meizi&gs=images" alt="生成的图片">
                                     <div class="image-actions">
                                         <button class="image-action-btn" title="收藏">
                                             <i class="ri-heart-line"></i>
@@ -232,12 +263,17 @@
                         <div class="history-content">
                             <!-- 层级视图 -->
                             <div class="history-list tree-view" id="treeViewList">
-                                <!-- 图片组示例 -->
+                                <!-- 层级视图下的图片组 -->
                                 <div class="history-group">
-                                    <div class="group-images">
-                                        <!-- 动态插入生成的图片 -->
+                                    <img src="https://imgapi.cn/api.php?zd=mobile&fl=meizi&gs=images" alt="组预览图片">
+                                    <div class="image-actions">
+                                        <button class="image-action-btn" title="收藏">
+                                            <i class="ri-heart-line"></i>
+                                        </button>
                                     </div>
+                                    <div class="image-count">9张</div>
                                 </div>
+                                
                                 <!-- 默认空状态 -->
                                 <div class="history-empty-state">
                                     <div class="empty-icon">
@@ -250,19 +286,16 @@
 
                             <!-- 平铺视图 -->
                             <div class="history-list grid-view" id="gridViewList" style="display: none;">
-                                <!-- 单张图片示例 -->
+                                <!-- 平铺视图下的图片卡片 -->
                                 <div class="history-item">
-                                    <img src="" alt="生成图片">
-                                    <!-- <div class="history-item-info">
-                                        <div class="history-item-title">生成于 14:30</div>
-                                    </div> -->
+                                    <img src="https://imgapi.cn/api.php?zd=mobile&fl=meizi&gs=images" alt="生成图片">
                                     <div class="image-actions">
-                                        <button class="image-action-btn" title="下载">
-                                            <i class="ri-download-line"></i>
+                                        <button class="image-action-btn" title="收藏" onclick="handleFavorite(this)">
+                                            <i class="ri-heart-line"></i>
                                         </button>
-                                        <button class="image-action-btn" title="删除">
-                                            <i class="ri-delete-bin-line"></i>
-                                        </button>
+                                    </div>
+                                    <div class="image-tags">
+                                        <span class="image-tag">风景</span>
                                     </div>
                                 </div>
                                 <!-- 默认空状态 -->
@@ -295,6 +328,38 @@
                     </div>
                     <div class="video-preview" id="videoPreview">
                         <!-- 视频预览区域 -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- 文件管理区域 -->
+            <section id="files" class="ai-section">
+                <div class="files-container">
+                    <div class="section-header">
+                        <h2>文件管理</h2>
+                        <p>管理您的AI创作文件</p>
+                    </div>
+                    <div class="files-content">
+                        <div class="empty-state">
+                            <i class="ri-file-list-3-line"></i>
+                            <p>暂无文件</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 我的收藏区域 -->
+            <section id="favorites" class="ai-section">
+                <div class="favorites-container">
+                    <div class="section-header">
+                        <h2>我的收藏</h2>
+                        <p>您收藏的AI创作内容</p>
+                    </div>
+                    <div class="favorites-content">
+                        <div class="empty-state">
+                            <i class="ri-star-line"></i>
+                            <p>暂无收藏内容</p>
+                        </div>
                     </div>
                 </div>
             </section>

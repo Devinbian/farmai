@@ -20,19 +20,37 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: relative;
+    transition: width 0.3s ease;
+}
+
+.ai-sidebar.collapsed {
+    width: 80px;
+}
+
+.ai-sidebar.collapsed .ai-logo span {
+    display: none;
+}
+
+.ai-sidebar.collapsed .ai-nav a span {
+    display: none;
+}
+
+.ai-sidebar.collapsed .ai-nav a {
+    justify-content: center;
 }
 
 .ai-logo {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
     margin-bottom: 30px;
+    position: relative;
 }
 
 .ai-logo img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
 }
 
 .ai-logo span {
@@ -41,17 +59,75 @@
     color: #2c3e50;
 }
 
+.ai-sidebar.collapsed .ai-logo {
+    justify-content: center;
+}
+
+.ai-sidebar.collapsed .ai-logo img {
+    margin-right: 0;
+}
+
 .ai-nav {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
+/* 导航组样式 */
+.nav-group {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.nav-group-title {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #6c757d;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.nav-group-title:hover {
+    background: #f8f9fa;
+    color: #2c3e50;
+}
+
+.nav-group-title i:first-child {
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+.nav-group-title .dropdown-icon {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+}
+
+.nav-group.collapsed .dropdown-icon {
+    transform: rotate(-90deg);
+}
+
+.nav-submenu {
+    display: flex;
+    flex-direction: column;
+    margin-left: 15px;
+    gap: 5px;
+    max-height: 1000px;
+    transition: max-height 0.3s ease;
+}
+
+.nav-group.collapsed .nav-submenu {
+    max-height: 0;
+    overflow: hidden;
+}
+
+/* 导航链接样式 */
 .ai-nav a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 12px 16px;
+    padding: 10px 15px;
     color: #6c757d;
     text-decoration: none;
     border-radius: 8px;
@@ -59,17 +135,51 @@
 }
 
 .ai-nav a:hover {
-    background-color: #f8f9fa;
+    background: #f8f9fa;
     color: #2c3e50;
 }
 
 .ai-nav a.active {
-    background-color: #e8f5e9;
-    color: #2e7d32;
+    background: #e9ecef;
+    color: #2c3e50;
 }
 
 .ai-nav i {
-    font-size: 1.2rem;
+    font-size: 20px;
+    margin-right: 10px;
+}
+
+/* 侧边栏折叠时的样式 */
+.ai-sidebar.collapsed .nav-group-title span,
+.ai-sidebar.collapsed .nav-submenu a span {
+    display: none;
+}
+
+.ai-sidebar.collapsed .nav-group-title {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.ai-sidebar.collapsed .nav-group-title i:first-child {
+    margin-right: 0;
+}
+
+.ai-sidebar.collapsed .nav-group-title .dropdown-icon {
+    display: none;
+}
+
+.ai-sidebar.collapsed .nav-submenu {
+    margin-left: 0;
+    align-items: center;
+}
+
+.ai-sidebar.collapsed .nav-submenu a {
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.ai-sidebar.collapsed .nav-submenu a i {
+    margin-right: 0;
 }
 
 /* 主要内容区域样式 */
@@ -486,6 +596,10 @@
     margin-top: 4px;
 }
 
+.user-message .message-time {
+    color: rgba(255, 255, 255, 0.9);
+}
+
 .chat-input-container {
     padding: 20px;
     border-top: 1px solid #e9ecef;
@@ -862,7 +976,6 @@
     align-items: center;
     justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    padding: 12px;
 }
 
 /* 生成中状态 */
@@ -897,7 +1010,7 @@
 .preview-item img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 8px;
 }
 
@@ -1045,6 +1158,14 @@
     padding: 0; /* 移除内边距 */
     padding-left: 7px;
     justify-content: flex-start;
+    position: relative;
+    min-height: 200px; /* 确保有足够高度显示空状态 */
+}
+
+.history-list .history-item img{
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
 }
 
 /* 统一卡片大小 */
@@ -1244,8 +1365,8 @@
 }
 
 .history-list.tree-view .group-images img {
-    width: 80px;
-    height: 80px;
+    width: 120px;
+    height: 120px;
     object-fit: cover;
     border-radius: 6px;
     cursor: pointer;
@@ -1257,8 +1378,14 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    position: absolute;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
     color: #999;
+    text-align: center;
 }
 
 .empty-icon {
@@ -1269,6 +1396,7 @@
 .empty-text {
     font-size: 14px;
     line-height: 1.5;
+    margin: 0;
 }
 
 /* 展开/收起按钮样式 */
@@ -1306,38 +1434,48 @@
     position: absolute;
     top: 8px;
     right: 8px;
-    display: none;
+    display: flex;
     gap: 4px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 10;
 }
 
 .history-list .history-item:hover .image-actions,
 .history-list .history-group:hover .image-actions {
-    display: flex;
+    opacity: 1;
 }
 
-/* 只保留收藏按钮 */
-.history-list .image-action-btn:not([title="收藏"]) {
+/* 只在平铺视图中隐藏除收藏按钮外的其他按钮 */
+.history-list.grid-view .image-action-btn:not([title="收藏"]) {
     display: none;
 }
 
-.history-list .image-action-btn {
+/* 统一所有图片操作按钮的样式 */
+.image-action-btn {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.9);
-    border: none;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: #6c757d;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6c757d;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.history-list .image-action-btn:hover {
+.image-action-btn:hover {
     background: #ffffff;
     color: #2e7d32;
     transform: scale(1.1);
+}
+
+/* 收藏按钮选中样式 */
+.image-action-btn[title="收藏"] .ri-heart-fill {
+    color: #ff4757;
 }
 
 /* 收起状态下的历史区域头部按钮样式 */
@@ -1365,4 +1503,263 @@
 
 .image-history.collapsed .history-list.tree-view .group-images img {
     border: 1px solid #e9ecef;
+}
+
+/* 直接为group-count元素添加显示样式 */
+#treeViewList .history-group .group-count {
+    position: absolute !important;
+    bottom: 8px !important;
+    right: 8px !important;
+    background-color: rgba(0, 0, 0, 0.6) !important; 
+    color: white !important;
+    padding: 4px 8px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+    font-weight: bold !important;
+    z-index: 9999 !important;
+    display: block !important;
+}
+
+/* 确保图片组有正确的样式 */
+#treeViewList .history-group {
+    width: 120px !important;
+    height: 120px !important;
+    position: relative !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* 图片填充样式 */
+#treeViewList .history-group img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+}
+
+/* 收藏按钮样式 */
+#treeViewList .history-group .image-actions {
+    position: absolute !important;
+    top: 8px !important;
+    right: 8px !important;
+    opacity: 0 !important;
+    display: flex !important;
+    z-index: 9999 !important;
+    transition: opacity 0.3s !important;
+}
+
+#treeViewList .history-group:hover .image-actions {
+    opacity: 1 !important;
+}
+
+/* 批量按钮交互状态 */
+.batch-btn {
+    padding: 6px 12px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.batch-btn:hover {
+    background: rgba(46, 125, 50, 0.05);
+    color: #2e7d32;
+}
+
+.batch-btn.active {
+    background: rgba(46, 125, 50, 0.1);
+    color: #2e7d32;
+}
+
+/* 图片多选框样式 */
+.history-item .checkbox-container,
+.history-group .checkbox-container {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 10;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+.batch-mode .checkbox-container {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.custom-checkbox i {
+    color: #2e7d32;
+    font-size: 14px;
+    display: none;
+}
+
+.custom-checkbox.checked {
+    background: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.custom-checkbox.checked i {
+    display: block;
+    color: white;
+}
+
+/* 底部操作栏样式 */
+.batch-actions-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #ffffff;
+    border-top: 1px solid #e9ecef;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transform: translateY(140%);
+    transition: transform 0.3s ease;
+    z-index: 100;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.batch-mode .batch-actions-bar {
+    transform: translateY(0);
+}
+
+.batch-info {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.batch-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.batch-action-btn {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid #e9ecef;
+    border-radius: 4px;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.3s ease;
+}
+
+.batch-action-btn:hover {
+    background: #f8f9fa;
+    border-color: #dee2e6;
+}
+
+.batch-action-btn.favorite-btn:hover {
+    color: #ff4757;
+    border-color: #ff4757;
+    background: rgba(255, 71, 87, 0.05);
+}
+
+.batch-action-btn.download-btn:hover {
+    color: #2e7d32;
+    border-color: #2e7d32;
+    background: rgba(46, 125, 50, 0.05);
+}
+
+.batch-action-btn.delete-btn:hover {
+    color: #dc3545;
+    border-color: #dc3545;
+    background: rgba(220, 53, 69, 0.05);
+}
+
+/* 批量模式下的历史内容区域 */
+.batch-mode .history-content {
+    height: calc(100% - 120px);
+}
+
+/* 左侧导航栏展开/收起样式 */
+.sidebar-toggle-btn {
+    position: relative;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
+    background: transparent;
+    border: none;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.sidebar-toggle-btn:hover {
+    background: #e9ecef;
+    color: #2c3e50;
+}
+
+.ai-sidebar.collapsed .sidebar-toggle-btn {
+    margin-right: 0;
+}
+
+.ai-sidebar.collapsed .sidebar-toggle-btn i {
+    transform: rotate(180deg);
+}
+
+/* 文件管理和收藏页面的共同样式 */
+.section-header {
+    padding: 20px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.section-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #343a40;
+}
+
+.section-header p {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 800px;
+    color: #6c757d;
+}
+
+.empty-state i {
+    font-size: 64px;
+    margin-bottom: 20px;
+    color: #dee2e6;
+}
+
+.empty-state p {
+    font-size: 16px;
 } 
