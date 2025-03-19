@@ -707,3 +707,292 @@ function initVideoGeneration() {
     return "https://example.com/sample-video.mp4";
   }
 }
+
+// AI绘画部分的控制代码
+class ImageGenerationController {
+  constructor() {
+    this.initElements();
+    if (this.elementsExist()) {
+      this.bindEvents();
+    } else {
+      console.warn("Some required elements are missing");
+    }
+
+    // 初始状态
+    this.isGenerating = false;
+    this.currentRatio = "1:1";
+    this.currentCount = 1;
+  }
+
+  initElements() {
+    // 初始化DOM元素
+    this.prompt = document.querySelector(".prompt-input textarea");
+    this.generateBtn = document.querySelector(".primary-btn");
+    this.previewArea = document.querySelector(".preview-area");
+    this.emptyPreview = document.querySelector(".empty-preview");
+    this.previewGrid = document.querySelector(".preview-grid");
+    this.generateCount = document.querySelector(".number-input input");
+    this.uploadArea = document.querySelector(".upload-area");
+    this.imageHistory = document.querySelector(".image-history");
+    this.historyToggleBtn = document.querySelector(".toggle-btn");
+
+    // 从localStorage恢复状态
+    if (this.imageHistory) {
+      const isCollapsed =
+        localStorage.getItem("imageHistoryCollapsed") === "true";
+      if (isCollapsed) {
+        this.imageHistory.classList.add("collapsed");
+        const icon = this.historyToggleBtn?.querySelector("i");
+        if (icon) {
+          icon.classList.replace(
+            "ri-arrow-left-s-line",
+            "ri-arrow-right-s-line",
+          );
+        }
+      }
+    }
+  }
+
+  elementsExist() {
+    // 检查必要的元素是否存在
+    const elements = {
+      prompt: this.prompt,
+      generateBtn: this.generateBtn,
+      previewArea: this.previewArea,
+      previewGrid: this.previewGrid,
+      generateCount: this.generateCount,
+      imageHistory: this.imageHistory,
+      historyToggleBtn: this.historyToggleBtn,
+    };
+
+    // 输出缺失的元素
+    Object.entries(elements).forEach(([name, element]) => {
+      if (!element) {
+        console.warn(`Missing element: ${name}`);
+      }
+    });
+
+    return Object.values(elements).every((element) => element !== null);
+  }
+
+  bindEvents() {
+    // 生成按钮点击事件
+    this.generateBtn.addEventListener("click", () => this.handleGenerate());
+
+    // 数量控制
+    const minusBtn = document.querySelector(".number-btn.minus");
+    const plusBtn = document.querySelector(".number-btn.plus");
+    if (minusBtn && plusBtn) {
+      minusBtn.addEventListener("click", () => this.updateCount(-1));
+      plusBtn.addEventListener("click", () => this.updateCount(1));
+    }
+    if (this.generateCount) {
+      this.generateCount.addEventListener("change", () => this.validateCount());
+    }
+
+    // 比例选择
+    const ratioButtons = document.querySelectorAll(".ratio-btn");
+    ratioButtons.forEach((btn) => {
+      btn.addEventListener("click", () => this.handleRatioChange(btn));
+    });
+
+    // 历史记录展开/收起
+    if (this.historyToggleBtn) {
+      this.historyToggleBtn.addEventListener("click", (e) => {
+        e.preventDefault(); // 阻止默认行为
+        e.stopPropagation(); // 阻止事件冒泡
+        this.toggleHistory();
+      });
+    }
+
+    // 文件上传
+    if (this.uploadArea) {
+      this.uploadArea.addEventListener("click", () => this.handleUpload());
+      this.uploadArea.addEventListener("dragover", (e) => e.preventDefault());
+      this.uploadArea.addEventListener("drop", (e) => this.handleDrop(e));
+    }
+  }
+
+  handleGenerate() {
+    if (this.isGenerating) return;
+
+    const prompt = this.prompt.value.trim();
+    if (!prompt) {
+      alert("请输入创意描述");
+      return;
+    }
+
+    this.isGenerating = true;
+    this.generateBtn.disabled = true;
+
+    // 显示预览网格
+    this.emptyPreview.style.display = "none";
+    this.previewGrid.style.display = "grid";
+    this.previewGrid.setAttribute("data-count", this.currentCount);
+
+    // 清空现有内容
+    this.previewGrid.innerHTML = "";
+
+    // 添加生成中的占位符
+    for (let i = 0; i < this.currentCount; i++) {
+      this.previewGrid.appendChild(this.createGeneratingItem());
+    }
+
+    // 模拟生成过程
+    setTimeout(() => {
+      this.handleGenerateComplete();
+    }, 3000);
+  }
+
+  createGeneratingItem() {
+    const div = document.createElement("div");
+    div.className = "preview-item generating";
+    div.innerHTML = `
+            <div class="loading-spinner"></div>
+            <span class="generating-text">图像生成中...</span>
+        `;
+    return div;
+  }
+
+  createImageItem(imageUrl) {
+    const div = document.createElement("div");
+    div.className = "preview-item";
+    div.innerHTML = `
+            <img src="${imageUrl}" alt="生成的图片">
+            <div class="image-actions">
+                <button class="image-action-btn" title="收藏" onclick="handleFavorite(this)">
+                    <i class="ri-heart-line"></i>
+                </button>
+                <button class="image-action-btn" title="下载" onclick="handleDownload('${imageUrl}')">
+                    <i class="ri-download-line"></i>
+                </button>
+            </div>
+        `;
+    return div;
+  }
+
+  handleGenerateComplete() {
+    this.isGenerating = false;
+    this.generateBtn.disabled = false;
+
+    // 清空预览网格
+    this.previewGrid.innerHTML = "";
+
+    // 使用本地示例图片（这里需要替换为实际的图片路径）
+    const demoImages = [
+      "/images/demo/image1.jpg",
+      "/images/demo/image2.jpg",
+      "/images/demo/image3.jpg",
+      "/images/demo/image4.jpg",
+    ];
+
+    // 添加生成的图片
+    for (let i = 0; i < this.currentCount; i++) {
+      // 使用占位图片服务作为备选
+      const imageUrl =
+        demoImages[i] ||
+        `https://via.placeholder.com/800x800.png?text=Generated+Image+${i + 1}`;
+      this.previewGrid.appendChild(this.createImageItem(imageUrl));
+    }
+  }
+
+  updateCount(delta) {
+    let count = parseInt(this.generateCount.value) + delta;
+    count = Math.max(1, Math.min(4, count));
+    this.generateCount.value = count;
+    this.currentCount = count;
+  }
+
+  validateCount() {
+    let count = parseInt(this.generateCount.value);
+    count = Math.max(1, Math.min(4, count));
+    this.generateCount.value = count;
+    this.currentCount = count;
+  }
+
+  handleRatioChange(btn) {
+    document
+      .querySelectorAll(".ratio-btn")
+      .forEach((b) => b.classList.remove("active"));
+    btn.classList.add("active");
+    this.currentRatio = btn.getAttribute("data-ratio");
+  }
+
+  toggleHistory() {
+    if (this.imageHistory) {
+      this.imageHistory.classList.toggle("collapsed");
+      // 更新按钮图标
+      const icon = this.historyToggleBtn.querySelector("i");
+      if (icon) {
+        if (this.imageHistory.classList.contains("collapsed")) {
+          icon.classList.replace(
+            "ri-arrow-left-s-line",
+            "ri-arrow-right-s-line",
+          );
+        } else {
+          icon.classList.replace(
+            "ri-arrow-right-s-line",
+            "ri-arrow-left-s-line",
+          );
+        }
+      }
+      // 保存状态到localStorage
+      localStorage.setItem(
+        "imageHistoryCollapsed",
+        this.imageHistory.classList.contains("collapsed"),
+      );
+    }
+  }
+
+  handleUpload() {
+    const input = document.createElement("input");
+    input.type = "file";
+    input.accept = "image/jpeg,image/png";
+    input.onchange = (e) => this.handleFile(e.target.files[0]);
+    input.click();
+  }
+
+  handleDrop(e) {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) {
+      this.handleFile(file);
+    }
+  }
+
+  handleFile(file) {
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.uploadArea.innerHTML = `
+                <img src="${e.target.result}" alt="上传的图片" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            `;
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// 收藏和下载功能
+function handleFavorite(btn) {
+  const icon = btn.querySelector("i");
+  if (icon.classList.contains("ri-heart-line")) {
+    icon.classList.replace("ri-heart-line", "ri-heart-fill");
+    icon.style.color = "#ff4757";
+  } else {
+    icon.classList.replace("ri-heart-fill", "ri-heart-line");
+    icon.style.color = "";
+  }
+}
+
+function handleDownload(imageUrl) {
+  const link = document.createElement("a");
+  link.href = imageUrl;
+  link.download = `generated-image-${Date.now()}.jpg`;
+  link.click();
+}
+
+// 等待DOM加载完成后初始化
+document.addEventListener("DOMContentLoaded", () => {
+  const controller = new ImageGenerationController();
+});

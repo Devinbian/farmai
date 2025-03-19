@@ -169,9 +169,32 @@
                     <!-- 中间预览区域 -->
                     <div class="image-preview-container">
                         <div class="preview-area" id="imagePreview">
+                            <!-- 空状态 -->
                             <div class="empty-preview">
                                 <i class="ri-image-2-line"></i>
                                 <p>快去生成你的创意吧~</p>
+                            </div>
+                            
+                            <!-- 图片预览网格 -->
+                            <div class="preview-grid" data-count="4" style="display: none;">
+                                <!-- 生成中的图片项 -->
+                                <div class="preview-item generating">
+                                    <div class="loading-spinner"></div>
+                                    <span class="generating-text">图像生成中...</span>
+                                </div>
+                                
+                                <!-- 已生成的图片项 -->
+                                <div class="preview-item">
+                                    <img src="path/to/image.jpg" alt="生成的图片">
+                                    <div class="image-actions">
+                                        <button class="image-action-btn" title="收藏">
+                                            <i class="ri-heart-line"></i>
+                                        </button>
+                                        <button class="image-action-btn" title="下载">
+                                            <i class="ri-download-line"></i>
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="preview-footer">
@@ -180,21 +203,36 @@
                     </div>
 
                     <!-- 右侧历史记录 -->
-                    <div class="image-history">
+                    <div class="image-history collapsed">
+                        <!-- 展开/收起按钮 -->
+                        <button class="toggle-btn" title="展开/收起">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </button>
                         <div class="history-header">
                             <div class="header-left">
                                 <span>历史</span>
                             </div>
                             <div class="header-right">
+                                <button class="view-btn" title="层级视图">
+                                    <i class="ri-list-check-2"></i>
+                                    <span>层级视图</span>
+                                </button>
                                 <button class="batch-btn">
                                     <i class="ri-file-copy-line"></i>
-                                    批量操作
+                                    <span>批量操作</span>
                                 </button>
                             </div>
                         </div>
                         <div class="history-content">
                             <div class="history-list" id="imageHistoryList">
-                                <!-- 历史记录将通过JavaScript动态添加 -->
+                                <!-- 默认内容 -->
+                                <div class="history-empty-state">
+                                    <div class="empty-icon">
+                                        <i class="ri-heart-3-line"></i>
+                                    </div>
+                                    <p class="empty-text">点击收藏按钮</p>
+                                    <p class="empty-text">收藏喜欢的作品</p>
+                                </div>
                             </div>
                         </div>
                     </div>
