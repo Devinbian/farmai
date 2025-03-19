@@ -1,0 +1,3 @@
+[submodule "farm-scene-plans"]
+    path = farm-scene-plans
+    url = https://github.com/Devinbian/farm-scene-plans.git
