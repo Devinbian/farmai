@@ -1439,6 +1439,7 @@
     color: #6c757d;
     padding: 0;
     transition: all 0.3s ease;
+    z-index: 100; /* 增加z-index确保按钮可点击 */
 }
 
 .image-history .toggle-btn:hover {
@@ -1997,6 +1998,7 @@
     color: #6c757d;
     padding: 0;
     transition: all 0.3s ease;
+    z-index: 100; /* 增加z-index确保按钮可点击 */
 }
 
 .video-history .toggle-btn:hover {
@@ -2023,6 +2025,16 @@
 .video-history .history-item:hover .video-actions,
 .video-history .history-group:hover .video-actions {
     opacity: 1;
+}
+
+/* 视频区域批量按钮提高z-index */
+.video-history .batch-btn {
+    z-index: 10;
+}
+
+/* 视频视图切换按钮提高z-index */
+.video-history .view-btn {
+    z-index: 10;
 }
 
 .video-history .video-action-btn {
@@ -2277,4 +2289,14 @@
 /* 参数组样式调整 */
 .video-generation-container .param-group {
     margin-bottom: 8px; /* 保持原有间距 */
+}
+
+/* 图像区域批量按钮提高z-index */
+.image-history .batch-btn {
+    z-index: 10;
+}
+
+/* 图像视图切换按钮提高z-index */
+.image-history .view-btn {
+    z-index: 10;
 } 
