@@ -6,7 +6,7 @@
     <title>AI控制台 - FarmAI</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/ai-console.css">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/remixicon.css">
 </head>
 <body>
     <div class="ai-console-container">
@@ -315,19 +315,223 @@
             <!-- AI视频区域 -->
             <section id="video" class="ai-section">
                 <div class="video-generation-container">
-                    <div class="prompt-input">
-                        <textarea id="videoPrompt" placeholder="描述您想要生成的视频..." rows="3"></textarea>
-                        <div class="video-options">
-                            <select id="videoStyle">
-                                <option value="realistic">写实风格</option>
-                                <option value="anime">动漫风格</option>
-                                <option value="documentary">纪录片风格</option>
-                            </select>
-                            <button id="generateVideo" class="primary-btn">生成视频</button>
+                    <!-- 左侧创意描述区域 -->
+                    <div class="video-creation-area">
+                        <!-- 顶部创意描述卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <i class="ri-lightbulb-line"></i>
+                                <span>创意描述</span>
+                            </div>
+                            <div class="card-content">
+                                <div class="prompt-input">
+                                    <textarea id="videoPrompt" placeholder="请描述您想生成的视频内容，或查看使用指南提升生成效果" rows="3"></textarea>
+                                </div>
+                                <div class="prompt-suggestions">
+                                    <div class="tag-list">
+                                        <span class="tag">写实风格</span>
+                                        <span class="tag">动漫风格</span>
+                                        <span class="tag">纪录片风格</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 中间参考视频卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <div class="header-left">
+                                    <i class="ri-video-line"></i>
+                                    <span>上传参考视频</span>
+                                </div>
+                                <div class="header-right">
+                                    <span class="tip-text">(非必填)</span>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="upload-area" id="videoUploadArea">
+                                    <div class="upload-icon">
+                                        <i class="ri-upload-2-line"></i>
+                                    </div>
+                                    <div class="upload-text">
+                                        <p>点击/拖拽</p>
+                                    </div>
+                                    <div class="upload-tip">支持mp4/mov格式</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 底部参数设置卡片 -->
+                        <div class="creation-card">
+                            <div class="card-header">
+                                <i class="ri-settings-3-line"></i>
+                                <span>参数设置</span>
+                            </div>
+                            <div class="card-content">
+                                <!-- 创意想象力 -->
+                                <div class="param-group">
+                                    <div class="param-label">创意想象力</div>
+                                    <div class="imagination-slider">
+                                        <input type="range" id="imaginationSlider" min="0" max="1" step="0.1" value="0.5">
+                                        <div class="slider-value">0.5</div>
+                                    </div>
+                                </div>
+
+                                <!-- 生成模式 -->
+                                <div class="param-group">
+                                    <div class="param-label">生成模式</div>
+                                    <div class="mode-options">
+                                        <label class="mode-option">
+                                            <input type="radio" name="generationMode" value="standard" checked>
+                                            <span class="mode-text">标准</span>
+                                        </label>
+                                        <label class="mode-option">
+                                            <input type="radio" name="generationMode" value="high">
+                                            <span class="mode-text">高品质</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 生成时长 -->
+                                <div class="param-group">
+                                    <div class="param-label">生成时长</div>
+                                    <div class="duration-options">
+                                        <label class="duration-option">
+                                            <input type="radio" name="duration" value="5" checked>
+                                            <span class="duration-text">5秒</span>
+                                        </label>
+                                        <label class="duration-option">
+                                            <input type="radio" name="duration" value="10">
+                                            <span class="duration-text">10秒</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- 视频比例 -->
+                                <div class="param-group">
+                                    <div class="param-label">视频比例</div>
+                                    <div class="ratio-options">
+                                        <button class="ratio-btn active" data-ratio="16:9">16:9</button>
+                                        <button class="ratio-btn" data-ratio="9:16">9:16</button>
+                                        <button class="ratio-btn" data-ratio="1:1">1:1</button>
+                                    </div>
+                                </div>
+
+                                <!-- 生成数量 -->
+                                <div class="param-group">
+                                    <div class="param-label">生成数量</div>
+                                    <div class="number-input">
+                                        <button class="number-btn minus">-</button>
+                                        <input type="number" id="videoGenerateCount" value="1" min="1" max="4">
+                                        <button class="number-btn plus">+</button>
+                                    </div>
+                                </div>
+
+                                <button id="generateVideo" class="primary-btn">
+                                    <i class="ri-magic-line"></i>
+                                    立即生成
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="video-preview" id="videoPreview">
-                        <!-- 视频预览区域 -->
+
+                    <!-- 中间预览区域 -->
+                    <div class="video-preview-container">
+                        <div class="preview-area" id="videoPreview">
+                            <!-- 空状态 -->
+                            <div class="empty-preview">
+                                <i class="ri-video-line"></i>
+                                <p>快去生成你的创意视频吧~</p>
+                            </div>
+                            
+                            <!-- 视频预览区域 -->
+                            <div class="preview-content" style="display: none;">
+                                <video id="previewVideo" controls>
+                                    <source src="" type="video/mp4">
+                                    您的浏览器不支持视频播放。
+                                </video>
+                            </div>
+                        </div>
+                        <div class="preview-footer">
+                            <p>内容由人工智能模型生成，不代表平台的观点，立场或态度，请合理使用和参考</p>
+                        </div>
+                    </div>
+
+                    <!-- 右侧历史记录 -->
+                    <div class="video-history collapsed">
+                        <!-- 展开/收起按钮 -->
+                        <button class="toggle-btn" title="展开/收起">
+                            <i class="ri-arrow-left-s-line"></i>
+                        </button>
+                        <div class="history-header">
+                            <div class="header-left">
+                                <span>历史</span>
+                            </div>
+                            <div class="header-right">
+                                <div class="view-toggle">
+                                    <button class="view-btn active" data-view="tree" title="层级视图">
+                                        <i class="ri-list-check-2"></i>
+                                        <span>层级</span>
+                                    </button>
+                                    <button class="view-btn" data-view="grid" title="平铺视图">
+                                        <i class="ri-grid-line"></i>
+                                        <span>平铺</span>
+                                    </button>
+                                </div>
+                                <button class="batch-btn">
+                                    <i class="ri-file-copy-line"></i>
+                                    <span>批量</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="history-content">
+                            <!-- 层级视图 -->
+                            <div class="history-list tree-view" id="videoTreeViewList">
+                                <!-- 层级视图下的视频组 -->
+                                <!-- <div class="history-group">
+                                    <video src="" alt="组预览视频"></video>
+                                    <div class="video-actions">
+                                        <button class="video-action-btn" title="收藏">
+                                            <i class="ri-heart-line"></i>
+                                        </button>
+                                    </div>
+                                    <div class="video-count">3个</div>
+                                </div> -->
+                                
+                                <!-- 默认空状态 -->
+                                <div class="history-empty-state">
+                                    <div class="empty-icon">
+                                        <i class="ri-video-add-line"></i>
+                                    </div>
+                                    <p class="empty-text">生成视频后</p>
+                                    <p class="empty-text">将在这里显示</p>
+                                </div>
+                            </div>
+
+                            <!-- 平铺视图 -->
+                            <div class="history-list grid-view" id="videoGridViewList" style="display: none;">
+                                <!-- 平铺视图下的视频卡片 -->
+                                <!-- <div class="history-item">
+                                    <video src="" alt="生成视频"></video>
+                                    <div class="video-actions">
+                                        <button class="video-action-btn" title="收藏">
+                                            <i class="ri-heart-line"></i>
+                                        </button>
+                                    </div>
+                                    <div class="video-tags">
+                                        <span class="video-tag">写实</span>
+                                    </div>
+                                </div> -->
+                                <!-- 默认空状态 -->
+                                <div class="history-empty-state">
+                                    <div class="empty-icon">
+                                        <i class="ri-video-add-line"></i>
+                                    </div>
+                                    <p class="empty-text">生成视频后</p>
+                                    <p class="empty-text">将在这里显示</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

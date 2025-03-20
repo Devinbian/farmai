@@ -1,0 +1,4 @@
+coze 访问令牌
+token=pat_WXY7PUkTzeVlEWMosOmkzEvKWuNcjoPQfFoZJIzBUjbbhtRVfjzcuaQuTfQyUwuJ
+bot_id=7483310119825162267
+space_id=7365403142974177299
